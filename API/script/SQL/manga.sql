@@ -41,7 +41,7 @@ CREATE TABLE tome (
     number integer NOT NULL,
     title varchar(100) NOT NULL,
     picture bytea,
-    release_date TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    release_date date NOT NULL DEFAULT CURRENT_DATE ,
     FOREIGN KEY (fk_manga) REFERENCES manga (id_manga) NOT NULL,
 );
 
@@ -52,10 +52,11 @@ CREATE TABLE followed_manga (
     FOREIGN KEY (fk_manga) REFERENCES manga (id_manga) NOT NULL,
     FOREIGN KEY (fk_user) REFERENCES user (id_user) NOT NULL,
 );
+/* state : 1 = en cours, 2 = termine , 3 = pas commence*/
 
 CREATE TABLE readed_tome (
     id_reade_tome integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    read_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    read_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (fk_followed_manga) REFERENCES followed_manga (id_followed_manga) NOT NULL,
     FOREIGN KEY (fk_user) REFERENCES  user (id_user) NOT NULL,
     FOREIGN KEY (fk_tome) REFERENCES tome (id_tome) NOT NULL,
