@@ -1,0 +1,22 @@
+
+node --version
+npm init
+npm install -s express
+node app.js
+
+npm install --save-dev nodemon    => pour ne pas devoir refaire la commande node app.js tout le temps. (Changement effectué a chaud)
+npm run dev
+
+
+npm install -s pg   =>  permet req a la db
+npm run initDB
+
+npm install –save express-promise-router
+
+
+
+
+ATTENTION VERIFIER COMMENT FAIRE TRANSACTION ....
+
+
+NOTE 1 :  on a ajoute a la table tome un attribut is_last_tome qui indique si c'est le dernier tome sortie.

@@ -4,11 +4,19 @@
   "description": "API sur le suivi des mangas.",
   "main": "index.js",
   "scripts": {
+    "dev": "nodemon app.js",
+    "initDB": "node scripts/JS/initDB.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Hugo Janssens & Remy Lecrond",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1"
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "express-promise-router": "^4.1.0",
+    "pg": "^8.7.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
   }
 }
