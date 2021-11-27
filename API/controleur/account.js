@@ -3,24 +3,35 @@ const process = require('process');
 const jwt = require('jsonwebtoken');
 
 const pool = require('../scripts/JS/database');
-const account = require('../modele/account');
+const account = require('../modele/login');
+
 
 module.exports.login = async (req, res) => {
-    const {login, pswd} = req.body;
-    if(login === undefined || pswd === undefined){
+
+    const {login, password} = req.body;
+    if(login === undefined || password === undefined){
         res.sendStatus(400);
     } else {
         const client = await pool.connect();
         try {
-            const {rows: account} = await account.getAccount(client, login, pswd);
-            if (!account.isAdmin) {
-                /* envoie normal
-                * avec expiresIn 3 month
-                * sans canConnect react ?
-                * */
+            const result = await account.checkConnection(client, login, password);
+
+            const {userType, value} = result;
+            if (userType === "inconnu") {
+                res.sendStatus(404);
+            } else if (userType === "admin") {
+                const {id_account, login} = value;
+                const payload = {status: userType, value: {id_account, login}};
+                const token = jwt.sign(
+                    payload,
+                    process.env.SECRET_TOKEN,
+                    {expiresIn: '1d'}
+                );
+                res.json(token);
+
             } else {
-                const {id, nom} = value;
-                const payload = {status: userType, value: {id, nom}};
+                const {id_account, login} = value;
+                const payload = {status: userType, value: {id_account, login}};
                 const token = jwt.sign(
                     payload,
                     process.env.SECRET_TOKEN,
@@ -36,6 +47,8 @@ module.exports.login = async (req, res) => {
         }
     }
 };
+
+
 
 module.exports.inscription = async (req, res) => {
     const login = req.body.login;

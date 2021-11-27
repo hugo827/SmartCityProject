@@ -24,18 +24,24 @@ module.exports.getFollowedManga = async (req, res) => {
 }
 
 module.exports.postFollowedManga = async (req, res) => {
-    const body = req.body;
-    const {state,fk_manga,fk_user} = body;
-    const client = await pool.connect();
-    try{
-        await FollowedManga.postFollowedManga(state,fk_manga,fk_user, client);
-        res.sendStatus(201);
-    } catch (error){
-        console.error(error);
-        res.sendStatus(500);
-    } finally {
-        client.release();
+    if(req.session) {
+        const user = req.session;
+        const body = req.body;
+        const {state,fk_manga} = body;
+        const client = await pool.connect();
+        try{
+            await FollowedManga.postFollowedManga(state,fk_manga,user.id_account, client);
+            res.sendStatus(201);
+        } catch (error){
+            console.error(error);
+            res.sendStatus(500);
+        } finally {
+            client.release();
+        }
+    } else {
+        res.sendStatus(401);
     }
+
 };
 
 module.exports.patchFollowedManga = async (req, res) => {

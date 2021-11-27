@@ -8,9 +8,11 @@ module.exports.verifAccount = async (req, res, next) => {
     const login = req.body.login;
     const pswd = req.body.pswd;
     const email = req.body.email;
+    /*
     const birthdate = req.body.birthdate;
     const phone  =  req.body.phone;
-    /* profile picture ??? */
+    const profile_picture = req.body.profile_picture //???
+     */
 
     if(login === undefined || pswd === undefined || email === undefined){
         res.sendStatus(400);

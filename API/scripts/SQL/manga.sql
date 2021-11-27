@@ -74,17 +74,17 @@ CREATE TABLE readed_tome (
 INSERT INTO account
 (login, pswd, email, is_Admin)
 VALUES
-    ('admin', 'tigrou007','test@gmail.com',true);
+    ('admin', '$2a$10$fiKILzSQn2YvA.mbmxhqa.7f8pErrnl4qofZY7nE/a5Vq8KakfPKG','test@gmail.com',true);
 
 INSERT INTO account
 (login, pswd, email)
 VALUES
-    ('remy', 'remy007', 'test@gmail.com');
+    ('remy', '$2a$10$fiKILzSQn2YvA.mbmxhqa.7f8pErrnl4qofZY7nE/a5Vq8KakfPKG', 'test@gmail.com');
 
 INSERT INTO account
 (login, pswd, email)
 VALUES
-    ('hugo', 'hugo007','test@gmail.com');
+    ('hugo', '$2a$10$fiKILzSQn2YvA.mbmxhqa.7f8pErrnl4qofZY7nE/a5Vq8KakfPKG','test@gmail.com');
 
 INSERT INTO manga
 (title,synopsis,new_price,type,sub_genre,author,publisher,is_finish)
@@ -109,7 +109,7 @@ INSERT INTO tome
 INSERT INTO tome
 (number, title, release_date,fk_manga)
     VALUES
-    (4, 'Quincy Archer Hates You', '-02-18', 1);
+    (4, 'Quincy Archer Hates You', '2004-02-18', 1);
 
 
 INSERT INTO tome

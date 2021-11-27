@@ -1,14 +1,16 @@
-const TomeControleur = require("../controleur/tome");
 const Router = require("express-promise-router");
 const router = new Router;
 
+const TomeControleur = require("../controleur/tome");
 
-router.get('/:id', TomeControleur.getTome);
+const JWTMiddleWare = require("../middleware/identification");
+const AuthoMiddleware = require("../middleware/authorization");
 
-router.post('/', TomeControleur.postTome);
 
-router.patch('/', TomeControleur.patchTome);
+router.get('/', TomeControleur.getTome);
+router.post('/',JWTMiddleWare.identification, AuthoMiddleware.mustBeAdmin, TomeControleur.postTome);
+router.patch('/',JWTMiddleWare.identification, AuthoMiddleware.mustBeAdmin, TomeControleur.patchTome);
+router.delete('/',JWTMiddleWare.identification, AuthoMiddleware.mustBeAdmin, TomeControleur.deleteTome);
 
-router.delete('/', TomeControleur.deleteTome);
 
 module.exports = router;

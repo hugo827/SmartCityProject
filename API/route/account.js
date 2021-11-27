@@ -2,10 +2,16 @@ const Router = require("express-promise-router");
 const router = new Router();
 
 const accountController = require('../controleur/account');
-const JWTMiddleWare = require('../middleware/identification');
 const inscription = require('../middleware/inscription');
 
-router.get('/account', JWTMiddleWare.identification,  accountController.login);
-router.post('/', JWTMiddleWare.identification, inscription.verifAccount, accountController.inscription);
+const JWTMiddleWare = require('../middleware/identification');
+const AuthoMiddleware = require("../middleware/authorization");
+
+
+router.get('/login',  accountController.login);
+router.post('/', inscription.verifAccount, accountController.inscription);
+
+//router.patch('/', JWTMiddleWare.identification, AuthoMiddleware.mustBeOwner, accountController.patchAccount);
+//router.delete('/', JWTMiddleWare.identification, AuthoMiddleware.mustBeOwner, accountController.deleteAccount);
 
 module.exports =  router;

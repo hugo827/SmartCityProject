@@ -1,11 +1,16 @@
-const MangaControleur = require("../controleur/manga");
 const Router = require("express-promise-router");
 const router = new Router;
 
+const MangaControleur = require("../controleur/manga");
 
-router.get('/:id', MangaControleur.getManga);
-router.post('/', MangaControleur.postManga);
-router.patch('/', MangaControleur.patchManga);
-router.delete('/', MangaControleur.deleteManga);
+const JWTMiddleWare = require("../middleware/identification");
+const AuthoMiddleware = require("../middleware/authorization");
+
+
+
+router.get('/', MangaControleur.getManga);
+router.post('/',JWTMiddleWare.identification, AuthoMiddleware.mustBeAdmin, MangaControleur.postManga);
+router.patch('/',JWTMiddleWare.identification, AuthoMiddleware.mustBeAdmin, MangaControleur.patchManga);
+router.delete('/',JWTMiddleWare.identification, AuthoMiddleware.mustBeAdmin, MangaControleur.deleteManga);
 
 module.exports = router;
