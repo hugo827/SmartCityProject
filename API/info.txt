@@ -20,3 +20,7 @@ ATTENTION VERIFIER COMMENT FAIRE TRANSACTION ....
 
 
 NOTE 1 :  on a ajoute a la table tome un attribut is_last_tome qui indique si c'est le dernier tome sortie.
+
+npm install -g node-gyp
+npm install –save bcrypt
+npm install --save jsonwebtoken
