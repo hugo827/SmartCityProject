@@ -7,7 +7,7 @@ module.exports.mustBeAdmin = (req, res, next) => {
 }
 
 module.exports.mustBeOwner = (req, res, next) => {
-    if(req.session !== undefined && req.session.authLevel === "client" || req.session.authLevel === "admin" ){
+    if(req.session !== undefined && (req.session.authLevel === "client" || req.session.authLevel === "admin") ){
         next();
     } else {
         res.sendStatus(403);

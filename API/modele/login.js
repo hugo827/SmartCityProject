@@ -1,17 +1,14 @@
-const {compareHash, getHash} = require("../utils/utils");
+const {compareHash} = require("../utils/utils");
 const {getAccount} = require("./account");
 
 module.exports.checkConnection = async (client, loginArg, password) => {
 
-    const promises = [];
     const promiseClient = getAccount(client, loginArg);
-    promises.push(promiseClient);
-    const values = await Promise.all(promises);
-    const clientRow = values[0].rows[0];
-    const passwordHash = getHash(password);
+    const values = await Promise.resolve(promiseClient);
+    const clientRow = values.rows[0];
+
     if(clientRow !== undefined   && await compareHash(password, clientRow.pswd) ) {
-        console.log(clientRow.is_Admin);
-        return {userType: (clientRow.is_Admin ? "admin" : "client") , value: clientRow};
+        return {userType: (clientRow.is_admin ? "admin" : "client") , value: clientRow};
     } else {
         return {userType: "inconnu", value: null}
     }

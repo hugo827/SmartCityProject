@@ -26,45 +26,57 @@ module.exports.getTome = async (req, res) => {
 }
 
 module.exports.postTome = async (req, res) => {
-    const body = req.body;
-    const {number, title, picture, release_date, fk_manga} = body;
-    const client = await pool.connect();
-    try{
-        await Tome.postTome(number, title, picture, release_date, fk_manga,client);
-        res.sendStatus(201);
-    } catch (error){
-        console.error(error);
-        res.sendStatus(500);
-    } finally {
-        client.release();
+    if(req.session) {
+        const body = req.body;
+        const {number, title, picture, release_date, fk_manga} = body;
+        const client = await pool.connect();
+        try{
+            await Tome.postTome(number, title, picture, release_date, fk_manga,client);
+            res.sendStatus(201);
+        } catch (error){
+            console.error(error);
+            res.sendStatus(500);
+        } finally {
+            client.release();
+        }
+    } else {
+        res.sendStatus(401);
     }
 };
 
 module.exports.patchTome = async (req, res) => {
-    const {id, number, title, picture} = req.body;
-    const client = await pool.connect();
-    try{
-        await Tome.patchTome(id, number, title, picture, client);
-        res.sendStatus(204);
-    } catch (error) {
-        console.error(error);
-        res.sendStatus(500);
-    } finally {
-        client.release();
+    if(req.session) {
+        const {id, number, title, picture} = req.body;
+        const client = await pool.connect();
+        try{
+            await Tome.patchTome(id, number, title, picture, client);
+            res.sendStatus(204);
+        } catch (error) {
+            console.error(error);
+            res.sendStatus(500);
+        } finally {
+            client.release();
+        }
+    } else {
+        res.sendStatus(401);
     }
 };
 
 
 module.exports.deleteTome = async (req, res) => {
-    const {id} = req.body;
-    const client = await pool.connect();
-    try{
-        await Tome.deleteTome(id, client);
-        res.sendStatus(204);
-    } catch (error){
-        console.error(error);
-        res.sendStatus(500);
-    } finally {
-        client.release();
+    if(req.session) {
+        const {id} = req.body;
+        const client = await pool.connect();
+        try{
+            await Tome.deleteTome(id, client);
+            res.sendStatus(204);
+        } catch (error){
+            console.error(error);
+            res.sendStatus(500);
+        } finally {
+            client.release();
+        }
+    } else {
+        res.sendStatus(401);
     }
 };

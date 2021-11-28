@@ -20,7 +20,7 @@ module.exports.verifAccount = async (req, res, next) => {
         const client = await pool.connect();
         try {
             if(await account.accountExist(client, login)) {
-                res.json({'login': login});
+                res.json({'exist': true});
             } else {
                 res.sendStatus(404)
                 next();
