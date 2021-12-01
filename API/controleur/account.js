@@ -9,6 +9,7 @@ const account = require('../modele/login');
 module.exports.login = async (req, res) => {
 
     const {login, password} = req.body;
+    console.log(login, password);
     if(login === undefined || password === undefined){
         res.sendStatus(400);
     } else {

@@ -1,6 +1,9 @@
 module.exports.getManga = async (id, client) => {
     return await client.query("SELECT * FROM manga WHERE id_manga = $1", [id]);
 }
+module.exports.getAllManga = async (client) => {
+    return await client.query("SELECT * FROM manga");
+}
 
 module.exports.postManga = async (title, synopsis, new_price, type, sub_genre, author, publisher, main_picture, is_finish, client) => {
     return await client.query("INSERT INTO manga(title, synopsis, new_price, type, sub_genre, author, publisher, main_picture, is_finish) VALUES ($1, $2, $3,$4,$5,$6,$7,$8,$9)", [title, synopsis, new_price, type, sub_genre, author, publisher, main_picture, is_finish]);

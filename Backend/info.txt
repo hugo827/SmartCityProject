@@ -1,1 +1,5 @@
+npx create-react-app nomapp -> init projet react
 
+npm start -> demarre react
+
+dans json package => "start": "set PORT=3006 && react-scripts start",
