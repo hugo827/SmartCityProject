@@ -81,3 +81,21 @@ module.exports.deleteFollowedManga = async (req, res) => {
         res.sendStatus(401);
     }
 };
+
+module.exports.getAllFollowedManga = async (req, res) => {
+    const client = await pool.connect();
+    try{
+        const {rows: Mangas} = await FollowedManga.getAllFollowedManga(client);
+        if(Mangas !== undefined){
+            res.json(Mangas);
+        } else {
+            res.sendStatus(404);
+        }
+
+    } catch (error){
+        console.error(error);
+        res.sendStatus(500);
+    } finally {
+        client.release();
+    }
+}

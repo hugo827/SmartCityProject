@@ -2,7 +2,6 @@ const pool = require('../scripts/JS/database');
 const Tome = require('../modele/tome');
 
 
-
 module.exports.getTome = async (req, res) => {
     const client = await pool.connect();
     const {id} = req.body;
@@ -80,3 +79,22 @@ module.exports.deleteTome = async (req, res) => {
         res.sendStatus(401);
     }
 };
+
+
+module.exports.getAllTome = async (req, res) => {
+    const client = await pool.connect();
+    try{
+        const {rows: tomes} = await Tome.getAllTome(client);
+        if(tomes !== undefined){
+            res.json(tomes);
+        } else {
+            res.sendStatus(404);
+        }
+
+    } catch (error){
+        console.error(error);
+        res.sendStatus(500);
+    } finally {
+        client.release();
+    }
+}

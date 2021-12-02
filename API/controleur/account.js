@@ -4,6 +4,8 @@ const jwt = require('jsonwebtoken');
 
 const pool = require('../scripts/JS/database');
 const account = require('../modele/login');
+const Account = require('../modele/account');
+
 
 
 module.exports.login = async (req, res) => {
@@ -63,7 +65,7 @@ module.exports.inscription = async (req, res) => {
     } else {
         const client = await pool.connect();
         try {
-            await account.createAccount(client, login, pswd, email, birthdate,phone, null);
+            await Account.createAccount(client, login, pswd, email, birthdate,phone, null);
             res.sendStatus(201);
         } catch (e) {
             console.error(e);
@@ -73,3 +75,22 @@ module.exports.inscription = async (req, res) => {
         }
     }
 };
+
+
+module.exports.getAllAccount = async (req, res) => {
+    const client = await pool.connect();
+    try{
+        const {rows: Mangas} = await Account.getAllAccount(client);
+        if(Mangas !== undefined){
+            res.json(Mangas);
+        } else {
+            res.sendStatus(404);
+        }
+
+    } catch (error){
+        console.error(error);
+        res.sendStatus(500);
+    } finally {
+        client.release();
+    }
+}

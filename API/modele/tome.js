@@ -2,6 +2,11 @@ module.exports.getTome = async (id, client) => {
     return await client.query("SELECT * FROM tome WHERE fk_manga = $1", [id]);
 }
 
+module.exports.getAllTome = async (client) => {
+    return await client.query("SELECT * FROM tome");
+}
+
+
 module.exports.postTome = async (number, title, picture, release_date, fk_manga, client) => {
     return await client.query("INSERT INTO tome(number, title, picture, release_date, fk_manga) VALUES ($1, $2, $3, $4, $5)", [number, title, picture, release_date, fk_manga]);
 }

@@ -1,6 +1,7 @@
 const pool = require('../scripts/JS/database');
 const ReadedTome = require('../modele/readedTome');
 
+
 module.exports.getReadedTome = async (req, res) => {
     const client = await pool.connect();
     const {fk_manga, fk_user} = req.body;
@@ -79,3 +80,22 @@ module.exports.deleteReadedTome = async (req, res) => {
         res.sendStatus(401);
     }
 };
+
+
+module.exports.getAllReadedTome = async (req, res) => {
+    const client = await pool.connect();
+    try{
+        const {rows: Mangas} = await ReadedTome.getAllReadedTome(client);
+        if(Mangas !== undefined){
+            res.json(Mangas);
+        } else {
+            res.sendStatus(404);
+        }
+
+    } catch (error){
+        console.error(error);
+        res.sendStatus(500);
+    } finally {
+        client.release();
+    }
+}

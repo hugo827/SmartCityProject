@@ -1,6 +1,9 @@
 module.exports.getFollowedManga = async (id, client) => {
     return await client.query("SELECT * FROM followed_manga WHERE fk_user = $1", [id]);
 }
+module.exports.getAllFollowedManga = async (client) => {
+    return await client.query("SELECT * FROM followed_manga ");
+}
 
 module.exports.postFollowedManga = async (state,fk_manga,fk_user, client) => {
     return await client.query("INSERT INTO followed_manga(state, fk_manga, fk_user) VALUES ($1, $2, $3)", [state,fk_manga,fk_user]);

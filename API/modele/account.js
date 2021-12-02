@@ -10,6 +10,11 @@ module.exports.getAccount = async (client, login) => {
         "SELECT * FROM account WHERE login = $1", [login] );
 }
 
+module.exports.getAllAccount = async (client) => {
+    return await client.query("SELECT * FROM account ");
+}
+
+
 module.exports.accountExist = async (client, login) => {
     const {rows} = await client.query(
         "SELECT count(id) AS nbr FROM account WHERE login = $1",
