@@ -1,5 +1,5 @@
 import './App.css';
-import Manga from './component/Manga';
+import Table from './component/Table';
 import NavBar from './component/NavBar';
 
 function App() {
@@ -8,7 +8,7 @@ function App() {
     <div className="App">
       <header className="App-header">
           <NavBar></NavBar>
-          <Manga></Manga>
+          <Table key="manga" colonnes={["id_manga","title","synopsis","new_price"]}></Table>
       </header>
     </div>
   );

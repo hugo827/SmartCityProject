@@ -94,7 +94,7 @@ VALUES
 INSERT INTO manga
 (title,synopsis,new_price,type,sub_genre,author,publisher,is_finish)
 VALUES
-    ('Naruto','synopsis',7.50,'shonen', 'Nekketsu', 'Masashi Kishimoto','kena',true);
+    ('Naruto','synopsis',7.50,'shonen', 'Nekketsu', 'Masashi Kishimoto','kena',false);
 
 INSERT INTO tome
 (number, title, release_date,fk_manga)
