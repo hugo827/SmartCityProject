@@ -13,7 +13,7 @@ class Table extends React.Component {
      componentDidMount() {
          const url = "http://localhost:3001/"
          const endUrl = "/all"
-         const table = "manga"
+         const table = this.props.name.toLowerCase()
 
          if (window.fetch) {
              fetch(url + table + endUrl)
@@ -31,12 +31,16 @@ class Table extends React.Component {
     }
 
     render() {
-
-
         const rows = this.state.rows.map( data => {
             return (
-                <tr key={data[this.props.colonnes[0]]}>
-                    {this.props.colonnes.map( c => <th>{data[c]}</th>)}
+                <tr key={ data[this.props.colonnes[0]] }>
+                    {this.props.colonnes.map( c => <td>{data[c]}</td>)}
+                    <td>
+                        <div>
+                            <button>DEL</button>
+                            <button>UPD</button>
+                        </div>
+                    </td>
                 </tr>
             )
         })
@@ -46,13 +50,14 @@ class Table extends React.Component {
 
         return (
             <div>
-                <div className="nameTable"><h1>Tables : Manga </h1></div>
+                <div className="nameTable"><h1>Tables : {this.props.name} </h1></div>
 
                 <div className="table">
                     <table className="fl-table">
                         <thead>
                         <tr>
                             { this.props.colonnes.map( c =>  <th>{c}</th> ) }
+                            <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -62,7 +67,7 @@ class Table extends React.Component {
 
                 </div>
                 <div>
-                    <button>Ajouter</button>
+                    <button className="btnAdd">Ajouter</button>
                 </div>
             </div>
 

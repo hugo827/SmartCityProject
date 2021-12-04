@@ -1,20 +1,16 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 function NavBar(){
 
-    function click(str) {
-        console.log(str);
-    }
+    const tables = ["Home", "Account", "Manga", "Tome", "FollowedManga", "ReadedTome"];
 
-    const tables = ["Accueil", "User", "Manga", "Tome", "followed_manga", "readed_tome"];
-
-    const names = tables.map( t => <li className="items" key={t} onClick={click(t)}>{t}</li>);
-
+    const names = tables.map( t => <Link to={`/${t.toLowerCase()}`} key={`link${t}`}><li className="items" key={`li${t}`}>{t}</li></Link>);
 
     return (
         <div className="navbar">
             <nav>
-                <ul className="liste" >
+                <ul className="liste">
                     {names}
                 </ul>
             </nav>

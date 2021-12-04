@@ -93,3 +93,10 @@
 .items:hover {
     background-color: red;
 }
+
+
+.home {
+  margin: auto auto;
+  width: auto;
+  height: auto;
+}

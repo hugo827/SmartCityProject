@@ -58,7 +58,7 @@ CREATE TABLE followed_manga (
 /* state : 1 = en cours, 2 = termine , 3 = pas commence*/
 
 CREATE TABLE readed_tome (
-                             id_reade_tome integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+                             id_readed_tome integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
                              read_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                              fk_followed_manga integer NOT NULL,
                              fk_user integer NOT NULL,
