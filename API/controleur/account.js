@@ -94,3 +94,17 @@ module.exports.getAllAccount = async (req, res) => {
         client.release();
     }
 }
+
+module.exports.getCountAccount = async (req, res) => {
+    const client = await pool.connect();
+    try {
+        const nbAccount = await Account.getCountAccount(client);
+        res.json(nbAccount);
+
+    } catch (e) {
+        console.error(error);
+        res.sendStatus(500);
+    } finally {
+        client.release();
+    }
+}

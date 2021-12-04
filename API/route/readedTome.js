@@ -8,6 +8,7 @@ const AuthoMiddleware = require("../middleware/authorization");
 
 
 
+router.get('/nb', ReadedTomeControleur.getCountReadedTome);
 router.get('/all', ReadedTomeControleur.getAllReadedTome);
 router.get('/', ReadedTomeControleur.getReadedTome);
 router.post('/', JWTMiddleWare.identification, AuthoMiddleware.mustBeOwner, ReadedTomeControleur.postReadedTome);

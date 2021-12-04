@@ -24,13 +24,14 @@ export default function Way(){
         <Router>
             <NavBar></NavBar>
             <Routes>
+                <Route path="/:page" element={<Table name="Manga" colonnes={colManga}></Table>}></Route>
+
                 <Route path="/manga" element={<Table name="Manga" colonnes={colManga}></Table>}></Route>
                 <Route path="/account" element={<Table name="Account" colonnes={colAccount}></Table>}></Route>
                 <Route path="/tome" element={<Table name="Tome" colonnes={colTome}></Table>}></Route>
                 <Route path="/followedmanga" element={<Table name="Followed_manga" colonnes={colFollowedManga}></Table>}></Route>
                 <Route path="/readedtome" element={<Table name="Readed_tome" colonnes={colReadedTome}></Table>}></Route>
                 <Route path="/" element={<Home></Home>}></Route>
-                <Route path="/home" element={<Home></Home>}></Route>
             </Routes>
         </Router>
     );

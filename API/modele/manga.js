@@ -16,3 +16,8 @@ module.exports.patchManga = async (id, title, synopsis, new_price, type, sub_gen
 module.exports.deleteManga = async (id, client) => {
     return await client.query("DELETE FROM manga WHERE id_manga = $1", [id]); /* transaction delete manga = delete all tome = et all table readetome // cascade */
 }
+
+module.exports.getCountManga = async (client) => {
+    const {rows} = await client.query("SELECT COUNT(*) FROM manga");
+    return rows[0].count;
+}

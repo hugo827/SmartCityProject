@@ -6,7 +6,7 @@ const FollowedMangaControleur = require("../controleur/followedManga");
 const JWTMiddleWare = require('../middleware/identification');
 const AuthoMiddleware = require('../middleware/authorization');
 
-
+router.get('/nb', FollowedMangaControleur.getCountFollowedManga);
 router.get('/all', FollowedMangaControleur.getAllFollowedManga);
 router.get('/', FollowedMangaControleur.getFollowedManga);
 router.post('/',JWTMiddleWare.identification, AuthoMiddleware.mustBeOwner,  FollowedMangaControleur.postFollowedManga);

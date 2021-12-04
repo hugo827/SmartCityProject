@@ -1,6 +1,7 @@
 const pool = require('../scripts/JS/database');
 const FollowedManga = require('../modele/followedManga');
 
+
 module.exports.getFollowedManga = async (req, res) => {
     const client = await pool.connect();
     const {id} = req.body;
@@ -93,6 +94,20 @@ module.exports.getAllFollowedManga = async (req, res) => {
         }
 
     } catch (error){
+        console.error(error);
+        res.sendStatus(500);
+    } finally {
+        client.release();
+    }
+}
+
+module.exports.getCountFollowedManga = async (req, res) => {
+    const client = await pool.connect();
+    try {
+        const nbAccount = await FollowedManga.getCountFollowedManga(client);
+        res.json(nbAccount);
+
+    } catch (e) {
         console.error(error);
         res.sendStatus(500);
     } finally {

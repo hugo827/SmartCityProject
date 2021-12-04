@@ -1,5 +1,6 @@
 const pool = require('../scripts/JS/database');
 const ReadedTome = require('../modele/readedTome');
+const Manga = require("../modele/manga");
 
 
 module.exports.getReadedTome = async (req, res) => {
@@ -93,6 +94,21 @@ module.exports.getAllReadedTome = async (req, res) => {
         }
 
     } catch (error){
+        console.error(error);
+        res.sendStatus(500);
+    } finally {
+        client.release();
+    }
+}
+
+
+module.exports.getCountReadedTome = async (req, res) => {
+    const client = await pool.connect();
+    try {
+        const nbAccount = await ReadedTome.getCountReadedTome(client);
+        res.json(nbAccount);
+
+    } catch (e) {
         console.error(error);
         res.sendStatus(500);
     } finally {

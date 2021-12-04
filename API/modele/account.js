@@ -17,8 +17,13 @@ module.exports.getAllAccount = async (client) => {
 
 module.exports.accountExist = async (client, login) => {
     const {rows} = await client.query(
-        "SELECT count(id) AS nbr FROM account WHERE login = $1",
+        "SELECT count(id) FROM account WHERE login = $1",
         [login]
     );
-    return rows[0].nbr > 0;
+    return rows[0].count > 0;
+}
+
+module.exports.getCountAccount = async (client) => {
+    const {rows} = await client.query("SELECT COUNT(*) FROM account")
+    return rows[0].count;
 }

@@ -31,6 +31,7 @@ class Table extends React.Component {
     }
 
     render() {
+
         const rows = this.state.rows.map( data => {
             return (
                 <tr key={ data[this.props.colonnes[0]] }>

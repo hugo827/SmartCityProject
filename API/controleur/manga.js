@@ -1,7 +1,6 @@
 const pool = require('../scripts/JS/database');
 const Manga = require('../modele/manga');
 
-
 module.exports.getManga = async (req, res) => {
     const client = await pool.connect();
     const {id} = req.body;
@@ -102,3 +101,17 @@ module.exports.deleteManga = async (req, res) => {
     }
 
 };
+
+module.exports.getCountManga = async (req, res) => {
+    const client = await pool.connect();
+    try {
+        const nbAccount = await Manga.getCountManga(client);
+        res.json(nbAccount);
+
+    } catch (e) {
+        console.error(error);
+        res.sendStatus(500);
+    } finally {
+        client.release();
+    }
+}

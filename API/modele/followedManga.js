@@ -16,3 +16,8 @@ module.exports.patchFollowedManga = async (id_followed_manga, state, client) => 
 module.exports.deleteFollowedManga = async (id_followed_manga, client) => {
     return await client.query("DELETE FROM followed_manga WHERE id_followed_manga = $1", [id_followed_manga]); /* transaction a faire pour supprimer tous les tomes lu dans readed_tome */
 }
+
+module.exports.getCountFollowedManga = async (client) => {
+    const {rows} = await client.query("SELECT COUNT(*) FROM followed_manga");
+    return rows[0].count;
+}

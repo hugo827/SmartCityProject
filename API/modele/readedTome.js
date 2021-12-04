@@ -16,3 +16,8 @@ module.exports.patchReadedTome = async (id, read_at, client) => {
 module.exports.deleteReadedTome = async (id, client) => {
     return await client.query("DELETE FROM readed_tome WHERE id = $1", [id]);
 }
+
+module.exports.getCountReadedTome = async (client) => {
+    const {rows} = await client.query("SELECT COUNT(*) FROM readed_tome");
+    return rows[0].count;
+}
