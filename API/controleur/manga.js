@@ -3,7 +3,8 @@ const Manga = require('../modele/manga');
 
 module.exports.getManga = async (req, res) => {
     const client = await pool.connect();
-    const {id} = req.body;
+    const idTexte = req.params.id;
+    const id = parseInt(idTexte);
     try{
         if(isNaN(id)){
             res.sendStatus(400);
@@ -26,8 +27,10 @@ module.exports.getManga = async (req, res) => {
 
 module.exports.getAllManga = async (req, res) => {
     const client = await pool.connect();
+    const offsetText = req.params.offset;
+    const offset = parseInt(offsetText);
     try{
-        const {rows: Mangas} = await Manga.getAllManga(client);
+        const {rows: Mangas} = await Manga.getAllManga(client, offset);
         if(Mangas !== undefined){
             res.json(Mangas);
         } else {

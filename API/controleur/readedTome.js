@@ -85,8 +85,10 @@ module.exports.deleteReadedTome = async (req, res) => {
 
 module.exports.getAllReadedTome = async (req, res) => {
     const client = await pool.connect();
+    const offsetText = req.params.offset;
+    const offset = parseInt(offsetText);
     try{
-        const {rows: Mangas} = await ReadedTome.getAllReadedTome(client);
+        const {rows: Mangas} = await ReadedTome.getAllReadedTome(client, offset);
         if(Mangas !== undefined){
             res.json(Mangas);
         } else {

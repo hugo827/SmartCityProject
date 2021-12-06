@@ -87,10 +87,23 @@
       <workItem from="1638533586207" duration="9729000" />
       <workItem from="1638613567172" duration="10219000" />
       <workItem from="1638635570809" duration="2239000" />
+      <workItem from="1638697703754" duration="5147000" />
+      <workItem from="1638784211883" duration="10921000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/backend/src/component/Table.js</url>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

@@ -1,8 +1,8 @@
 module.exports.getFollowedManga = async (id, client) => {
     return await client.query("SELECT * FROM followed_manga WHERE fk_user = $1", [id]);
 }
-module.exports.getAllFollowedManga = async (client) => {
-    return await client.query("SELECT * FROM followed_manga ");
+module.exports.getAllFollowedManga = async (client, nb) => {
+    return await client.query("SELECT * FROM followed_manga LIMIT 2 OFFSET $1", [nb]);
 }
 
 module.exports.postFollowedManga = async (state,fk_manga,fk_user, client) => {

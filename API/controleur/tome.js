@@ -83,8 +83,10 @@ module.exports.deleteTome = async (req, res) => {
 
 module.exports.getAllTome = async (req, res) => {
     const client = await pool.connect();
+    const offsetText = req.params.offset;
+    const offset = parseInt(offsetText);
     try{
-        const {rows: tomes} = await Tome.getAllTome(client);
+        const {rows: tomes} = await Tome.getAllTome(client, offset);
         if(tomes !== undefined){
             res.json(tomes);
         } else {

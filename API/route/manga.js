@@ -7,8 +7,8 @@ const JWTMiddleWare = require("../middleware/identification");
 const AuthoMiddleware = require("../middleware/authorization");
 
 router.get('/nb', MangaControleur.getCountManga);
-router.get('/all', MangaControleur.getAllManga);
-router.get('/', MangaControleur.getManga);
+router.get('/all/:offset', MangaControleur.getAllManga);
+router.get('/:id', MangaControleur.getManga);
 router.post('/',JWTMiddleWare.identification, AuthoMiddleware.mustBeAdmin, MangaControleur.postManga);
 router.patch('/',JWTMiddleWare.identification, AuthoMiddleware.mustBeAdmin, MangaControleur.patchManga);
 router.delete('/',JWTMiddleWare.identification, AuthoMiddleware.mustBeAdmin, MangaControleur.deleteManga);

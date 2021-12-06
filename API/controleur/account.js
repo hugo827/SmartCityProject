@@ -79,8 +79,10 @@ module.exports.inscription = async (req, res) => {
 
 module.exports.getAllAccount = async (req, res) => {
     const client = await pool.connect();
+    const offsetText = req.params.offset;
+    const offset = parseInt(offsetText);
     try{
-        const {rows: Mangas} = await Account.getAllAccount(client);
+        const {rows: Mangas} = await Account.getAllAccount(client, offset);
         if(Mangas !== undefined){
             res.json(Mangas);
         } else {

@@ -2,8 +2,8 @@ module.exports.getTome = async (id, client) => {
     return await client.query("SELECT * FROM tome WHERE fk_manga = $1", [id]);
 }
 
-module.exports.getAllTome = async (client) => {
-    return await client.query("SELECT * FROM tome");
+module.exports.getAllTome = async (client, nb) => {
+    return await client.query("SELECT * FROM tome LIMIT 2 OFFSET $1", [nb]);
 }
 
 

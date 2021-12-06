@@ -8,7 +8,7 @@ const AuthoMiddleware = require("../middleware/authorization");
 
 
 router.get('/nb', TomeControleur.getCountTome);
-router.get('/all', TomeControleur.getAllTome);
+router.get('/all/:offset', TomeControleur.getAllTome);
 router.get('/', TomeControleur.getTome);
 router.post('/',JWTMiddleWare.identification, AuthoMiddleware.mustBeAdmin, TomeControleur.postTome);
 router.patch('/',JWTMiddleWare.identification, AuthoMiddleware.mustBeAdmin, TomeControleur.patchTome);

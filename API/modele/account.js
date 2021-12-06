@@ -10,8 +10,8 @@ module.exports.getAccount = async (client, login) => {
         "SELECT * FROM account WHERE login = $1", [login] );
 }
 
-module.exports.getAllAccount = async (client) => {
-    return await client.query("SELECT * FROM account ");
+module.exports.getAllAccount = async (client, nb) => {
+    return await client.query("SELECT * FROM account LIMIT 2 OFFSET $1", [nb]);
 }
 
 

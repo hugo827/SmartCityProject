@@ -1,6 +1,7 @@
 import React from "react";
 import NavBar from '../component/NavBar';
 import Home from '../component/Home';
+import Update from '../component/Update';
 
 import {
     BrowserRouter as Router,
@@ -18,21 +19,23 @@ const colFollowedManga = ["id_followed_manga", "state", "fk_manga", "fk_user"];
 const colReadedTome = ["id_readed_tome", "read_at", "fk_followed_manga", "fk_user", "fk_tome"];
 
 
-export default function Way(){
+function Way(){
     return(
 
         <Router>
             <NavBar></NavBar>
             <Routes>
-                <Route path="/:page" element={<Table name="Manga" colonnes={colManga}></Table>}></Route>
-
+                <Route path="/manga/update" element={<Update name="Manga" idElem="1" ></Update>}></Route>
                 <Route path="/manga" element={<Table name="Manga" colonnes={colManga}></Table>}></Route>
                 <Route path="/account" element={<Table name="Account" colonnes={colAccount}></Table>}></Route>
                 <Route path="/tome" element={<Table name="Tome" colonnes={colTome}></Table>}></Route>
                 <Route path="/followedmanga" element={<Table name="Followed_manga" colonnes={colFollowedManga}></Table>}></Route>
                 <Route path="/readedtome" element={<Table name="Readed_tome" colonnes={colReadedTome}></Table>}></Route>
                 <Route path="/" element={<Home></Home>}></Route>
+                <Route path="/home" element={<Home></Home>}></Route>
             </Routes>
         </Router>
     );
 }
+
+export default Way;
