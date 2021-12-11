@@ -14,6 +14,10 @@ module.exports.getAllAccount = async (client, nb) => {
     return await client.query("SELECT * FROM account LIMIT 2 OFFSET $1", [nb]);
 }
 
+module.exports.getAccountId = async (client, id) => {
+    return await client.query("SELECT * FROM account WHERE id_user = $1", [id] );
+}
+
 
 module.exports.accountExist = async (client, login) => {
     const {rows} = await client.query(
@@ -24,6 +28,6 @@ module.exports.accountExist = async (client, login) => {
 }
 
 module.exports.getCountAccount = async (client) => {
-    const {rows} = await client.query("SELECT COUNT(*) FROM account")
+    const {rows} = await client.query("SELECT COUNT(*) FROM account");
     return rows[0].count;
 }

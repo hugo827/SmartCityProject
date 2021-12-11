@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-const Pagination = ({totalRecord, nbElemPerPage}) => {
+const Pagination = ({totalRecord, nbElemPerPage, table}) => {
 
     const pageNumber = [];
 
@@ -9,11 +9,11 @@ const Pagination = ({totalRecord, nbElemPerPage}) => {
         pageNumber.push(i);
     }
 
+
     return (
         <div>
-                { pageNumber.map( nb => <a href="!#" onClick={ () => console.log(nb) }><button className="li-pagination" key={nb} >{nb}</button></a>)}
+            { pageNumber.map( nb => <button className="li-pagination" key={nb} onClick={ () => console.log(nb)}>{nb}</button>)}
         </div>
-
     )
 }
 

@@ -1,0 +1,6 @@
+     <Route path="/manga" element={<Manga />}></Route>
+     <Route path="/account" element={<Account />}></Route>
+     <Route path="/tome" element={<Tome />}></Route>
+     <Route path="/followedmanga" element={<FollowedManga />}></Route>
+     <Route path="/readedtome" element={<ReadedTome />}></Route>
+     <Route path="/home" element={<Home />}></Route>

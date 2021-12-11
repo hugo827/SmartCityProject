@@ -2,16 +2,16 @@ import './App.css';
 
 
 
-import Way from './routes/index';
+import Way from './routes/routes';
+
 
 function App() {
-
-return (
-    <div className="App">
-      <header className="App-header">
-          <Way></Way>
-      </header>
-    </div>
+    return (
+        <div className="App">
+          <header className="App-header">
+              <Way></Way>
+          </header>
+        </div>
   );
 }
 

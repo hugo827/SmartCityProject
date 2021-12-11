@@ -8,6 +8,7 @@ const AuthoMiddleware = require('../middleware/authorization');
 
 router.get('/nb', FollowedMangaControleur.getCountFollowedManga);
 router.get('/all/:offset', FollowedMangaControleur.getAllFollowedManga);
+//router.get('/:id', FollowedMangaControleur.getFollowedMangaId);
 router.get('/', FollowedMangaControleur.getFollowedManga);
 router.post('/',JWTMiddleWare.identification, AuthoMiddleware.mustBeOwner,  FollowedMangaControleur.postFollowedManga);
 router.patch('/',JWTMiddleWare.identification, AuthoMiddleware.mustBeOwner,  FollowedMangaControleur.patchFollowedManga);

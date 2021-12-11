@@ -4,14 +4,16 @@ const Tome = require('../modele/tome');
 
 module.exports.getTome = async (req, res) => {
     const client = await pool.connect();
-    const {id} = req.body;
+    const idTexte = req.params.id;
+    const id = parseInt(idTexte);
     try{
         if(isNaN(id)){
             res.sendStatus(400);
         } else {
             const {rows: tomes} = await Tome.getTome(id, client);
-            if(tomes !== undefined){
-                res.json(tomes);
+            const tome = tomes[0]
+            if(tome !== undefined){
+                res.json(tome);
             } else {
                 res.sendStatus(404);
             }
@@ -108,6 +110,28 @@ module.exports.getCountTome = async (req, res) => {
         res.json(nbAccount);
 
     } catch (e) {
+        console.error(error);
+        res.sendStatus(500);
+    } finally {
+        client.release();
+    }
+}
+
+module.exports.getTomeManga = async (req, res) => {
+    const client = await pool.connect();
+    const {id} = req.body;
+    try{
+        if(isNaN(id)){
+            res.sendStatus(400);
+        } else {
+            const {rows: tomes} = await Tome.getTome(id, client);
+            if(tomes !== undefined){
+                res.json(tomes);
+            } else {
+                res.sendStatus(404);
+            }
+        }
+    } catch (error){
         console.error(error);
         res.sendStatus(500);
     } finally {

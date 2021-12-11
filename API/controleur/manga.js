@@ -108,8 +108,8 @@ module.exports.deleteManga = async (req, res) => {
 module.exports.getCountManga = async (req, res) => {
     const client = await pool.connect();
     try {
-        const nbAccount = await Manga.getCountManga(client);
-        res.json(nbAccount);
+        const nbManga = await Manga.getCountManga(client);
+        res.json(nbManga);
 
     } catch (e) {
         console.error(error);

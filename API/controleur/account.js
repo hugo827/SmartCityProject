@@ -1,17 +1,19 @@
 require("dotenv").config();
+
 const process = require('process');
 const jwt = require('jsonwebtoken');
 
 const pool = require('../scripts/JS/database');
+
 const account = require('../modele/login');
-const Account = require('../modele/account');
 
-
+const AccountMod = require('../modele/account');
+const Manga = require("../modele/manga");
 
 module.exports.login = async (req, res) => {
 
     const {login, password} = req.body;
-    console.log(login, password);
+
     if(login === undefined || password === undefined){
         res.sendStatus(400);
     } else {
@@ -65,7 +67,7 @@ module.exports.inscription = async (req, res) => {
     } else {
         const client = await pool.connect();
         try {
-            await Account.createAccount(client, login, pswd, email, birthdate,phone, null);
+            await AccountMod.createAccount(client, login, pswd, email, birthdate,phone, null);
             res.sendStatus(201);
         } catch (e) {
             console.error(e);
@@ -82,7 +84,7 @@ module.exports.getAllAccount = async (req, res) => {
     const offsetText = req.params.offset;
     const offset = parseInt(offsetText);
     try{
-        const {rows: Mangas} = await Account.getAllAccount(client, offset);
+        const {rows: Mangas} = await AccountMod.getAllAccount(client, offset);
         if(Mangas !== undefined){
             res.json(Mangas);
         } else {
@@ -100,10 +102,34 @@ module.exports.getAllAccount = async (req, res) => {
 module.exports.getCountAccount = async (req, res) => {
     const client = await pool.connect();
     try {
-        const nbAccount = await Account.getCountAccount(client);
-        res.json(nbAccount);
+        const nb = await Manga.getCountManga(client);
+        res.json(nb);
 
-    } catch (e) {
+    } catch (error) {
+        console.error(error);
+        res.sendStatus(500);
+    } finally {
+        client.release();
+    }
+}
+
+module.exports.getAccountId = async (req, res) =>  {
+    const client = await pool.connect();
+    const idTexte = req.params.id;
+    const id = parseInt(idTexte);
+    try{
+        if(isNaN(id)){
+            res.sendStatus(400);
+        } else {
+            const {rows: Users} = await AccountMod.getAccountId(client, id);
+            const user = Users[0];
+            if(user !== undefined){
+                res.json(user);
+            } else {
+                res.sendStatus(404);
+            }
+        }
+    } catch (error){
         console.error(error);
         res.sendStatus(500);
     } finally {

@@ -6,7 +6,7 @@ function NavBar(){
     const tables = ["Home", "Account", "Manga", "Tome", "FollowedManga", "ReadedTome"];
 
 
-    const names = tables.map( t => <Link to={`/${t.toLowerCase()}`} key={`link${t}`}><li className="items" key={`li${t}`} >{t}</li></Link>);
+    const names = tables.map( table => <Link to={`/${table.toLowerCase()}`} key={`link${table}`}><li className="items" key={`li${table}`} >{table}</li></Link>);
 
     return (
         <div className="navbar">

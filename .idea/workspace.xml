@@ -42,6 +42,9 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\github\SmartCityProject\backend\src\update" />
+      <recent name="D:\github\SmartCityProject\backend\src\routes" />
+      <recent name="D:\github\SmartCityProject\backend\src\pages" />
       <recent name="D:\github\SmartCityProject\API\modele" />
       <recent name="D:\github\SmartCityProject\API\scripts\JS" />
     </key>
@@ -88,22 +91,21 @@
       <workItem from="1638613567172" duration="10219000" />
       <workItem from="1638635570809" duration="2239000" />
       <workItem from="1638697703754" duration="5147000" />
-      <workItem from="1638784211883" duration="10921000" />
+      <workItem from="1638784211883" duration="11595000" />
+      <workItem from="1638864308688" duration="2547000" />
+      <workItem from="1638879368074" duration="10693000" />
+      <workItem from="1638891683296" duration="7247000" />
+      <workItem from="1638900618901" duration="1742000" />
+      <workItem from="1638902799833" duration="869000" />
+      <workItem from="1638982247798" duration="1182000" />
+      <workItem from="1638990931440" duration="3016000" />
+      <workItem from="1639046010450" duration="14259000" />
+      <workItem from="1639129382108" duration="15940000" />
+      <workItem from="1639222796614" duration="6546000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/backend/src/component/Table.js</url>
-          <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

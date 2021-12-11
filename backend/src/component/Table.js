@@ -1,21 +1,24 @@
 import React from 'react';
 import Pagination from './Pagination';
+import { Link } from 'react-router-dom';
+import Delete from './Delete';
 
 class Table extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {
+        this.state  = {
             nbRecords : [],
             rows: []
         };
+
     }
 
-    callAPI(nb) {
+    callAPI() {
         const url = "http://localhost:3001/";
         const endUrl = "/all/";
         const table = this.props.name.toLowerCase();
-        const page = nb ?? 0;
+        const page = 0;
 
         if (window.fetch) {
             fetch(url + table + endUrl + page)
@@ -37,8 +40,10 @@ class Table extends React.Component {
         const endUrl = "/nb";
         const table = this.props.name.toLowerCase();
 
+        const urlFinal = `${url}${table}${endUrl}`;
+
         if (window.fetch) {
-            fetch(`${url}${table}${endUrl}`)
+            fetch(urlFinal)
                 .then( res => {
                     res.json().then( data => {
                         this.setState({nbRecords: data})
@@ -53,15 +58,22 @@ class Table extends React.Component {
     }
 
 
-     componentDidMount() {
+    componentDidMount() {
          this.createPagination();
-         this.callAPI(0);
+         this.callAPI();
     }
 
     componentDidUpdate(prevProps) {
         if (this.props.name !== prevProps.name) {
-            this.componentDidMount(); // Je remonte a chaque fois pas bon
+            this.createPagination();
+            this.callAPI();
         }
+    }
+
+    delete(id) {
+        Delete(this.props.name, id);
+        this.createPagination();
+        this.callAPI();
     }
 
     render() {
@@ -73,43 +85,41 @@ class Table extends React.Component {
                         {this.props.colonnes.map(c => <td>{data[c]}</td>)}
                         <td>
                             <div>
-                                <button>DEL</button>
-                                <button>UPD</button>
+                                <button className="BTN DEL" onClick={ () => this.delete(data[`${this.props.colonnes[0]}`])}>DEL</button>
+                                <Link  to={`/update/${this.props.name}${data[`${this.props.colonnes[0]}`]}`}><button className="BTN UPD">UPD</button></Link>
                             </div>
                         </td>
                     </tr>
                 )
+            } else {
+                return null;
             }
         })
 
-
         return (
+
             <div>
                 <div className="nameTable"><h1>Tables : {this.props.name} </h1></div>
 
                 <div className="table">
                     <table className="fl-table">
                         <thead>
-                        <tr>
-                            { this.props.colonnes.map( c =>  <th>{c}</th> ) }
-                            <th>Action</th>
-                        </tr>
+                            <tr>
+                                { this.props.colonnes.map( col =>  <th>{col}</th> ) }
+                                <th>Action</th>
+                            </tr>
                         </thead>
                         <tbody>
                             {rows}
                         </tbody>
                     </table>
-                    <Pagination totalRecord={this.state.nbRecords} nbElemPerPage={2} ></Pagination>
-                </div>
-                <div>
-                    <button className="btnAdd">Ajouter</button>
+                    <Pagination totalRecord={this.state.nbRecords} nbElemPerPage={2} table={this.props.name.toLowerCase()}></Pagination>
+                    <Link to={`/add/${this.props.name.toLowerCase()}`}><button className="btnAdd">Ajouter</button></Link>
                 </div>
             </div>
 
         )
     }
 }
-
-
 
 export default Table;

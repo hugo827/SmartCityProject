@@ -18,7 +18,7 @@ CREATE TABLE account (
                          email varchar(100) NOT NULL,
                          birthdate date DEFAULT null,
                          phone varchar(100) DEFAULT null,
-                         profile_picture bytea,
+                         picture bytea,
                          is_Admin BOOLEAN DEFAULT false
 );
 
@@ -31,7 +31,7 @@ CREATE TABLE manga (
                        sub_genre varchar(100) NOT NULL,
                        author varchar(100) NOT NULL,
                        publisher varchar(100) NOT NULL,
-                       main_picture bytea,
+                       picture bytea,
                        is_finish BOOLEAN DEFAULT false
 );
 
