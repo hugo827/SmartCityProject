@@ -1,8 +1,9 @@
 import React from 'react';
 
 
-const Pagination = ({totalRecord, nbElemPerPage, table}) => {
+const Pagination = ({totalRecord, changeOffset}) => {
 
+    const nbElemPerPage = 2;
     const pageNumber = [];
 
     for(let i = 1; i <= Math.ceil(totalRecord / nbElemPerPage); i++) {
@@ -12,9 +13,10 @@ const Pagination = ({totalRecord, nbElemPerPage, table}) => {
 
     return (
         <div>
-            { pageNumber.map( nb => <button className="li-pagination" key={nb} onClick={ () => console.log(nb)}>{nb}</button>)}
+            { pageNumber.map( nb => <button className="li-pagination" key={nb} onClick={ () => changeOffset((nb-1)*nbElemPerPage) }> {nb} </button>)}
         </div>
     )
 }
 
 export  default Pagination;
+

@@ -1,3 +1,5 @@
+/*
+
 import React from 'react';
 import Table from "../component/Table";
 
@@ -9,3 +11,5 @@ export default function ReadedTome(props) {
         <Table name="Readed_tome" colonnes={colReadedTome}></Table>
     )
 }
+
+*/

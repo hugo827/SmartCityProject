@@ -1,5 +1,6 @@
 import React from 'react';
 
+
 class Update extends React.Component {
 
     constructor(props) {
@@ -21,19 +22,20 @@ class Update extends React.Component {
         const urlFinal = url + table + endUrl + id;
 
         if (window.fetch) {
-            fetch(urlFinal)
-                .then( res => {
-                    res.json().then( data => {
-                        if(this.state.id) {
-                            this.setState({update: true, rows: data});
-                        } else {
-                            this.setState({update: false, rows: data});
-                        }
+               fetch(urlFinal)
+                    .then( res => {
+                        res.json().then( data => {
+                            if(this.state.id) {
+                                this.setState({update: true, rows: data});
+                            } else {
+                                this.setState({update: false, rows: data});
+                            }
+                        })
                     })
-                })
-                .catch( (error) => {
-                    console.error(error);
-                });
+                    .catch( (error) => {
+                        console.error(error);
+                    });
+
             } else {
                 console.log("Fetch n'est pas disponible")
             }

@@ -42,7 +42,7 @@ CREATE TABLE tome (
                       title varchar(100) NOT NULL,
                       picture bytea,
                       release_date date DEFAULT CURRENT_DATE,
-                      is_last_tome BOOLEAN DEFAULT true,
+                      is_last_tome BOOLEAN DEFAULT false,
                       fk_manga integer NOT NULL,
                       FOREIGN KEY (fk_manga) REFERENCES manga(id_manga)
 );

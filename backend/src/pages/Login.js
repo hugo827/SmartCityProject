@@ -24,7 +24,8 @@ class Login extends React.Component {
             },
         }).then( res => {
             res.json().then( data => {
-                this.props.setToken({token: data});
+                this.props.setToken(data);
+                localStorage.setItem("token", data);
                 this.verifAdmin(data);
             })
         })
@@ -46,7 +47,8 @@ class Login extends React.Component {
             },
         }).then( res => {
             res.json().then( data => {
-                this.props.setAdmin({admin: data['admin']});
+                this.props.setAdmin(data['admin']);
+                localStorage.setItem("admin", data['admin']);
             })
         })
             .catch( (error) => {

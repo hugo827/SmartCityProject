@@ -8,7 +8,7 @@ const pool = require('../scripts/JS/database');
 const account = require('../modele/login');
 
 const AccountMod = require('../modele/account');
-const Manga = require("../modele/manga");
+
 
 module.exports.login = async (req, res) => {
 
@@ -102,7 +102,7 @@ module.exports.getAllAccount = async (req, res) => {
 module.exports.getCountAccount = async (req, res) => {
     const client = await pool.connect();
     try {
-        const nb = await Manga.getCountManga(client);
+        const nb = await AccountMod.getCountAccount(client);
         res.json(nb);
 
     } catch (error) {

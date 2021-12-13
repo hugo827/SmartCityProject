@@ -4,7 +4,7 @@ import Home from "../pages/Home";
 import Table from "../component/Table";
 import Error from "../pages/Error";
 
-export default function Page(props) {
+export default function Page() {
     let params = useParams();
     let name = params.name.toLowerCase();
 
@@ -17,26 +17,26 @@ export default function Page(props) {
     switch (name) {
         case 'manga' :
             return (
-                <Table name={`${name}`} colonnes={colManga} />
+                <Table name={name} colonnes={colManga} />
             )
         case 'account' :
             return (
-                <Table name={`${name}`} colonnes={colAccount} />
+                <Table name={name} colonnes={colAccount} />
             )
         case 'tome' :
             return (
-                <Table name={`${name}`} colonnes={colTome} />
+                <Table name={name} colonnes={colTome} />
             )
         case 'readedtome' :
             return (
-                <Table name={`${name}`} colonnes={colReadedTome} />
+                <Table name={name} colonnes={colReadedTome} />
             )
         case 'followedmanga' :
             return (
-                <Table name={`${name}`} colonnes={colFollowedManga} />
+                <Table name={name} colonnes={colFollowedManga} />
             )
         case 'home' :
-            return <Home />
+            return <Home />;
         default :
             return <Error />;
     }

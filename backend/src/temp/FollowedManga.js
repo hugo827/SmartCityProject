@@ -1,3 +1,4 @@
+/*
 import React from 'react';
 import Table from "../component/Table";
 
@@ -9,3 +10,5 @@ export default function FollowedManga(props) {
         <Table name="Followed_manga" colonnes={colFollowedManga}></Table>
     )
 }
+
+*/

@@ -9,7 +9,7 @@ const AuthoMiddleware = require("../middleware/authorization");
 
 router.get('/nb', accountController.getCountAccount);
 router.post('/login',  accountController.login);
-router.get('/admin', JWTMiddleWare.identification, AuthoMiddleware.mustBeAdmin, module.exports.result = (req, res) => {  res.json( {  "admin" : true});} )
+router.get('/admin', JWTMiddleWare.identification, AuthoMiddleware.mustBeAdmin, module.exports.result = (req, res) => {  res.json( {  "admin" : true});} );
 router.get('/:id', accountController.getAccountId);
 router.get('/all/:offset', accountController.getAllAccount);
 router.post('/', inscription.verifAccount, accountController.inscription);

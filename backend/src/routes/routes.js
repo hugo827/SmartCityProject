@@ -15,20 +15,18 @@ import Login from "../pages/Login";
 
 function Way(){
 
-    const [token, setToken ] = useState();
-    const [admin, setAdmin ] = useState();
+    const [token, setToken ] = useState(localStorage.getItem("token"));
+    const [admin, setAdmin ] = useState(localStorage.getItem("admin"));
 
     if((!token && !admin)) {
         localStorage.clear();
         return <Login  setToken={setToken} setAdmin={setAdmin}/>
     }
     else {
-        localStorage.setItem("token", JSON.stringify(token));
-        localStorage.setItem("admin", JSON.stringify(admin));
 
             return(
                 <Router>
-                    <NavBar></NavBar>
+                    <NavBar/>
                     <Routes>
                         <Route path={"/:name"} element={<Page />} />
                         <Route path="/" element={<Home />} />

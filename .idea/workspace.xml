@@ -42,11 +42,11 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\github\SmartCityProject\backend\src\temp" />
       <recent name="D:\github\SmartCityProject\backend\src\update" />
       <recent name="D:\github\SmartCityProject\backend\src\routes" />
       <recent name="D:\github\SmartCityProject\backend\src\pages" />
       <recent name="D:\github\SmartCityProject\API\modele" />
-      <recent name="D:\github\SmartCityProject\API\scripts\JS" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -101,7 +101,10 @@
       <workItem from="1638990931440" duration="3016000" />
       <workItem from="1639046010450" duration="14259000" />
       <workItem from="1639129382108" duration="15940000" />
-      <workItem from="1639222796614" duration="6546000" />
+      <workItem from="1639222796614" duration="6636000" />
+      <workItem from="1639237241724" duration="6553000" />
+      <workItem from="1639387598892" duration="5024000" />
+      <workItem from="1639398643824" duration="7093000" />
     </task>
     <servers />
   </component>

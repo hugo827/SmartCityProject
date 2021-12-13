@@ -1,24 +1,26 @@
 import React from 'react';
-import Pagination from './Pagination';
 import { Link } from 'react-router-dom';
+
 import Delete from './Delete';
+import Pagination from './Pagination';
+
 
 class Table extends React.Component {
 
     constructor(props) {
         super(props);
         this.state  = {
+            offset : 0,
             nbRecords : [],
             rows: []
         };
-
     }
 
     callAPI() {
         const url = "http://localhost:3001/";
         const endUrl = "/all/";
         const table = this.props.name.toLowerCase();
-        const page = 0;
+        const page = this.state.offset;
 
         if (window.fetch) {
             fetch(url + table + endUrl + page)
@@ -35,7 +37,7 @@ class Table extends React.Component {
         }
     }
 
-    createPagination() {
+    getCountRecord() {
         const url = "http://localhost:3001/";
         const endUrl = "/nb";
         const table = this.props.name.toLowerCase();
@@ -59,30 +61,45 @@ class Table extends React.Component {
 
 
     componentDidMount() {
-         this.createPagination();
+         this.getCountRecord();
          this.callAPI();
     }
 
-    componentDidUpdate(prevProps) {
+    componentDidUpdate(prevProps, prevState) {
         if (this.props.name !== prevProps.name) {
-            this.createPagination();
+            this.setState({offset: 0});
+            this.getCountRecord();
+            this.callAPI();
+        }
+        if(this.state.offset !== prevState.offset) {
             this.callAPI();
         }
     }
 
     delete(id) {
         Delete(this.props.name, id);
-        this.createPagination();
+        this.getCountRecord();
         this.callAPI();
     }
 
-    render() {
+    changeOffset = (numPage) => {
+        this.setState({offset: numPage});
+    }
 
+    render() {
         const rows = this.state.rows.map( data => {
             if(data != null) {
                 return (
                     <tr key={data[this.props.colonnes[0]]}>
-                        {this.props.colonnes.map(c => <td>{data[c]}</td>)}
+                        {
+                            this.props.colonnes.map((c, i) => {
+                                if(c.split("_")[0] !== "is") {
+                                    return <td key={i}>{data[c]}</td>;
+                                } else {
+                                    return <td key={i}>{data[c] ? "True" : "false" }</td>;
+                                }
+                            })
+                        }
                         <td>
                             <div>
                                 <button className="BTN DEL" onClick={ () => this.delete(data[`${this.props.colonnes[0]}`])}>DEL</button>
@@ -105,15 +122,15 @@ class Table extends React.Component {
                     <table className="fl-table">
                         <thead>
                             <tr>
-                                { this.props.colonnes.map( col =>  <th>{col}</th> ) }
-                                <th>Action</th>
+                                { this.props.colonnes.map( (col, index) => <th key={index}>{col}</th> ) }
+                                <th key="action">Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             {rows}
                         </tbody>
                     </table>
-                    <Pagination totalRecord={this.state.nbRecords} nbElemPerPage={2} table={this.props.name.toLowerCase()}></Pagination>
+                    <Pagination totalRecord={this.state.nbRecords} changeOffset={this.changeOffset}/>
                     <Link to={`/add/${this.props.name.toLowerCase()}`}><button className="btnAdd">Ajouter</button></Link>
                 </div>
             </div>

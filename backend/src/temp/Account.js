@@ -9,3 +9,4 @@ export default function Account(props) {
         <Table name="Account" colonnes={colAccount}></Table>
     )
 }
+

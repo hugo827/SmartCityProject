@@ -1,3 +1,4 @@
+/*
 import React from 'react';
 import Table from "../component/Table";
 
@@ -9,3 +10,4 @@ export default function Tome(props) {
         <Table name="Tome" colonnes={colTome}></Table>
     )
 }
+*/
