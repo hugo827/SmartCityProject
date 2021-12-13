@@ -9,29 +9,23 @@ class Add extends React.Component {
         this.state = {
             urlAPI : "http://localhost:3001/",
             name : this.props.name.toLowerCase(),
-            token : "",
-            rows : []
+            token : localStorage.getItem('token'),
         }
     }
 
-    callAPI() {
+    postAPI() {
 
         const urlFinal = this.state.urlAPI + this.state.name;
 
         if (window.fetch) {
             fetch(urlFinal, {
-                method: "GET",
+                method: "POST",
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
                     'authorization': `Bearer ${this.state.token}`
                 }
             })
-                .then( res => {
-                    res.json().then( data => {
-                            this.setState({update: false, rows: data});
-                    })
-                })
                 .catch( (error) => {
                     console.error(error);
                 });
@@ -39,10 +33,6 @@ class Add extends React.Component {
             console.log("Fetch n'est pas disponible")
         }
 
-    }
-
-    componentDidMount() {
-        this.callAPI();
     }
 
 }

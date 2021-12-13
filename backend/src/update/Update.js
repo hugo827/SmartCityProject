@@ -6,9 +6,9 @@ class Update extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            token : localStorage.getItem('token'),
             id : this.props.id,
             name : this.props.name,
-            update: false,
             rows : []
         }
     }
@@ -25,11 +25,7 @@ class Update extends React.Component {
                fetch(urlFinal)
                     .then( res => {
                         res.json().then( data => {
-                            if(this.state.id) {
-                                this.setState({update: true, rows: data});
-                            } else {
-                                this.setState({update: false, rows: data});
-                            }
+                                this.setState({rows: data});
                         })
                     })
                     .catch( (error) => {

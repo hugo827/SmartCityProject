@@ -76,8 +76,8 @@ class Table extends React.Component {
         }
     }
 
-    delete(id) {
-        Delete(this.props.name, id);
+    async delete(id) {
+        await Delete(this.props.name, id);
         this.getCountRecord();
         this.callAPI();
     }

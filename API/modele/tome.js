@@ -19,7 +19,7 @@ module.exports.patchTome = async (id, number, title, picture, client) => {
 }
 
 module.exports.deleteTome = async (id, client) => {
-    return await client.query("DELETE FROM tome WHERE id = $1", [id]);
+    return await client.query("DELETE FROM tome WHERE id_tome = $1", [id]);
 }
 
 module.exports.getCountTome = async (client) => {

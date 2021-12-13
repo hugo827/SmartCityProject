@@ -144,3 +144,8 @@
   height: 800px;
   display: grid;
 }
+
+.deconnexion {
+  position: absolute;
+
+}
