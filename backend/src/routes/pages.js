@@ -8,10 +8,10 @@ export default function Page() {
     let params = useParams();
     let name = params.name.toLowerCase();
 
-    const colAccount = ["id_user", "login", "pswd", "email", "birthdate", "phone", "profile_picture", "is_admin"];
+    const colAccount = ["id_user", "login", "pswd", "email", "birthdate", "phone", "picture", "is_admin"];
     const colTome = ["id_tome", "number", "title", "picture", "release_date", "is_last_tome", "fk_manga" ];
     const colReadedTome = ["id_readed_tome", "read_at", "fk_followed_manga", "fk_user", "fk_tome"];
-    const colManga = ["id_manga","title","synopsis","new_price", "type", "sub_genre", "author", "publisher", "main_picture", "is_finish"];
+    const colManga = ["id_manga","title","synopsis","new_price", "type", "sub_genre", "author", "publisher", "picture", "is_finish"];
     const colFollowedManga = ["id_followed_manga", "state", "fk_manga", "fk_user"];
 
     switch (name) {

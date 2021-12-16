@@ -121,7 +121,7 @@ class Table extends React.Component {
                 <div className="table">
                     <table className="fl-table">
                         <thead>
-                            <tr>
+                            <tr key={'thead'}>
                                 { this.props.colonnes.map( (col, index) => <th key={index}>{col}</th> ) }
                                 <th key="action">Action</th>
                             </tr>

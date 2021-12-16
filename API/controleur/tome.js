@@ -69,7 +69,6 @@ module.exports.deleteTome = async (req, res) => {
         const {id} = req.body;
         const client = await pool.connect();
         try{
-            console.log("coucou");
             await Tome.deleteTome(id, client);
             res.sendStatus(204);
         } catch (error){
