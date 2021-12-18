@@ -51,7 +51,7 @@ module.exports.postManga = async (req, res) => {
         const {title, synopsis, new_price, type, sub_genre, author, publisher, picture, is_finish} = req.body;
         const client = await pool.connect();
         try{
-            await Manga.postManga(title, synopsis, new_price, type, sub_genre, author, publisher, picture, is_finish, client);
+            await Manga.postManga(title, synopsis, new_price, type, sub_genre, author, publisher, null, is_finish, client);
             res.sendStatus(201);
         } catch (error){
             console.error(error);

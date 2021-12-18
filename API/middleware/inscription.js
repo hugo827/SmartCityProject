@@ -5,14 +5,7 @@ const pool = require('../scripts/JS/database');
 
 module.exports.verifAccount = async (req, res, next) => {
 
-    const login = req.body.login;
-    const pswd = req.body.pswd;
-    const email = req.body.email;
-    /*
-    const birthdate = req.body.birthdate;
-    const phone  =  req.body.phone;
-    const profile_picture = req.body.profile_picture //???
-     */
+    const {login, pswd, email} = req.body;
 
     if(login === undefined || pswd === undefined || email === undefined){
         res.sendStatus(400);
@@ -22,7 +15,7 @@ module.exports.verifAccount = async (req, res, next) => {
             if(await account.accountExist(client, login)) {
                 res.json({'exist': true});
             } else {
-                res.sendStatus(404)
+                res.sendStatus(204)
                 next();
             }
         } catch (e) {

@@ -1,48 +1,113 @@
 import React from 'react';
-import Update from "./Update";
+import {Link} from "react-router-dom";
+
+class UpdateFollowedManga extends React.Component {
 
 
-class UpdateFollowedManga extends Update {
+    constructor(props) {
+        super(props);
+        this.state = {
+            id: this.props.id,
+            name : this.props.name,
+            token : localStorage.getItem('token'),
+            rows: [],
 
-    handleClick() {
+            stateManga: 3,
+            fkManga: 0,
+            fkUser: 0,
+        }
 
     }
 
-    render() {
-        let data = [];
-        let updateElem;
-        for(let elem in this.state.rows) {
-            if(elem.split('_')[0] !==  'id') data.push(elem);
-        }
+    callAPI() {
+        const url = "http://localhost:3001/followedManga/";
+        const id = this.state.id;
 
-        if(this.state.update) {
-            updateElem = data.map( elem => {
-                if(elem !== 'picture') {
-                    return <p><label>{elem} :</label><input defaultValue={this.state.rows[`${elem}`]}/></p>;
-                }
-                else {
-                    return <p><label>{elem} :</label><input type="file" name="my_file" defaultValue={this.state.rows[`${elem}`]}/> </p>
-                }
+        const urlFinal = url + id;
 
-            })
+        if (window.fetch) {
+            fetch(urlFinal)
+                .then( res => {
+                    res.json().then( data => {
+                        this.setState({rows: data});
+                        this.testSetState();
+                    })
+                })
+                .catch( (error) => {
+                    console.error(error);
+                });
+
         } else {
-            updateElem = data.map( elem => {
-                if(elem !== 'picture') {
-                    return <p><label>{elem} :</label><input /></p>;
-                }
-                else {
-                    return <p><label>{elem} :</label><input type="file" name="my_file"/> </p>
-                }
-
-            })
+            console.log("Fetch n'est pas disponible")
         }
 
+    }
+
+    componentDidMount() {
+        this.callAPI();
+
+    }
+
+    testSetState() {
+        this.setState({stateManga: this.state.rows['state']});
+        this.setState({fkManga: this.state.rows['fk_manga']});
+        this.setState({fkUser: this.state.rows['fk_user']});
+    }
+
+
+    sendAPI = async (formData) => {
+        const URL = `http://localhost:3001/${this.state.name}`;
+        const headers = {
+            'Content-Type': 'application/json; charset=utf-8',
+            'Accept':'application/json',
+            'authorization' : `Bearer ${this.state.token}`
+        };
+        const body = JSON.stringify({
+            id: this.state.id,
+            state: this.state.stateManga,
+            fk_manga: this.state.fkManga,
+            fk_user: this.state.fkUser,
+        });
+
+        return await fetch(URL, {
+            method : "PATCH",
+            headers: headers,
+            body : body
+        });
+    };
+
+
+
+
+    async sendForm(event){
+        event.preventDefault();
+        const formData = new FormData();
+        formData.append('id', this.state.id);
+        formData.append('state', this.state.stateManga);
+        formData.append('fk_manga', this.state.fkManga);
+        formData.append('fk_user', this.state.fkUser);
+
+        try {
+
+            await this.sendAPI(formData);
+            await window.alert("Le compte a bien ete mis a jour !");
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    render() {
 
         return (
             <div className="nameTable">
-                { updateElem }
-                <button type="submit">submit</button>
-                <input onClick={this.handleClick()}  type="submit" value="Cancel"/>
+                <form className="form">
+                    <label>State : </label> <input defaultValue={this.state.rows[`state`]} onChange={(e) => this.setState({stateManga: e.target.value})} />
+                    <label>fk Manga : </label> <input defaultValue={this.state.rows[`fk_manga`]} onChange={(e) => this.setState({fkManga: e.target.value})} />
+                    <label>fk User : </label> <input  defaultValue={this.state.rows[`fk_user`]}  onChange={(e) => this.setState({fkUser: e.target.value})} />
+                    <button type="submit" onClick={(e) => this.sendForm(e)}>submit</button>
+                    <Link to={`/${this.state.name}`}><input  type="submit" value="Cancel"/></Link>
+                </form>
             </div>
         )
     }

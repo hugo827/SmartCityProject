@@ -7,7 +7,6 @@ class AddManga extends React.Component {
         this.state = {
             name : this.props.name,
             token : localStorage.getItem('token'),
-            id: 0,
 
             title: "",
             synopsis: "",
@@ -22,12 +21,20 @@ class AddManga extends React.Component {
 
     }
 
-    submitAdd(event) {
-        this.sendForm(event);
+    async submitAdd(event) {
+        event.preventDefault()
+        try {
+            const formData = new FormData();
+            await this.sendAPI(formData);
+            await window.alert("Votre manga a bien et ajouter");
+            this.resetState();
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     sendAPI = async (formData) => {
-        console.log(this.state.token);
+
         const URL = `http://localhost:3001/${this.state.name}/`;
         return await fetch(URL, {
             method : "POST",
@@ -89,17 +96,6 @@ class AddManga extends React.Component {
                 isFinish: false,
            });
     }
-/*
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if(prevState.picture !== this.state.picture) {
-            console.log(this.state.picture);
-        }
-    }
-*/
-    componentDidMount() {
-        if(this.props.id !== null) this.setState({id: this.props.id});
-    }
-
 
     render() {
 

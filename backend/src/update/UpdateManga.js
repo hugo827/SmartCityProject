@@ -1,6 +1,5 @@
 import React from 'react';
-
-
+import {Link} from "react-router-dom";
 
 class UpdateManga extends React.Component {
 
@@ -37,7 +36,7 @@ class UpdateManga extends React.Component {
                 .then( res => {
                     res.json().then( data => {
                         this.setState({rows: data});
-                        this.testsetState();
+                        this.testSetState();
                     })
                 })
                 .catch( (error) => {
@@ -55,9 +54,9 @@ class UpdateManga extends React.Component {
 
     }
 
-    testsetState() {
-        console.log(this.state.rows);
-       this.setState({title: this.state.rows['title']});
+    testSetState() {
+       const title = "title";
+       this.setState({[`${title}`]: this.state.rows['title']});
        this.setState({synopsis: this.state.rows['synopsis']});
        this.setState({price: this.state.rows['new_price']});
        this.setState({subGenre: this.state.rows['sub_genre']});
@@ -73,7 +72,6 @@ class UpdateManga extends React.Component {
     }
 
     sendAPI = async (formData) => {
-        console.log(this.state.token);
         const URL = `http://localhost:3001/${this.state.name}`;
         return await fetch(URL, {
             method : "PATCH",
@@ -136,7 +134,7 @@ class UpdateManga extends React.Component {
                     <label>picture : </label> <input defaultValue={this.state.picture} type="file" accept={"image/*"} onChange={(e) => this.setState({picture: e.target.files[0]})}/>
                     <label>is finish : </label> <input defaultValue={!this.state.isFinish} type="checkbox" onChange={(e) => this.setState({isFinish: !this.state.isFinish})}/>
                     <button type="submit" onClick={(e) => this.sendForm(e)}>submit</button>
-                    <input  type="submit" value="Cancel"/>
+                    <Link to={`/${this.state.name}`}><input  type="submit" value="Cancel"/></Link>
                 </form>
             </div>
         )

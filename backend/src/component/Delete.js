@@ -17,7 +17,7 @@
             })
         }).then(res => {
             res.status === 204 ? window.alert('L\'element a bien ete supprimé') : window.alert(`Un problème est survenue lors de la tentative de suppression\n ${res.error()}`);
-        }) .catch( error => {
+        }).catch( error => {
             window.alert("Votre action n'a pas ete execute");
             console.error(error);
         })

@@ -4,14 +4,16 @@ const FollowedManga = require('../modele/followedManga');
 
 module.exports.getFollowedManga = async (req, res) => {
     const client = await pool.connect();
-    const {id} = req.body;
+    const idText = req.params.id;
+    const id = parseInt(idText);
     try{
         if(isNaN(id)){
             res.sendStatus(400);
         } else {
             const {rows: followedMangas} = await FollowedManga.getFollowedManga(id, client);
-            if(followedMangas !== undefined){
-                res.json(followedMangas);
+            const followedManga = followedMangas[0];
+            if(followedManga !== undefined){
+                res.json(followedManga);
             } else {
                 res.sendStatus(404);
             }
@@ -28,10 +30,11 @@ module.exports.postFollowedManga = async (req, res) => {
     if(req.session) {
         const user = req.session;
         const body = req.body;
-        const {state,fk_manga} = body;
+        const {state,fk_manga, fk_user} = body;
+
         const client = await pool.connect();
         try{
-            await FollowedManga.postFollowedManga(state,fk_manga,user.id_account, client);
+            await FollowedManga.postFollowedManga(state,fk_manga,fk_user, client);
             res.sendStatus(201);
         } catch (error){
             console.error(error);
@@ -48,10 +51,10 @@ module.exports.postFollowedManga = async (req, res) => {
 
 module.exports.patchFollowedManga = async (req, res) => {
     if(req.session) {
-        const {id, state} = req.body;
+        const {id, state, fk_user,fk_manga} = req.body;
         const client = await pool.connect();
         try{
-            await FollowedManga.patchFollowedManga(id, state, client);
+            await FollowedManga.patchFollowedManga(id, state, fk_user,fk_manga, client);
             res.sendStatus(204);
         } catch (error){
             console.error(error);

@@ -29,10 +29,11 @@ module.exports.getTome = async (req, res) => {
 module.exports.postTome = async (req, res) => {
     if(req.session) {
         const body = req.body;
-        const {number, title, picture, release_date, fk_manga} = body;
+        const {number, title, picture, release_date, is_last_tome, fk_manga} = body;
+
         const client = await pool.connect();
         try{
-            await Tome.postTome(number, title, picture, release_date, fk_manga,client);
+            await Tome.postTome(number, title, null, release_date,is_last_tome, fk_manga, client);
             res.sendStatus(201);
         } catch (error){
             console.error(error);
@@ -47,10 +48,10 @@ module.exports.postTome = async (req, res) => {
 
 module.exports.patchTome = async (req, res) => {
     if(req.session) {
-        const {id, number, title, picture} = req.body;
+        const {id, number, title, picture, release_date, is_last_tome, fk_manga} = req.body;
         const client = await pool.connect();
         try{
-            await Tome.patchTome(id, number, title, picture, client);
+            await Tome.patchTome(id, number, title, picture,release_date, is_last_tome, fk_manga, client);
             res.sendStatus(204);
         } catch (error) {
             console.error(error);
