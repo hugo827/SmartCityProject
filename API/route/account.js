@@ -7,6 +7,8 @@ const inscription = require('../middleware/inscription');
 const JWTMiddleWare = require('../middleware/identification');
 const AuthoMiddleware = require("../middleware/authorization");
 
+
+
 router.get('/nb', accountController.getCountAccount);
 router.get('/admin', JWTMiddleWare.identification, AuthoMiddleware.mustBeAdmin, module.exports.result = (req, res) => {  res.json( {  "admin" : true});} );
 router.get('/all/:offset', accountController.getAllAccount);

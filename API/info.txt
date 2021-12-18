@@ -24,3 +24,4 @@ NOTE 1 :  on a ajoute a la table tome un attribut is_last_tome qui indique si c'
 npm install -g node-gyp
 npm install –save bcrypt
 npm install --save jsonwebtoken
+npm install --save-dev swagger-jsdoc
