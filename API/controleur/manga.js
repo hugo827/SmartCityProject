@@ -1,5 +1,8 @@
 const pool = require('../scripts/JS/database');
 const Manga = require('../modele/manga');
+const Tome = require("../modele/tome");
+const FollowedManga = require('../modele/followedManga');
+const ReadedTome = require('../modele/readedTome');
 
 module.exports.getManga = async (req, res) => {
     const client = await pool.connect();
@@ -90,9 +93,38 @@ module.exports.deleteManga = async (req, res) => {
         const {id} = req.body;
         const client = await pool.connect();
         try{
-            await Manga.deleteManga(id, client);
-            res.sendStatus(204);
+            await client.query("BEGIN;");
+            let promises = [];
+            const {rows} =  await FollowedManga.getFollowedMangaByIdManga(id, client);
+            if(rows.length !== 0) {
+                for(let idFM in rows) {
+                    promises.push(await ReadedTome.deleteFollowedMangaTome(idFM, client));
+                }
+                promises.push(await FollowedManga.deleteFollowedMangaIDManga(id, client));
+            }
+            const {rows: tomes} = await Tome.getTomeManga(id, client)
+            if(tomes.length > 0) {
+                promises.push(await Tome.deleteTomeManga(id, client));
+            }
+            promises.push(await Manga.deleteManga(id, client));
+
+            const response = await Promise.all(promises);
+            let i = 0;
+            let isDelete = true;
+
+            while(i < response.length && isDelete) {
+                if(response[i].rowCount === 0) isDelete = false;
+                i++
+            }
+            if (isDelete) {
+                await client.query("COMMIT")
+                res.sendStatus(201);
+            } else {
+                await client.query("ROLLBACK");
+                res.status(404).json({error: "Un problème est survenue lors de la suppression du manga"});
+            }
         } catch (error){
+            await client.query("ROLLBACK");
             console.error(error);
             res.sendStatus(500);
         } finally {

@@ -22,6 +22,10 @@ module.exports.deleteTome = async (id, client) => {
     return await client.query("DELETE FROM tome WHERE id_tome = $1", [id]);
 }
 
+module.exports.deleteTomeManga = async (id, client) => {
+    return await client.query("DELETE FROM tome WHERE fk_manga = $1", [id]);
+}
+
 module.exports.getCountTome = async (client) => {
     const {rows} = await client.query("SELECT COUNT(*) FROM tome");
     return rows[0].count;

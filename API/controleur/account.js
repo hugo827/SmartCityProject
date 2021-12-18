@@ -2,11 +2,10 @@ require("dotenv").config();
 
 const process = require('process');
 const jwt = require('jsonwebtoken');
-
 const pool = require('../scripts/JS/database');
 
-const account = require('../modele/login');
 
+const account = require('../modele/login');
 const AccountMod = require('../modele/account');
 const readedTome = require('../modele/readedTome');
 const followedManga = require('../modele/followedManga');
@@ -138,7 +137,6 @@ module.exports.getAccountId = async (req, res) =>  {
 
 
 module.exports.patchAccount = async (req, res) => {
-
     if(req.session) {
         const {id_user, login, pswd, email, birthdate, phone, picture, is_admin} = req.body;
         const client = await pool.connect();
@@ -165,26 +163,27 @@ module.exports.deleteAccount = async (req, res) => {
         try{
             await client.query("BEGIN;");
             const resDelReadTome = await readedTome.deleteUserReadedTome(id, client);
-            if(resDelReadTome) {
+            if(resDelReadTome.rowCount !== 1) {
                 const resDelFollowedManga = await followedManga.deleteUserFollowedManga(id, client);
-                if(resDelFollowedManga) {
+                if(resDelFollowedManga.rowCount !== 1) {
                     const resDelAccount = await AccountMod.deleteAccount(id, client);
-                    if(resDelAccount) {
+                    if(resDelAccount.rowCount !== 1) {
                         await client.query("COMMIT")
                         res.sendStatus(204);
                     } else {
                         await client.query("ROLLBACK");
-                        res.status(404).json({error: "Un problème est survenue de la suppression du comptes"});
+                        res.status(404).json({error: "Un problème est survenue lors de la suppression du compte"});
                     }
                 } else {
                     await client.query("ROLLBACK");
-                    res.status(404).json({error: "Un problème est survenue de la suppression des mangas suivit !"});
+                    res.status(404).json({error: "Un problème est survenue lors de la suppression des mangas suivit !"});
                 }
             } else {
                 await client.query("ROLLBACK");
-                res.status(404).json({error: "Un problème est survenue de la suppression des tomes lu !"});
+                res.status(404).json({error: "Un problème est survenue lors de la suppression des tomes lu !"});
             }
         } catch (error){
+            await client.query("ROLLBACK");
             console.error(error);
             res.sendStatus(500);
         } finally {

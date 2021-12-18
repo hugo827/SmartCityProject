@@ -14,7 +14,11 @@ module.exports.patchFollowedManga = async (id_followed_manga, state, fk_user,fk_
 }
 
 module.exports.deleteFollowedManga = async (id_followed_manga, client) => {
-    return await client.query("DELETE FROM followed_manga WHERE id_followed_manga = $1", [id_followed_manga]); /* transaction a faire pour supprimer tous les tomes lu dans readed_tome */
+    return await client.query("DELETE FROM followed_manga WHERE id_followed_manga = $1", [id_followed_manga]);
+}
+
+module.exports.deleteFollowedMangaIDManga = async (id_manga, client) => {
+    return await client.query("DELETE FROM followed_manga WHERE fk_manga = $1", [id_manga]);
 }
 
 module.exports.getCountFollowedManga = async (client) => {
@@ -24,4 +28,8 @@ module.exports.getCountFollowedManga = async (client) => {
 
 module.exports.deleteUserFollowedManga = async (fk_user, client) => {
     return await client.query("DELETE FROM followed_manga WHERE fk_user = $1", [fk_user]);
+}
+
+module.exports.getFollowedMangaByIdManga = async (fk_manga, client) =>  {
+    return await client.query("SELECT id_followed_manga FROM followed_manga WHERE fk_manga = $1", [fk_manga]);
 }

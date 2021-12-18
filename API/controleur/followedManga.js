@@ -1,6 +1,6 @@
 const pool = require('../scripts/JS/database');
 const FollowedManga = require('../modele/followedManga');
-
+const ReadedTome = require('../modele/readedTome');
 
 module.exports.getFollowedManga = async (req, res) => {
     const client = await pool.connect();
@@ -73,8 +73,22 @@ module.exports.deleteFollowedManga = async (req, res) => {
         const {id} = req.body;
         const client = await pool.connect();
         try{
-            await FollowedManga.deleteFollowedManga(id, client);
-            res.sendStatus(204);
+            await client.query("BEGIN;")
+            const resDelReadedTome = ReadedTome.deleteFollowedMangaTome(id, client);
+            if(resDelReadedTome) {
+                const resDelFollowedManga = await FollowedManga.deleteFollowedManga(id, client);
+                if(resDelFollowedManga) {
+                    await client.query("COMMIT")
+                    res.sendStatus(204);
+                }else {
+                    await client.query("ROLLBACK");
+                    res.status(404).json({error: "Un problème est survenue de la suppression du mangas suivit"});
+                }
+            } else {
+                await client.query("ROLLBACK");
+                res.status(404).json({error: "Un problème est survenue de la suppression des tomes lu"});
+            }
+
         } catch (error){
             console.error(error);
             res.sendStatus(500);
@@ -97,7 +111,6 @@ module.exports.getAllFollowedManga = async (req, res) => {
         } else {
             res.sendStatus(404);
         }
-
     } catch (error){
         console.error(error);
         res.sendStatus(500);
@@ -113,7 +126,7 @@ module.exports.getCountFollowedManga = async (req, res) => {
         res.json(nbAccount);
 
     } catch (e) {
-        console.error(error);
+        console.error(e);
         res.sendStatus(500);
     } finally {
         client.release();
