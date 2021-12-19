@@ -3,9 +3,22 @@ const process = require('process');
 const jwt = require('jsonwebtoken');
 
 
+/**
+ * @swagger
+ * components:
+ *  securitySchemes:
+ *      bearerAuth:
+ *          type: http
+ *          scheme: bearer
+ *          bearerFormat: JWT
+ *  responses:
+ *      ErrorJWT:
+ *          description: le JWT n'est pas valide
+ *      MissingJWT:
+ *          description: le JWT n'est pas présent
+ */
 module.exports.identification = async (req, res, next) => {
     const headerAuth = req.get('authorization');
-
     if(headerAuth !== undefined && headerAuth.includes("Bearer")){
         const jwtToken =  headerAuth.split(' ')[1];
         try{
@@ -16,7 +29,7 @@ module.exports.identification = async (req, res, next) => {
         }
         catch (e) {
             console.error(e);
-            res.sendStatus(400);
+            res.sendStatus(500);
         }
     } else {
         res.sendStatus(401);

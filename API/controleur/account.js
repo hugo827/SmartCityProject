@@ -4,13 +4,27 @@ const process = require('process');
 const jwt = require('jsonwebtoken');
 const pool = require('../scripts/JS/database');
 
-
 const account = require('../modele/login');
 const AccountMod = require('../modele/account');
 const readedTome = require('../modele/readedTome');
 const followedManga = require('../modele/followedManga');
 
-
+/**
+ * @swagger
+ * components:
+ *  schemas:
+ *      Login:
+ *          type: object
+ *          properties:
+ *              login:
+ *                  type: string
+ *              password:
+ *                  type: string
+ *                  format: password
+ *          required:
+ *              - login
+ *              - password
+ */
 module.exports.login = async (req, res) => {
 
     const {login, password} = req.body;
@@ -54,8 +68,35 @@ module.exports.login = async (req, res) => {
     }
 };
 
-
-
+/**
+ * @swagger
+ * components:
+ *  schemas:
+ *      Inscription:
+ *          type: object
+ *          properties:
+ *              login:
+ *                  type: string
+ *              pswd:
+ *                  type: string
+ *                  format: password
+ *              email:
+ *                  type: string
+ *              birthdate:
+ *                  type: object
+ *                  format: date
+ *              phone:
+ *                  type: string
+ *              picture:
+ *                  type: object
+ *                  format: image
+ *              is_admin:
+ *                  type: boolean
+ *          required:
+ *              - login
+ *              - pswd
+ *              - email
+ */
 module.exports.inscription = async (req, res) => {
     const {login, pswd, email, birthdate, phone, picture, is_admin} = req.body;
 
@@ -76,6 +117,44 @@ module.exports.inscription = async (req, res) => {
 };
 
 
+/**
+ * @swagger
+ *  components:
+ *      responses:
+ *          AccountList:
+ *              description:  renvoie la liste des comptes à partir du offset (limiter a n)
+ *              content:
+ *               application/json:
+ *                   schema:
+ *                       $ref: '#/components/schemas/AccountList'
+ */
+/**
+ * @swagger
+ * components:
+ *  schemas:
+ *      AccountList:
+ *          type: object
+ *          properties:
+ *              id_user:
+ *                  type: integer
+ *              login:
+ *                  type: string
+ *              pswd:
+ *                  type: string
+ *                  format: text
+ *              email:
+ *                  type: string
+ *              birthdate:
+ *                  type: object
+ *                  format: date
+ *              phone:
+ *                  type: number
+ *              picture:
+ *                  type: object
+ *                  format: image
+ *              is_admin:
+ *                  type: boolean
+ */
 module.exports.getAllAccount = async (req, res) => {
     const client = await pool.connect();
     const offsetText = req.params.offset;
@@ -96,6 +175,24 @@ module.exports.getAllAccount = async (req, res) => {
     }
 }
 
+/**
+ * @swagger
+ *  components:
+ *      responses:
+ *          AccountCount:
+ *              description: Le nombre de comptes utilisateur dans la table
+ *              content:
+ *               application/json:
+ *                   schema:
+ *                       $ref: '#/components/schemas/AccountCount'
+ */
+/**
+ * @swagger
+ * components:
+ *  schemas:
+ *      AccountCount:
+ *          type: string
+ */
 module.exports.getCountAccount = async (req, res) => {
     const client = await pool.connect();
     try {
@@ -110,6 +207,45 @@ module.exports.getCountAccount = async (req, res) => {
     }
 }
 
+
+/**
+ * @swagger
+ *  components:
+ *      responses:
+ *          AccountGet:
+ *              description: Le compte a été trouvé
+ *              content:
+ *               application/json:
+ *                   schema:
+ *                       $ref: '#/components/schemas/Account'
+ */
+/**
+ * @swagger
+ * components:
+ *  schemas:
+ *      Account:
+ *          type: object
+ *          properties:
+ *              id_user:
+ *                  type: integer
+ *              login:
+ *                  type: string
+ *              pswd:
+ *                  type: string
+ *                  format: text
+ *              email:
+ *                  type: string
+ *              birthdate:
+ *                  type: object
+ *                  format: date
+ *              phone:
+ *                  type: number
+ *              picture:
+ *                  type: object
+ *                  format: image
+ *              is_admin:
+ *                  type: boolean
+ */
 module.exports.getAccountId = async (req, res) =>  {
     const client = await pool.connect();
     const idTexte = req.params.id;
@@ -134,8 +270,13 @@ module.exports.getAccountId = async (req, res) =>  {
     }
 }
 
-
-
+/**
+ * @swagger
+ *  components:
+ *      responses:
+ *          AccountUpdate:
+ *              description: Le compte a été mis à jour
+ */
 module.exports.patchAccount = async (req, res) => {
     if(req.session) {
         const {id_user, login, pswd, email, birthdate, phone, picture, is_admin} = req.body;
@@ -155,7 +296,46 @@ module.exports.patchAccount = async (req, res) => {
 
 };
 
+/**
+ * @swagger
+ *  components:
+ *      responses:
+ *          AccountDelete:
+ *              description: Le compte a été supprimer
+ */
 
+/**
+ * @swagger
+ *  components:
+ *      responses:
+ *          AccountDeleteFailed:
+ *              description: Une erreur est survenue lors de la supression du comptes
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                        $ref: '#/components/schemas/AccountDeleteFailed'
+ */
+
+/**
+ * @swagger
+ * components:
+ *  schemas:
+ *      AccountDelete:
+ *          type: object
+ *          properties:
+ *              id_user:
+ *                  type: integer
+ */
+/**
+ * @swagger
+ * components:
+ *  schemas:
+ *      AccountDeleteFailed:
+ *          type: object
+ *          properties:
+ *              error:
+ *                  type: string
+ */
 module.exports.deleteAccount = async (req, res) => {
     if(req.session) {
         const {id} = req.body;
