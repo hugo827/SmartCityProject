@@ -16,7 +16,7 @@ const AuthoMiddleware = require("../middleware/authorization");
  *      description: Renvoie un string correspond au nombre d'occurrences dans la table
  *      responses:
  *          200:
- *              $ref: '#/components/responses/AccountCount'
+ *              $ref: '#/components/responses/Count'
  *          500:
  *              description: Erreur serveur
  */

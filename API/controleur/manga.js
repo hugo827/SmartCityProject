@@ -27,7 +27,45 @@ module.exports.getManga = async (req, res) => {
         client.release();
     }
 }
-
+/**
+ * @swagger
+ *  components:
+ *      responses:
+ *          MangaList:
+ *              description:  renvoie la liste des comptes à partir du offset (limiter a n)
+ *              content:
+ *               application/json:
+ *                   schema:
+ *                       $ref: '#/components/schemas/MangaList'
+ */
+/**
+ * @swagger
+ * components:
+ *  schemas:
+ *      MangaList:
+ *          type: object
+ *          properties:
+ *              id_manga:
+ *                  type: integer
+ *              title:
+ *                  type: string
+ *              synopsis:
+ *                  type: string
+ *              new_price:
+ *                  type: integer
+ *              type:
+ *                  type: string
+ *              sub_genre:
+ *                  type: string
+ *              author:
+ *                  type: string
+ *              publisher:
+ *                  type: string
+ *              picture:
+ *                  type: object
+ *              is_finish:
+ *                  type: boolean
+ */
 module.exports.getAllManga = async (req, res) => {
     const client = await pool.connect();
     const offsetText = req.params.offset;

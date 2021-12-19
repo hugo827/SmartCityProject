@@ -83,7 +83,40 @@ module.exports.deleteTome = async (req, res) => {
     }
 };
 
-
+/**
+ * @swagger
+ *  components:
+ *      responses:
+ *          TomeList:
+ *              description:  renvoie la liste des comptes à partir du offset (limiter a n)
+ *              content:
+ *               application/json:
+ *                   schema:
+ *                       $ref: '#/components/schemas/TomeList'
+ */
+/**
+ * @swagger
+ * components:
+ *  schemas:
+ *      TomeList:
+ *          type: object
+ *          properties:
+ *              id_tome:
+ *                  type: integer
+ *              number:
+ *                  type: integer
+ *              title:
+ *                  type: string
+ *              picture:
+ *                  type: object
+ *              release_date:
+ *                  type: object
+ *                  format: date
+ *              is_last_tome:
+ *                  type: boolean
+ *              fk_manga:
+ *                  type: integer
+ */
 module.exports.getAllTome = async (req, res) => {
     const client = await pool.connect();
     const offsetText = req.params.offset;

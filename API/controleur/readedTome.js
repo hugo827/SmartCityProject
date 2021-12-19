@@ -112,8 +112,35 @@ module.exports.deleteReadedTome = async (req, res) => {
         res.sendStatus(401);
     }
 };
-
-
+/**
+ * @swagger
+ *  components:
+ *      responses:
+ *          ReadedTomeList:
+ *              description:  renvoie la liste des comptes à partir du offset (limiter a n)
+ *              content:
+ *               application/json:
+ *                   schema:
+ *                       $ref: '#/components/schemas/ReadedTomeList'
+ */
+/**
+ * @swagger
+ * components:
+ *  schemas:
+ *      ReadedTomeList:
+ *          type: object
+ *          properties:
+ *              id_readed_tome:
+ *                  type: integer
+ *              read_at:
+ *                  type: string
+ *              fk_followed_manga:
+ *                  type: integer
+ *              fk_user:
+ *                  type: integer
+ *              fk_tome:
+ *                  type: integer
+ */
 module.exports.getAllReadedTome = async (req, res) => {
     const client = await pool.connect();
     const offsetText = req.params.offset;

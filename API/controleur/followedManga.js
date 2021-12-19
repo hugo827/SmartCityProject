@@ -100,6 +100,33 @@ module.exports.deleteFollowedManga = async (req, res) => {
     }
 };
 
+/**
+ * @swagger
+ *  components:
+ *      responses:
+ *          FollowedMangaList:
+ *              description:  renvoie la liste des comptes à partir du offset (limiter a n)
+ *              content:
+ *               application/json:
+ *                   schema:
+ *                       $ref: '#/components/schemas/FollowedMangaList'
+ */
+/**
+ * @swagger
+ * components:
+ *  schemas:
+ *      FollowedMangaList:
+ *          type: object
+ *          properties:
+ *              id_followed_manga:
+ *                  type: integer
+ *              state:
+ *                  type: integer
+ *              fk_manga:
+ *                  type: integer
+ *              fk_user:
+ *                  type: integer
+ */
 module.exports.getAllFollowedManga = async (req, res) => {
     const client = await pool.connect();
     const offsetText = req.params.offset;

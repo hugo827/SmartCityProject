@@ -179,18 +179,18 @@ module.exports.getAllAccount = async (req, res) => {
  * @swagger
  *  components:
  *      responses:
- *          AccountCount:
+ *          Count:
  *              description: Le nombre de comptes utilisateur dans la table
  *              content:
  *               application/json:
  *                   schema:
- *                       $ref: '#/components/schemas/AccountCount'
+ *                       $ref: '#/components/schemas/Count'
  */
 /**
  * @swagger
  * components:
  *  schemas:
- *      AccountCount:
+ *      Count:
  *          type: string
  */
 module.exports.getCountAccount = async (req, res) => {
