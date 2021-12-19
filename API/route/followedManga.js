@@ -2,9 +2,10 @@ const Router = require("express-promise-router");
 const router = new Router;
 
 const FollowedMangaControleur = require("../controleur/followedManga");
-
 const JWTMiddleWare = require('../middleware/identification');
 const AuthoMiddleware = require('../middleware/authorization');
+
+
 
 router.get('/nb', FollowedMangaControleur.getCountFollowedManga);
 router.get('/all/:offset', FollowedMangaControleur.getAllFollowedManga);
