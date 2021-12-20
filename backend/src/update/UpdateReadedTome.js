@@ -22,7 +22,6 @@ class UpdateReadedTome extends React.Component {
     callAPI() {
         const url = "http://localhost:3001/readedTome";
         const endUrl = "/";
-        const table = this.state.name;
         const id = this.state.id;
 
         const urlFinal = url + endUrl + id;
@@ -59,17 +58,25 @@ class UpdateReadedTome extends React.Component {
     }
 
 
-    sendAPI = async (formData) => {
+    sendAPI = async () => {
 
         const URL = `http://localhost:3001/${this.state.name}`;
         const headers = {
+            'Content-Type': 'application/json; charset=utf-8',
             'Accept':'application/json',
             'authorization' : `Bearer ${this.state.token}`
         };
         return await fetch(URL, {
             method : "PATCH",
             headers: headers,
-            body : formData
+            body : JSON.stringify({
+                    id: this.state.id,
+                    read_at: this.state.readAt,
+                    fk_followed_manga: this.state.fkFollowedManga,
+                    fk_user: this.state.fkUser,
+                    fk_tome: this.state.fkTome
+                }
+            )
         });
     };
 
@@ -78,16 +85,9 @@ class UpdateReadedTome extends React.Component {
 
     async sendForm(event){
         event.preventDefault();
-        const formData = new FormData();
-        formData.append('id', this.state.id);
-        formData.append('read_at', this.state.readAt);
-        formData.append('fk_followed_manga', this.state.fkFollowedManga);
-        formData.append('fk_user', this.state.fk_user);
-        formData.append('fk_tome', this.state.fk_tome);
 
         try {
-
-            await this.sendAPI(formData);
+            await this.sendAPI();
             await window.alert("Le compte a bien ete mis a jour !");
 
         } catch (error) {

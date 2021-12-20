@@ -47,7 +47,32 @@ router.get('/nb', MangaControleur.getCountManga);
  *
  */
 router.get('/all/:offset', MangaControleur.getAllManga);
-
+/**
+ * @swagger
+ * /manga/{id}:
+ *  get:
+ *      tags:
+ *         - Manga
+ *      description: Renvoie les infos du manga correspondant à l'id.
+ *      parameters:
+ *          - name: id
+ *            description: ID d'un manga
+ *            in: path
+ *            required: true
+ *            schema:
+ *              type: integer
+ *      responses:
+ *          200:
+ *              $ref: '#/components/responses/MangaGet'
+ *          400:
+ *              description: L'id passé n'est pas un nombre - Erreur imputable à l'utilisateur.
+ *          404:
+ *              description: Manga non trouvé
+ *          500:
+ *              description: Erreur serveur
+ *
+ */
+router.get('/:id', MangaControleur.getManga);
 
 router.post('/',JWTMiddleWare.identification, AuthoMiddleware.mustBeAdmin, uploadImage.upload.fields( [
     {name: 'title', maxCount: 1 },
@@ -77,30 +102,5 @@ router.patch('/',JWTMiddleWare.identification, AuthoMiddleware.mustBeAdmin, uplo
 router.delete('/',JWTMiddleWare.identification, AuthoMiddleware.mustBeAdmin, MangaControleur.deleteManga);
 
 
-/**
- * @swagger
- * /manga/{id}:
- *  get:
- *      tags:
- *         - Manga
- *      description: Renvoie les infos du manga correspondant à l'id.
- *      parameters:
- *          - name: id
- *            description: ID d'un manga
- *            in: path
- *            required: true
- *            schema:
- *              type: integer
- *      responses:
- *          200:
- *              $ref: '#/components/responses/MangaGet'
- *          400:
- *              description: L'id passé n'est pas un nombre - Erreur imputable à l'utilisateur.
- *          404:
- *              description: Manga non trouvé
- *          500:
- *              description: Erreur serveur
- *
- */
-router.get('/:id', MangaControleur.getManga);
+
 module.exports = router;

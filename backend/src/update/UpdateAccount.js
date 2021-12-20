@@ -1,6 +1,7 @@
 import React from 'react';
 import {Link} from "react-router-dom";
 
+
 class UpdateAccount extends React.Component {
 
     constructor(props) {
@@ -68,7 +69,6 @@ class UpdateAccount extends React.Component {
         const URL = `http://localhost:3001/${this.state.name}`;
 
         const headers = {
-            'Content-Type': 'application/json; charset=utf-8',
             'Accept':'application/json',
             'authorization' : `Bearer ${this.state.token}`
         };
@@ -95,7 +95,6 @@ class UpdateAccount extends React.Component {
         formData.append('is_admin', this.state.isAdmin);
 
         try {
-
             await this.sendAPI(formData);
             await window.alert("Le compte a bien ete mis a jour !");
 

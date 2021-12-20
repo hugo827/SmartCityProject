@@ -48,8 +48,24 @@ router.get('/nb', TomeControleur.getCountTome);
 router.get('/all/:offset', TomeControleur.getAllTome);
 router.get('/', TomeControleur.getTomeManga);
 router.get('/:id', TomeControleur.getTome);
-router.post('/',JWTMiddleWare.identification, AuthoMiddleware.mustBeAdmin, TomeControleur.postTome);
-router.patch('/',JWTMiddleWare.identification, AuthoMiddleware.mustBeAdmin, TomeControleur.patchTome);
+router.post('/',JWTMiddleWare.identification, AuthoMiddleware.mustBeAdmin, uploadImage.upload.fields( [
+    {name: 'number', maxCount: 1 },
+    {name: 'title', maxCount: 1 },
+    {name: 'picture', maxCount: 1},
+    {name: 'release_date', maxCount: 1 },
+    {name: 'is_last_tome', maxCount: 1 },
+    {name: 'fk_manga', maxCount: 1 }
+]), TomeControleur.postTome);
+router.patch('/',JWTMiddleWare.identification, AuthoMiddleware.mustBeAdmin, uploadImage.upload.fields( [
+    {name: 'id_tome', maxCount: 1 },
+    {name: 'number', maxCount: 1 },
+    {name: 'title', maxCount: 1 },
+    {name: 'picture', maxCount: 1 },
+    {name: 'release_date', maxCount: 1 },
+    {name: 'is_last_tome', maxCount: 1 },
+    {name: 'fk_manga', maxCount: 1 }
+]), TomeControleur.patchTome);
+
 router.delete('/',JWTMiddleWare.identification, AuthoMiddleware.mustBeAdmin, TomeControleur.deleteTome);
 
 

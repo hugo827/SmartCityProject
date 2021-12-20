@@ -76,7 +76,6 @@ class UpdateManga extends React.Component {
         return await fetch(URL, {
             method : "PATCH",
             headers: {
-                'Content-Type': 'application/json; charset=utf-8',
                 'Accept':'application/json',
                 'authorization' : `Bearer ${this.state.token}`
             },

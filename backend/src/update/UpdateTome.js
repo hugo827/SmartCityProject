@@ -106,7 +106,7 @@ class UpdateTome extends React.Component {
                 <form className="form">
                     <label>Number : </label> <input defaultValue={this.state.numberTome} onChange={(e) => this.setState({numberTome: e.target.value})} />
                     <label>title : </label> <input defaultValue={this.state.title} onChange={(e) => this.setState({title: e.target.value})} />
-                    <label>picture : </label> <input type="file" accept={"image/*"} defaultValue={this.state.picture} onChange={(e) => this.setState({picture: e.target.value})} />
+                    <label>picture : </label> <input type="file" accept={"image/*"} defaultValue={this.state.picture} onChange={(e) => this.setState({picture: e.target.files})} />
                     <label>Release date  : </label> <input type={"date"} defaultValue={this.state.releaseDate} onChange={(e) => this.setState({releaseDate: e.target.value})} />
                     <label>is last tome  : </label> <input type="checkbox" defaultValue={!this.state.isLastTome} onChange={(e) => this.setState({isLastTome: e.target.value})}/>
                     <label>fk Manga : </label> <input defaultValue={this.state.fkManga} onChange={(e) => this.setState({fkManga: e.target.value})} />

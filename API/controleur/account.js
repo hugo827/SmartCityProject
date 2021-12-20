@@ -98,14 +98,15 @@ module.exports.login = async (req, res) => {
  *              - email
  */
 module.exports.inscription = async (req, res) => {
-    const {login, pswd, email, birthdate, phone, picture, is_admin} = req.body;
+    const {login, pswd, email, birthdate, phone, is_admin} = req.body;
+    const picture = req.files.picture[0];
 
     if(login === undefined || pswd === undefined || email === undefined) {
         res.sendStatus(400);
     } else {
         const client = await pool.connect();
         try {
-            await AccountMod.createAccount(client, login, pswd, email, birthdate, phone, null, is_admin);
+            await AccountMod.createAccount(client, login, pswd, email, birthdate, phone, picture, is_admin);
             res.sendStatus(201);
         } catch (e) {
             console.error(e);
@@ -279,7 +280,8 @@ module.exports.getAccountId = async (req, res) =>  {
  */
 module.exports.patchAccount = async (req, res) => {
     if(req.session) {
-        const {id_user, login, pswd, email, birthdate, phone, picture, is_admin} = req.body;
+        const {id_user, login, pswd, email, birthdate, phone, is_admin} = req.body;
+        const picture = req.files.picture[0];
         const client = await pool.connect();
         try{
             await AccountMod.patchAccount(id_user, login, pswd, email, birthdate, phone, picture, is_admin, client);

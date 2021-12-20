@@ -23,10 +23,11 @@ class AddReadedTome extends React.Component {
         return await fetch(URL, {
             method : "POST",
             headers: {
+                'Content-Type': 'application/json; charset=utf-8',
                 'Accept':'application/json',
                 'authorization' : `Bearer ${this.state.token}`
             },
-            body :formData
+            body: formData
         });
     };
 

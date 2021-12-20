@@ -147,5 +147,9 @@
 
 .deconnexion {
   position: absolute;
+}
 
+.imageView {
+  width: 100px;
+  height: 100px;
 }

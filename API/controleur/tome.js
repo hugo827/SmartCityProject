@@ -1,5 +1,6 @@
 const pool = require('../scripts/JS/database');
 const Tome = require('../modele/tome');
+const Buffer = require("buffer");
 
 
 module.exports.getTome = async (req, res) => {
@@ -12,6 +13,7 @@ module.exports.getTome = async (req, res) => {
         } else {
             const {rows: tomes} = await Tome.getTome(id, client);
             const tome = tomes[0]
+
             if(tome !== undefined){
                 res.json(tome);
             } else {
@@ -28,12 +30,14 @@ module.exports.getTome = async (req, res) => {
 
 module.exports.postTome = async (req, res) => {
     if(req.session) {
+
         const body = req.body;
-        const {number, title, picture, release_date, is_last_tome, fk_manga} = body;
+        const {number, title, release_date, is_last_tome, fk_manga} = body;
+        const picture =  req.files.picture;
 
         const client = await pool.connect();
         try{
-            await Tome.postTome(number, title, null, release_date,is_last_tome, fk_manga, client);
+            await Tome.postTome(number, title, picture, release_date,is_last_tome, fk_manga, client);
             res.sendStatus(201);
         } catch (error){
             console.error(error);
@@ -48,10 +52,13 @@ module.exports.postTome = async (req, res) => {
 
 module.exports.patchTome = async (req, res) => {
     if(req.session) {
-        const {id, number, title, picture, release_date, is_last_tome, fk_manga} = req.body;
+
+        const {id, number, title, release_date, is_last_tome, fk_manga} = req.body;
+        const picture =  req.files.picture;
+
         const client = await pool.connect();
         try{
-            await Tome.patchTome(id, number, title, picture,release_date, is_last_tome, fk_manga, client);
+            await Tome.patchTome(id, number, title, picture, release_date, is_last_tome, fk_manga, client);
             res.sendStatus(204);
         } catch (error) {
             console.error(error);
@@ -123,6 +130,11 @@ module.exports.getAllTome = async (req, res) => {
     const offset = parseInt(offsetText);
     try{
         const {rows: tomes} = await Tome.getAllTome(client, offset);
+
+        for(let i in tomes) {
+            console.log(Buffer.isBuffer(tomes[i].picture));
+        }
+
         if(tomes !== undefined){
             res.json(tomes);
         } else {

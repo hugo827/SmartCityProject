@@ -127,13 +127,12 @@ module.exports.getAllManga = async (req, res) => {
 
 
 module.exports.postManga = async (req, res) => {
-    console.log(req.body, req.files);
     if(req.session) {
-        console.log(req.body);
-        const {title, synopsis, new_price, type, sub_genre, author, publisher, picture, is_finish} = req.body;
+        const {title, synopsis, new_price, type, sub_genre, author, publisher, is_finish} = req.body;
+        const picture =  req.files.picture[0]
         const client = await pool.connect();
         try{
-            await Manga.postManga(title, synopsis, new_price, type, sub_genre, author, publisher, null, is_finish, client);
+            await Manga.postManga(title, synopsis, new_price, type, sub_genre, author, publisher, picture, is_finish, client);
             res.sendStatus(201);
         } catch (error){
             console.error(error);
@@ -149,10 +148,11 @@ module.exports.postManga = async (req, res) => {
 
 module.exports.patchManga = async (req, res) => {
     if(req.session) {
-        const {id, title, synopsis, new_price, type, sub_genre, author, publisher, main_picture, is_finish} = req.body;
+        const {id, title, synopsis, new_price, type, sub_genre, author, publisher, is_finish} = req.body;
+        const picture =  req.files.picture[0]
         const client = await pool.connect();
         try{
-            await Manga.patchManga(id, title, synopsis, new_price, type, sub_genre, author, publisher, main_picture, is_finish, client);
+            await Manga.patchManga(id, title, synopsis, new_price, type, sub_genre, author, publisher, picture, is_finish, client);
             res.sendStatus(204);
         } catch (error){
             console.error(error);
@@ -176,8 +176,8 @@ module.exports.deleteManga = async (req, res) => {
             let promises = [];
             const {rows} =  await FollowedManga.getFollowedMangaByIdManga(id, client);
             if(rows.length !== 0) {
-                for(let idFM in rows) {
-                    promises.push(await ReadedTome.deleteFollowedMangaTome(idFM, client));
+                for(let elem of rows) {
+                    promises.push(await ReadedTome.deleteFollowedMangaTome(elem["id_followed_manga"], client));
                 }
                 promises.push(await FollowedManga.deleteFollowedMangaIDManga(id, client));
             }

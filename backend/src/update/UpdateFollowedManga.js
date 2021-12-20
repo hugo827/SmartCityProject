@@ -55,9 +55,10 @@ class UpdateFollowedManga extends React.Component {
     }
 
 
-    sendAPI = async (formData) => {
+    sendAPI = async () => {
         const URL = `http://localhost:3001/${this.state.name}`;
         const headers = {
+            'Content-Type': 'application/json; charset=utf-8',
             'Accept':'application/json',
             'authorization' : `Bearer ${this.state.token}`
         };
@@ -77,18 +78,10 @@ class UpdateFollowedManga extends React.Component {
 
 
 
-
     async sendForm(event){
         event.preventDefault();
-        const formData = new FormData();
-        formData.append('id', this.state.id);
-        formData.append('state', this.state.stateManga);
-        formData.append('fk_manga', this.state.fkManga);
-        formData.append('fk_user', this.state.fkUser);
-
         try {
-
-            await this.sendAPI(formData);
+            await this.sendAPI();
             await window.alert("Le compte a bien ete mis a jour !");
 
         } catch (error) {

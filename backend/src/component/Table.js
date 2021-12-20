@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 import Delete from './Delete';
 import Pagination from './Pagination';
+import * as buffer from "buffer";
 
 
 class Table extends React.Component {
@@ -94,7 +95,11 @@ class Table extends React.Component {
                         {
                             this.props.colonnes.map((c, i) => {
                                 if(c.split("_")[0] !== "is") {
-                                    return <td key={i}>{data[c]}</td>;
+                                    if(c === 'picture' && data[c] !== null) {
+                                        return <td key={i}> <img className={"imageView"} src={`data:image/png;base64,${data[c]}`} alt={'none'}/></td>;
+                                    } else {
+                                        return <td key={i}>{data[c]}</td>;
+                                    }
                                 } else {
                                     return <td key={i}>{data[c] ? "True" : "false" }</td>;
                                 }

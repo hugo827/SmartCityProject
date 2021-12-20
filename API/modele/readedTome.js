@@ -31,5 +31,6 @@ module.exports.deleteUserReadedTome = async (fK_user, client) => {
 }
 
 module.exports.deleteFollowedMangaTome = async (fk_followed_manga, client) => {
+    console.log(fk_followed_manga);
     return await client.query("DELETE FROM readed_tome  WHERE fk_followed_manga = $1", [fk_followed_manga]);
 }

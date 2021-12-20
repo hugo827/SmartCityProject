@@ -132,7 +132,15 @@ router.get('/:id', accountController.getAccountId);
  *          500:
  *              description: Erreur serveur
  */
-router.post('/login',  accountController.login);
+router.post('/login', uploadImage.upload.fields( [
+    {name: 'login', maxCount: 1 },
+    {name: 'pswd', maxCount: 1 },
+    {name: 'email', maxCount: 1 },
+    {name: 'birthdate', maxCount: 1 },
+    {name: 'phone', maxCount: 1 },
+    {name: 'picture', maxCount: 1 },
+    {name: 'is_admin', maxCount: 1 }
+]),  accountController.login);
 
 /**
  * @swagger
@@ -161,7 +169,16 @@ router.post('/login',  accountController.login);
  *          500:
  *              description: Erreur serveur
  */
-router.post('/inscription', inscription.verifAccount, accountController.inscription);
+router.post('/inscription', uploadImage.upload.fields( [
+    {name: 'id_user', maxCount: 1 },
+    {name: 'login', maxCount: 1 },
+    {name: 'pswd', maxCount: 1 },
+    {name: 'email', maxCount: 1 },
+    {name: 'birthdate', maxCount: 1 },
+    {name: 'phone', maxCount: 1 },
+    {name: 'picture', maxCount: 1 },
+    {name: 'is_admin', maxCount: 1 }
+]), inscription.verifAccount, accountController.inscription);
 
 /**
  * @swagger
