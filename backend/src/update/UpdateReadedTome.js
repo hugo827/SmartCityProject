@@ -60,24 +60,16 @@ class UpdateReadedTome extends React.Component {
 
 
     sendAPI = async (formData) => {
+
         const URL = `http://localhost:3001/${this.state.name}`;
         const headers = {
-            'Content-Type': 'application/json; charset=utf-8',
             'Accept':'application/json',
             'authorization' : `Bearer ${this.state.token}`
         };
-        const body = JSON.stringify({
-            id: this.state.id,
-            read_at:  this.state.readAt,
-            fk_followed_manga: this.state.fkFollowedManga,
-            fk_user:  this.state.fkUser,
-            fk_tome:  this.state.fkTome,
-        });
-
         return await fetch(URL, {
             method : "PATCH",
             headers: headers,
-            body : body
+            body : formData
         });
     };
 

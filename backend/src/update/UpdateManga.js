@@ -80,18 +80,7 @@ class UpdateManga extends React.Component {
                 'Accept':'application/json',
                 'authorization' : `Bearer ${this.state.token}`
             },
-            body : JSON.stringify({
-                id: this.state.id,
-                title: this.state.title,
-                synopsis: this.state.synopsis,
-                new_price: this.state.price,
-                type: this.state.type,
-                sub_genre: this.state.subGenre,
-                author: this.state.author,
-                publisher: this.state.publisher,
-                picture: this.state.picture,
-                is_finish: this.state.isFinish,
-            })
+            body : formData
         });
     };
 

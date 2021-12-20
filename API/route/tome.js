@@ -6,6 +6,8 @@ const TomeControleur = require("../controleur/tome");
 const JWTMiddleWare = require("../middleware/identification");
 const AuthoMiddleware = require("../middleware/authorization");
 
+const uploadImage = require("../middleware/UploadsImage");
+
 /**
  * @swagger
  * /tome/nb:

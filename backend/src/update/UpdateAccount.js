@@ -64,27 +64,19 @@ class UpdateAccount extends React.Component {
 
 
     sendAPI = async (formData) => {
+
         const URL = `http://localhost:3001/${this.state.name}`;
+
         const headers = {
             'Content-Type': 'application/json; charset=utf-8',
             'Accept':'application/json',
             'authorization' : `Bearer ${this.state.token}`
         };
-        const body = JSON.stringify({
-            id_user: this.state.id,
-            login: this.state.login,
-            pswd: this.state.password,
-            email: this.state.email,
-            birthdate: this.state.birthdate,
-            phone: this.state.phone,
-            picture: this.state.picture,
-            is_admin: this.state.isAdmin,
-        });
 
         return await fetch(URL, {
             method : "PATCH",
             headers: headers,
-            body : body
+            body : formData
         });
     };
 

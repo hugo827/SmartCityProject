@@ -53,7 +53,6 @@ class UpdateTome extends React.Component {
     }
 
     testSetState() {
-
         this.setState({title: this.state.rows['title']});
         this.setState({picture: this.state.rows['picture']});
         this.setState({releaseDate: this.state.rows['release_date']});
@@ -71,19 +70,10 @@ class UpdateTome extends React.Component {
         return await fetch(URL, {
             method : "PATCH",
             headers: {
-                'Content-Type': 'application/json; charset=utf-8',
                 'Accept':'application/json',
                 'authorization' : `Bearer ${this.state.token}`
             },
-            body : JSON.stringify({
-                id: this.state.id,
-                number: this.state.numberTome,
-                title: this.state.title,
-                picture: this.state.picture,
-                release_date: this.state.releaseDate,
-                is_last_ome: this.state.isLastTome,
-                fk_manga: this.state.fkManga,
-            })
+            body : formData
         });
     };
 

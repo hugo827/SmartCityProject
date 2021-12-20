@@ -24,24 +24,14 @@ class AddAccount extends React.Component {
     sendAPI = async (formData) => {
         const URL = `http://localhost:3001/${this.state.name}/inscription`;
         const headers = {
-            'Content-Type': 'application/json; charset=utf-8',
             'Accept':'application/json',
             'authorization' : `Bearer ${this.state.token}`
             };
-        const body = JSON.stringify({
-                login: this.state.login,
-                pswd: this.state.password,
-                email: this.state.email,
-                birthdate: this.state.birthdate,
-                phone: this.state.phone,
-                picture: this.state.picture,
-                is_admin: this.state.isAdmin,
-            });
 
             return await fetch(URL, {
             method : "POST",
             headers: headers,
-            body : body
+            body : formData
         });
     };
 
@@ -49,8 +39,10 @@ class AddAccount extends React.Component {
 
 
     async sendForm(event){
+
         event.preventDefault();
         const formData = new FormData();
+
         formData.append('login', this.state.login);
         formData.append('pswd', this.state.password);
         formData.append('email', this.state.email);
@@ -60,7 +52,6 @@ class AddAccount extends React.Component {
         formData.append('is_admin', this.state.isAdmin);
 
         try {
-
             await this.sendAPI(formData);
             await window.alert("Un nouveau compte à bien été crée");
             this.resetState();

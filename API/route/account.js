@@ -7,6 +7,8 @@ const inscription = require('../middleware/inscription');
 const JWTMiddleWare = require('../middleware/identification');
 const AuthoMiddleware = require("../middleware/authorization");
 
+const uploadImage = require("../middleware/UploadsImage");
+
 /**
  * @swagger
  * /account/nb:

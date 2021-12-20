@@ -17,26 +17,16 @@ class AddReadedTome extends React.Component {
 
     }
 
-    submitAdd(event) {
-        this.sendForm(event);
-    }
-
     sendAPI = async (formData) => {
         const URL = `http://localhost:3001/readedTome/`;
 
         return await fetch(URL, {
             method : "POST",
             headers: {
-                'Content-Type': 'application/json; charset=utf-8',
                 'Accept':'application/json',
                 'authorization' : `Bearer ${this.state.token}`
             },
-            body : JSON.stringify({
-                read_at:  this.state.readAt,
-                fk_followed_manga: this.state.fkFollowedManga,
-                fk_user:  this.state.fkUser,
-                fk_tome:  this.state.fkTome,
-            })
+            body :formData
         });
     };
 

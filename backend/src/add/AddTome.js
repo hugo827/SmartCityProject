@@ -18,31 +18,18 @@ class AddTome extends React.Component {
 
     }
 
-    submitAdd(event) {
-        this.sendForm(event);
-    }
 
     sendAPI = async (formData) => {
         const URL = `http://localhost:3001/${this.state.name}/`;
         const headers = {
-            'Content-Type': 'application/json; charset=utf-8',
             'Accept':'application/json',
             'authorization' : `Bearer ${this.state.token}`
         };
-        const body = JSON.stringify({
-            number: this.state.number,
-            title: this.state.title,
-            picture: this.state.picture,
-            release_date: this.state.releaseDate,
-            is_last_tome: this.state.isLastTome,
-            fk_manga: this.state.fkManga
-        });
-
 
         return await fetch(URL, {
             method : "POST",
             headers: headers,
-            body : body
+            body : formData
         });
     };
 

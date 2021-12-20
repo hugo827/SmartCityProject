@@ -4,6 +4,45 @@ const Tome = require("../modele/tome");
 const FollowedManga = require('../modele/followedManga');
 const ReadedTome = require('../modele/readedTome');
 
+
+/**
+ * @swagger
+ *  components:
+ *      responses:
+ *          MangaGet:
+ *              description: Le manga a été trouvé
+ *              content:
+ *               application/json:
+ *                   schema:
+ *                       $ref: '#/components/schemas/Manga'
+ */
+/**
+ * @swagger
+ * components:
+ *  schemas:
+ *      Manga:
+ *          type: object
+ *          properties:
+ *              id_manga:
+ *                  type: integer
+ *              login:
+ *                  type: string
+ *              pswd:
+ *                  type: string
+ *                  format: text
+ *              email:
+ *                  type: string
+ *              birthdate:
+ *                  type: object
+ *                  format: date
+ *              phone:
+ *                  type: number
+ *              picture:
+ *                  type: object
+ *                  format: image
+ *              is_admin:
+ *                  type: boolean
+ */
 module.exports.getManga = async (req, res) => {
     const client = await pool.connect();
     const idTexte = req.params.id;
@@ -88,7 +127,9 @@ module.exports.getAllManga = async (req, res) => {
 
 
 module.exports.postManga = async (req, res) => {
+    console.log(req.body, req.files);
     if(req.session) {
+        console.log(req.body);
         const {title, synopsis, new_price, type, sub_genre, author, publisher, picture, is_finish} = req.body;
         const client = await pool.connect();
         try{

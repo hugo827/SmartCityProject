@@ -21,44 +21,18 @@ class AddManga extends React.Component {
 
     }
 
-    async submitAdd(event) {
-        event.preventDefault()
-        try {
-            const formData = new FormData();
-            await this.sendAPI(formData);
-            await window.alert("Votre manga a bien et ajouter");
-            this.resetState();
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
     sendAPI = async (formData) => {
 
         const URL = `http://localhost:3001/${this.state.name}/`;
+
         return await fetch(URL, {
             method : "POST",
             headers: {
-                'Content-Type': 'application/json; charset=utf-8',
-                'Accept':'application/json',
-                'authorization' : `Bearer ${this.state.token}`
+                'Authorization' : `Bearer ${this.state.token}`
             },
-            body : JSON.stringify({
-                title: this.state.title,
-                synopsis: this.state.synopsis,
-                new_price: this.state.price,
-                type: this.state.type,
-                sub_genre: this.state.subGenre,
-                author: this.state.author,
-                publisher: this.state.publisher,
-                picture: this.state.picture,
-                is_finish: this.state.isFinish,
-            })
+            body : formData
         });
     };
-
-
-
 
     async sendForm(event){
         event.preventDefault();
@@ -77,7 +51,6 @@ class AddManga extends React.Component {
         try {
             await this.sendAPI(formData);
             await window.alert("Votre manga a bien et ajouter");
-            this.resetState();
         } catch (error) {
             console.log(error);
         }
@@ -98,17 +71,16 @@ class AddManga extends React.Component {
     }
 
     render() {
-
         return (
             <div className="nameTable">
                 <form className="form">
-                    <label>Title : </label> <input onChange={(e) => this.setState({title: e.target.value})} />
-                    <label>Synopsis : </label> <input onChange={(e) => this.setState({synopsis: e.target.value})} />
-                    <label>Price : </label> <input onChange={(e) => this.setState({price: e.target.value})} />
-                    <label>type : </label> <input onChange={(e) => this.setState({type: e.target.value})} />
-                    <label>sub Genre : </label> <input onChange={(e) => this.setState({subGenre: e.target.value})}/>
-                    <label>Author : </label> <input onChange={(e) => this.setState({author: e.target.value})} />
-                    <label>publisher : </label> <input onChange={(e) => this.setState({publisher: e.target.value})} />
+                    <label>Title : </label> <input onChange={(e) => this.setState({title: e.target.value})} required/>
+                    <label>Synopsis : </label> <input onChange={(e) => this.setState({synopsis: e.target.value})} required/>
+                    <label>Price : </label> <input onChange={(e) => this.setState({price: e.target.value})} required/>
+                    <label>type : </label> <input onChange={(e) => this.setState({type: e.target.value})} required/>
+                    <label>sub Genre : </label> <input onChange={(e) => this.setState({subGenre: e.target.value})} required/>
+                    <label>Author : </label> <input onChange={(e) => this.setState({author: e.target.value})} required/>
+                    <label>publisher : </label> <input onChange={(e) => this.setState({publisher: e.target.value})} required/>
                     <label>picture : </label> <input type="file" accept={"image/*"} onChange={(e) => this.setState({picture: e.target.files[0]})}/>
                     <label>is finish : </label> <input type="checkbox" onChange={(e) => this.setState({isFinish: !this.state.isFinish})}/>
                     <button type="submit" onClick={(e) => this.sendForm(e)}>submit</button>

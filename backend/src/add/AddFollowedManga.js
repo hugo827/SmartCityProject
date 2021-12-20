@@ -25,15 +25,10 @@ class AddFollowedManga extends React.Component {
         return await fetch(URL, {
             method : "POST",
             headers: {
-                'Content-Type': 'application/json; charset=utf-8',
                 'Accept':'application/json',
                 'authorization' : `Bearer ${this.state.token}`
             },
-            body : JSON.stringify({
-                state: this.state.stateManga,
-                fk_manga: this.state.fkManga,
-                fk_user: this.state.fkUser,
-            })
+            body : formData
         });
     };
 

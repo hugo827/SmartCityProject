@@ -58,7 +58,6 @@ class UpdateFollowedManga extends React.Component {
     sendAPI = async (formData) => {
         const URL = `http://localhost:3001/${this.state.name}`;
         const headers = {
-            'Content-Type': 'application/json; charset=utf-8',
             'Accept':'application/json',
             'authorization' : `Bearer ${this.state.token}`
         };
