@@ -73,7 +73,27 @@ router.get('/all/:offset', MangaControleur.getAllManga);
  *
  */
 router.get('/:id', MangaControleur.getManga);
-
+/**
+ * @swagger
+ * /manga/:
+ *  post:
+ *      tags:
+ *          - Manga
+ *      description: Permet la création d'un manga
+ *      requestBody:
+ *          description: Toutes les attribut de la table sont passé dans le body pour l'ajout d'un manga.
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#/components/schemas/Manga'
+ *      responses:
+ *          201:
+ *            description: Manga ajouté
+ *          400:
+ *              description: Une ou plusieurs données required ne sont pas défénis - Erreur imputable au client.
+ *          500:
+ *              description: Erreur serveur
+ */
 router.post('/',JWTMiddleWare.identification, AuthoMiddleware.mustBeAdmin, uploadImage.upload.fields( [
     {name: 'title', maxCount: 1 },
     {name: 'synopsis', maxCount: 1 },
@@ -82,10 +102,43 @@ router.post('/',JWTMiddleWare.identification, AuthoMiddleware.mustBeAdmin, uploa
     {name: 'sub_genre', maxCount: 1 },
     {name: 'author', maxCount: 1 },
     {name: 'publisher', maxCount: 1 },
+    {name: 'is_finish', maxCount: 1 },
     {name: 'picture', maxCount: 1 },
-    {name: 'is_finish', maxCount: 1 }
 ]), MangaControleur.postManga);
-
+/**
+ * @swagger
+ * /manga/:
+ *  patch:
+ *      tags:
+ *          - Manga
+ *      description: Permet de faire une mise a jour d'un manga
+ *      security:
+ *          - bearerAuth: []
+ *      requestBody:
+ *          description: Toutes les données d'un manga sont passé dans le body pour la mise à jour du client ainsi que le token dans le headers.
+ *          content:
+ *              multipart/form-data:
+ *                  schema:
+ *                      $ref: '#/components/schemas/Manga'
+ *      responses:
+ *          201:
+ *              $ref: '#/components/responses/MangaUpdate'
+ *          400:
+ *              $ref: '#/components/responses/ErrorJWT'
+ *          401:
+ *              $ref: '#/components/responses/MissingJWT'
+ *          403:
+ *              $ref: '#/components/responses/mustBeOwner'
+ *          500:
+ *              description: Erreur serveur
+ */
+/**
+ * @swagger
+ *  components:
+ *      responses:
+ *          MangaUpdate:
+ *              description: Le manga a été mis à jour
+ */
 router.patch('/',JWTMiddleWare.identification, AuthoMiddleware.mustBeAdmin, uploadImage.upload.fields( [
     {name: 'id_manga', maxCount: 1},
     {name: 'title', maxCount: 1 },
@@ -95,10 +148,38 @@ router.patch('/',JWTMiddleWare.identification, AuthoMiddleware.mustBeAdmin, uplo
     {name: 'sub_genre', maxCount: 1 },
     {name: 'author', maxCount: 1 },
     {name: 'publisher', maxCount: 1 },
+    {name: 'is_finish', maxCount: 1 },
     {name: 'picture', maxCount: 1 },
-    {name: 'is_finish', maxCount: 1 }
 ]), MangaControleur.patchManga);
-
+/**
+ * @swagger
+ * /manga/:
+ *  delete:
+ *      tags:
+ *          - Manga
+ *      description: Permet de supprimer un manga.
+ *      security:
+ *          - bearerAuth: []
+ *      requestBody:
+ *          description: L'id du manga est passé dans le body pour la suppression ainsi que le token dans le headers.
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#/components/schemas/Delete'
+ *      responses:
+ *          204:
+ *            $ref: '#/components/responses/Delete'
+ *          400:
+ *              $ref: '#/components/responses/ErrorJWT'
+ *          401:
+ *              $ref: '#/components/responses/MissingJWT'
+ *          403:
+ *              $ref: '#/components/responses/mustBeOwner'
+ *          404:
+ *              $ref: '#/components/responses/DeleteFailed'
+ *          500:
+ *              description: Erreur serveur
+ */
 router.delete('/',JWTMiddleWare.identification, AuthoMiddleware.mustBeAdmin, MangaControleur.deleteManga);
 
 

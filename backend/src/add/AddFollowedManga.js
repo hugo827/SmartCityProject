@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from "react-router-dom";
 
 
 class AddFollowedManga extends React.Component {
@@ -22,6 +23,12 @@ class AddFollowedManga extends React.Component {
 
     sendAPI = async (formData) => {
         const URL = `http://localhost:3001/followedManga/`;
+        const body = JSON.stringify({
+            id: this.state.id,
+            state: this.state.stateManga,
+            fk_manga: this.state.fkManga,
+            fk_user: this.state.fkUser,
+        });
         return await fetch(URL, {
             method : "POST",
             headers: {
@@ -29,7 +36,7 @@ class AddFollowedManga extends React.Component {
                 'Accept':'application/json',
                 'authorization' : `Bearer ${this.state.token}`
             },
-            body : formData
+            body : body
         });
     };
 
@@ -40,15 +47,10 @@ class AddFollowedManga extends React.Component {
         event.preventDefault();
         const formData = new FormData();
 
-        formData.append('title', this.state.title);
-        formData.append('synopsis', this.state.synopsis);
-        formData.append('new_price', this.state.price);
-        formData.append('type', this.state.type);
-        formData.append('sub_genre', this.state.subGenre);
-        formData.append('author', this.state.author);
-        formData.append('publisher', this.state.publisher);
-        formData.append('picture', this.state.picture);
-        formData.append('is_finish', this.state.isFinish);
+        formData.append('state', this.state.stateManga);
+        formData.append('fk_manga', this.state.fkManga);
+        formData.append('fk_user', this.state.fkUser);
+
 
         try {
             await this.sendAPI(formData);
@@ -74,12 +76,13 @@ class AddFollowedManga extends React.Component {
         return (
             <div className="nameTable">
                 <form className="form">
-                    <label>stateManga : </label> <input type={"number"} onChange={(e) => this.setState({stateManga: e.target.value})} />
-                    <label>fkManga : </label> <input type={"number"} onChange={(e) => this.setState({fkManga: e.target.value})} />
-                    <label>fkUser : </label> <input type={"number"} onChange={(e) => this.setState({fkUser: e.target.value})} />
+                    <p>Tout est obligatoire</p>
+                    <label>stateManga (valeur obligatoire entre 1 et 3 -- 1 =terminer -- 2 =en cours -- 3 =pas commencer): </label> <input type={"number"} onChange={(e) => this.setState({stateManga: e.target.value})} required/>
+                    <label>fkManga (doit exister dans manga): </label> <input type={"number"} onChange={(e) => this.setState({fkManga: e.target.value})} required/>
+                    <label>fkUser (doit exister dans user): </label> <input type={"number"} onChange={(e) => this.setState({fkUser: e.target.value})} required/>
 
                     <button type="submit" onClick={(e) => this.sendForm(e)}>submit</button>
-                    <input  type="submit" value="Cancel"/>
+                    <Link to={`/${this.props.name}`}><input  type="submit" value="Cancel" /></Link>
                 </form>
             </div>
         )

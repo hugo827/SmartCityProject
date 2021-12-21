@@ -100,10 +100,11 @@ class UpdateReadedTome extends React.Component {
         return (
             <div className="nameTable">
                 <form className="form">
-                    <label>Read at : </label> <input type="date" defaultValue={this.state.rows[`read_at`]} onChange={(e) => this.setState({readAt: e.target.value})} />
-                    <label>fk followed manga : </label> <input defaultValue={this.state.rows[`fk_followed_manga`]} onChange={(e) => this.setState({fkFollowedManga: e.target.value})} />
-                    <label>fk user : </label> <input  defaultValue={this.state.rows[`fk_user`]}  onChange={(e) => this.setState({fkUser: e.target.value})} />
-                    <label>fk  tome : </label> <input  defaultValue={this.state.rows[`fk_tome`]} onChange={(e) => this.setState({fkTome: e.target.value})} />
+                    <p>Tout est obligatoire</p>
+                    <label>Read at : </label> <input type="date" defaultValue={this.state.rows[`read_at`]} onChange={(e) => this.setState({readAt: e.target.value})} required/>
+                    <label>fk followed manga (doit correspondre a un id existant dans followed manga): </label> <input defaultValue={this.state.rows[`fk_followed_manga`]} onChange={(e) => this.setState({fkFollowedManga: e.target.value})} required/>
+                    <label>fk user (doit correspondre a l'id de fk_user du record fk_followed_manga): </label> <input  defaultValue={this.state.rows[`fk_user`]}  onChange={(e) => this.setState({fkUser: e.target.value})} required/>
+                    <label>fk  tome (doit correspondre a un id existant dans tome): </label> <input  defaultValue={this.state.rows[`fk_tome`]} onChange={(e) => this.setState({fkTome: e.target.value})} required/>
                    <button type="submit" onClick={(e) => this.sendForm(e)}>submit</button>
                     <Link to={`/${this.state.name}`}><input  type="submit" value="Cancel"/></Link>
                 </form>

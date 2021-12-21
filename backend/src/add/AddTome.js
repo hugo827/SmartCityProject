@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from "react-router-dom";
 
 class AddTome extends React.Component {
 
@@ -10,7 +11,7 @@ class AddTome extends React.Component {
 
             number: 0,
             title: "",
-            picture: null,
+            picture: [],
             releaseDate: null,
             isLastTome: false,
             fkManga: null,
@@ -42,14 +43,14 @@ class AddTome extends React.Component {
 
         formData.append('number', this.state.number);
         formData.append('title', this.state.title);
-        formData.append('picture', this.state.picture);
         formData.append('release_date', this.state.releaseDate);
         formData.append('is_last_tome', this.state.isLastTome);
         formData.append('fk_manga', this.state.fkManga);
+        formData.append('picture', this.state.picture);
 
         try {
             await this.sendAPI(formData);
-            await window.alert("Votre manga a bien et ajouter");
+            await window.alert("Votre tome a bien et ajouter");
             this.resetState();
         } catch (error) {
             console.log(error);
@@ -73,14 +74,15 @@ class AddTome extends React.Component {
         return (
             <div className="nameTable">
                 <form className="form">
-                    <label>Number : </label> <input type={"number"} onChange={(e) => this.setState({number: e.target.value})} />
-                    <label>title : </label> <input type="text" onChange={(e) => this.setState({title: e.target.value})} />
-                    <label>picture : </label> <input type={"file"} accept={"image/*"} onChange={(e) => this.setState({picture: e.target.value})} />
-                    <label>Release date : </label> <input type={"date"} onChange={(e) => this.setState({releaseDate: e.target.value})} />
-                    <label>is last tome : </label> <input type="checkbox" onChange={(e) => this.setState({isLastTome: !this.state.isFinish})}/>
-                    <label>fk Manga : </label> <input type={"number"} onChange={(e) => this.setState({fkManga: e.target.value})}/>
+                    <p>Tout est obligatoire</p>
+                    <label>Number : </label> <input type={"number"} onChange={(e) => this.setState({number: e.target.value})} required/>
+                    <label>title : </label> <input type="text" onChange={(e) => this.setState({title: e.target.value})} required/>
+                    <label>picture : </label> <input type={"file"} accept={"image/*"} onChange={(e) => this.setState({picture: e.target.files[0]})} required/>
+                    <label>Release date : </label> <input type={"date"} onChange={(e) => this.setState({releaseDate: e.target.value})} required/>
+                    <label>is last tome : </label> <input type="checkbox" onChange={(e) => this.setState({isLastTome: !this.state.isFinish})} required/>
+                    <label>fk Manga (l'id entrée doit correspondre à un id existant dans manga): </label> <input type={"number"} onChange={(e) => this.setState({fkManga: e.target.value})} required/>
                     <button type="submit" onClick={(e) => this.sendForm(e)}>submit</button>
-                    <input  type="submit" value="Cancel"/>
+                    <Link to={`/${this.props.name}`}><input  type="submit" value="Cancel" /></Link>
                 </form>
             </div>
         )

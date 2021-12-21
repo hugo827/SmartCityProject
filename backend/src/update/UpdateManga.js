@@ -18,7 +18,7 @@ class UpdateManga extends React.Component {
             subGenre: "",
             author: "",
             publisher: "",
-            picture: null,
+            picture: [],
             isFinish: false,
         }
     }
@@ -88,6 +88,7 @@ class UpdateManga extends React.Component {
         event.preventDefault();
         const formData = new FormData();
 
+        formData.append("id_manga", this.state.id);
         formData.append('title', this.state.title);
         formData.append('synopsis', this.state.synopsis);
         formData.append('new_price', this.state.price);
@@ -95,8 +96,8 @@ class UpdateManga extends React.Component {
         formData.append('sub_genre', this.state.subGenre);
         formData.append('author', this.state.author);
         formData.append('publisher', this.state.publisher);
-        formData.append('picture', this.state.picture);
         formData.append('is_finish', this.state.isFinish);
+        formData.append('picture', this.state.picture);
 
         try {
             await this.sendAPI(formData);
@@ -112,15 +113,16 @@ class UpdateManga extends React.Component {
         return (
             <div className="nameTable">
                 <form className="form">
-                    <label>Title : </label> <input defaultValue={this.state.title} onChange={(e) => this.setState({title: e.target.value})} />
-                    <label>Synopsis : </label> <input defaultValue={this.state.synopsis} onChange={(e) => this.setState({synopsis: e.target.value})} />
-                    <label>Price : </label> <input defaultValue={this.state.price} onChange={(e) => this.setState({price: e.target.value})} />
-                    <label>type : </label> <input defaultValue={this.state.type} onChange={(e) => this.setState({type: e.target.value})} />
-                    <label>sub Genre : </label> <input defaultValue={this.state.subGenre} onChange={(e) => this.setState({subGenre: e.target.value})}/>
-                    <label>Author : </label> <input defaultValue={this.state.author} onChange={(e) => this.setState({author: e.target.value})} />
-                    <label>publisher : </label> <input defaultValue={this.state.publisher} onChange={(e) => this.setState({publisher: e.target.value})} />
-                    <label>picture : </label> <input defaultValue={this.state.picture} type="file" accept={"image/*"} onChange={(e) => this.setState({picture: e.target.files[0]})}/>
-                    <label>is finish : </label> <input defaultValue={!this.state.isFinish} type="checkbox" onChange={(e) => this.setState({isFinish: !this.state.isFinish})}/>
+                    <p>Tout est obligatoire</p>
+                    <label>Title : </label> <input defaultValue={this.state.title} onChange={(e) => this.setState({title: e.target.value})} required/>
+                    <label>Synopsis : </label> <input defaultValue={this.state.synopsis} onChange={(e) => this.setState({synopsis: e.target.value})} required/>
+                    <label>Price : </label> <input defaultValue={this.state.price} onChange={(e) => this.setState({price: e.target.value})} required/>
+                    <label>type : </label> <input defaultValue={this.state.type} onChange={(e) => this.setState({type: e.target.value})} required/>
+                    <label>sub Genre : </label> <input defaultValue={this.state.subGenre} onChange={(e) => this.setState({subGenre: e.target.value})} required/>
+                    <label>Author : </label> <input defaultValue={this.state.author} onChange={(e) => this.setState({author: e.target.value})} required/>
+                    <label>publisher : </label> <input defaultValue={this.state.publisher} onChange={(e) => this.setState({publisher: e.target.value})} required/>
+                    <label>picture : </label> <input defaultValue={this.state.picture} type="file" accept={"image/*"} onChange={(e) => this.setState({picture: e.target.files[0]})} required/>
+                    <label>is finish : </label> <input defaultValue={!this.state.isFinish} type="checkbox" onChange={(e) => this.setState({isFinish: !this.state.isFinish})} required/>
                     <button type="submit" onClick={(e) => this.sendForm(e)}>submit</button>
                     <Link to={`/${this.state.name}`}><input  type="submit" value="Cancel"/></Link>
                 </form>

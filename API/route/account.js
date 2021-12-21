@@ -132,15 +132,7 @@ router.get('/:id', accountController.getAccountId);
  *          500:
  *              description: Erreur serveur
  */
-router.post('/login', uploadImage.upload.fields( [
-    {name: 'login', maxCount: 1 },
-    {name: 'pswd', maxCount: 1 },
-    {name: 'email', maxCount: 1 },
-    {name: 'birthdate', maxCount: 1 },
-    {name: 'phone', maxCount: 1 },
-    {name: 'picture', maxCount: 1 },
-    {name: 'is_admin', maxCount: 1 }
-]),  accountController.login);
+router.post('/login', accountController.login);
 
 /**
  * @swagger
@@ -170,14 +162,13 @@ router.post('/login', uploadImage.upload.fields( [
  *              description: Erreur serveur
  */
 router.post('/inscription', uploadImage.upload.fields( [
-    {name: 'id_user', maxCount: 1 },
     {name: 'login', maxCount: 1 },
     {name: 'pswd', maxCount: 1 },
     {name: 'email', maxCount: 1 },
     {name: 'birthdate', maxCount: 1 },
     {name: 'phone', maxCount: 1 },
+    {name: 'is_admin', maxCount: 1 },
     {name: 'picture', maxCount: 1 },
-    {name: 'is_admin', maxCount: 1 }
 ]), inscription.verifAccount, accountController.inscription);
 
 /**
@@ -207,7 +198,16 @@ router.post('/inscription', uploadImage.upload.fields( [
  *          500:
  *              description: Erreur serveur
  */
-router.patch('/', JWTMiddleWare.identification, AuthoMiddleware.mustBeOwner, accountController.patchAccount);
+router.patch('/', JWTMiddleWare.identification, AuthoMiddleware.mustBeOwner, uploadImage.upload.fields( [
+    {name: 'id_user', maxCount: 1 },
+    {name: 'login', maxCount: 1 },
+    {name: 'pswd', maxCount: 1 },
+    {name: 'email', maxCount: 1 },
+    {name: 'birthdate', maxCount: 1 },
+    {name: 'phone', maxCount: 1 },
+    {name: 'is_admin', maxCount: 1 },
+    {name: 'picture', maxCount: 1 },
+]), accountController.patchAccount);
 
 /**
  * @swagger
@@ -223,10 +223,10 @@ router.patch('/', JWTMiddleWare.identification, AuthoMiddleware.mustBeOwner, acc
  *          content:
  *              application/json:
  *                  schema:
- *                      $ref: '#/components/schemas/AccountDelete'
+ *                      $ref: '#/components/schemas/Delete'
  *      responses:
  *          204:
- *            $ref: '#/components/responses/AccountDelete'
+ *            $ref: '#/components/responses/Delete'
  *          400:
  *              $ref: '#/components/responses/ErrorJWT'
  *          401:
@@ -234,7 +234,7 @@ router.patch('/', JWTMiddleWare.identification, AuthoMiddleware.mustBeOwner, acc
  *          403:
  *              $ref: '#/components/responses/mustBeOwner'
  *          404:
- *              $ref: '#/components/responses/AccountDeleteFailed'
+ *              $ref: '#/components/responses/DeleteFailed'
  *          500:
  *              description: Erreur serveur
  */

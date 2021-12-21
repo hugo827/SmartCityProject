@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 
 import Delete from './Delete';
 import Pagination from './Pagination';
-import * as buffer from "buffer";
 
 
 class Table extends React.Component {
@@ -67,11 +66,6 @@ class Table extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        if (this.props.name !== prevProps.name) {
-            this.setState({offset: 0});
-            this.getCountRecord();
-            this.callAPI();
-        }
         if(this.state.offset !== prevState.offset) {
             this.callAPI();
         }
@@ -95,10 +89,14 @@ class Table extends React.Component {
                         {
                             this.props.colonnes.map((c, i) => {
                                 if(c.split("_")[0] !== "is") {
-                                    if(c === 'picture' && data[c] !== null) {
-                                        return <td key={i}> <img className={"imageView"} src={`data:image/png;base64,${data[c]}`} alt={'none'}/></td>;
+                                    if(c === 'picture') {
+                                        return <td key={i}> <img className={"view"} src={`data:image/*;base64,${data[c]}`} alt={'no pic'}/></td>;
                                     } else {
-                                        return <td key={i}>{data[c]}</td>;
+                                        if( data[c] !== null && (c === 'birthdate' || c === 'release_date')) {
+                                            return <td key={i}>{data[c].substr(0,10)}</td>;
+                                        } else {
+                                            return <td key={i}>{data[c]}</td>;
+                                        }
                                     }
                                 } else {
                                     return <td key={i}>{data[c] ? "True" : "false" }</td>;
@@ -123,19 +121,19 @@ class Table extends React.Component {
             <div>
                 <div className="nameTable"><h1>Tables : {this.props.name} </h1></div>
 
-                <div className="table">
-                    <table className="fl-table">
-                        <thead>
+                <div className="table" key={this.props.name}>
+                    <table className="fl-table" key={`table${this.props.name}`}>
+                        <thead key={`thead${this.props.name}`}>
                             <tr key={'thead'}>
                                 { this.props.colonnes.map( (col, index) => <th key={index}>{col}</th> ) }
                                 <th key="action">Action</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody key={`tbody${this.props.name}`}>
                             {rows}
                         </tbody>
                     </table>
-                    <Pagination totalRecord={this.state.nbRecords} changeOffset={this.changeOffset}/>
+                    <Pagination key={`pag${this.props.name}`} totalRecord={this.state.nbRecords} changeOffset={this.changeOffset}/>
                     <Link to={`/add/${this.props.name.toLowerCase()}`}><button className="btnAdd">Ajouter</button></Link>
                 </div>
             </div>

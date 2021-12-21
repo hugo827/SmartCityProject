@@ -1,8 +1,37 @@
 const pool = require('../scripts/JS/database');
 const Tome = require('../modele/tome');
-const Buffer = require("buffer");
-
-
+const {Buffer} = require("buffer");
+/**
+ * @swagger
+ *  components:
+ *      responses:
+ *          TomeGet:
+ *              description: Le tome a été trouvé
+ *              content:
+ *               application/json:
+ *                   schema:
+ *                       $ref: '#/components/schemas/Tome'
+ */
+/**
+ * @swagger
+ * components:
+ *  schemas:
+ *      Tome:
+ *          type: object
+ *          properties:
+ *              id_tome:
+ *                  type: integer
+ *              number:
+ *                  type: integer
+ *              title:
+ *                  type: string
+ *              release_date:
+ *                  type: string
+ *              is_last_tome:
+ *                  type: boolean
+ *              fk_manga:
+ *                  type: integer
+ */
 module.exports.getTome = async (req, res) => {
     const client = await pool.connect();
     const idTexte = req.params.id;
@@ -13,6 +42,12 @@ module.exports.getTome = async (req, res) => {
         } else {
             const {rows: tomes} = await Tome.getTome(id, client);
             const tome = tomes[0]
+
+
+            if(tome.picture !== null) {
+                    let base64 = Buffer.from(tome.picture, 'hex').toString('base64');
+                    tome.picture = base64;
+            }
 
             if(tome !== undefined){
                 res.json(tome);
@@ -31,13 +66,14 @@ module.exports.getTome = async (req, res) => {
 module.exports.postTome = async (req, res) => {
     if(req.session) {
 
-        const body = req.body;
-        const {number, title, release_date, is_last_tome, fk_manga} = body;
-        const picture =  req.files.picture;
+        const {number, title, release_date, is_last_tome, fk_manga} = req.body;
+        const picture =  req.files.picture[0];
+        const pictureHex = picture.buffer.toString('hex');
+        const pictureHexX = '\\x' + pictureHex;
 
         const client = await pool.connect();
         try{
-            await Tome.postTome(number, title, picture, release_date,is_last_tome, fk_manga, client);
+            await Tome.postTome(number, title, pictureHexX, release_date,is_last_tome, fk_manga, client);
             res.sendStatus(201);
         } catch (error){
             console.error(error);
@@ -53,12 +89,15 @@ module.exports.postTome = async (req, res) => {
 module.exports.patchTome = async (req, res) => {
     if(req.session) {
 
-        const {id, number, title, release_date, is_last_tome, fk_manga} = req.body;
-        const picture =  req.files.picture;
+        const {id_tome, number, title, release_date, is_last_tome, fk_manga} = req.body;
+        const picture =  req.files.picture[0];
+        const pictureHex = picture.buffer.toString('hex');
+        const pictureHexX = '\\x' + pictureHex;
+
 
         const client = await pool.connect();
         try{
-            await Tome.patchTome(id, number, title, picture, release_date, is_last_tome, fk_manga, client);
+            await Tome.patchTome(id_tome, number, title, pictureHexX, release_date, is_last_tome, fk_manga, client);
             res.sendStatus(204);
         } catch (error) {
             console.error(error);
@@ -132,7 +171,10 @@ module.exports.getAllTome = async (req, res) => {
         const {rows: tomes} = await Tome.getAllTome(client, offset);
 
         for(let i in tomes) {
-            console.log(Buffer.isBuffer(tomes[i].picture));
+            if(tomes[i].picture !== null) {
+                let base64 = Buffer.from(tomes[i].picture, 'hex').toString('base64');
+                tomes[i].picture = base64;
+            }
         }
 
         if(tomes !== undefined){
@@ -171,6 +213,14 @@ module.exports.getTomeManga = async (req, res) => {
             res.sendStatus(400);
         } else {
             const {rows: tomes} = await Tome.getTome(id, client);
+
+            for(let i in tomes) {
+                if(tomes[i].picture !== null) {
+                    let base64 = Buffer.from(tomes[i].picture, 'hex').toString('base64');
+                    tomes[i].picture = base64;
+                }
+            }
+
             if(tomes !== undefined){
                 res.json(tomes);
             } else {

@@ -3,6 +3,7 @@ require("dotenv").config();
 const process = require('process');
 const jwt = require('jsonwebtoken');
 const pool = require('../scripts/JS/database');
+const {Buffer} = require("buffer");
 
 const account = require('../modele/login');
 const AccountMod = require('../modele/account');
@@ -100,13 +101,15 @@ module.exports.login = async (req, res) => {
 module.exports.inscription = async (req, res) => {
     const {login, pswd, email, birthdate, phone, is_admin} = req.body;
     const picture = req.files.picture[0];
+    const pictureHex = picture.buffer.toString('hex');
+    const pictureHexX = '\\x' + pictureHex;
 
     if(login === undefined || pswd === undefined || email === undefined) {
         res.sendStatus(400);
     } else {
         const client = await pool.connect();
         try {
-            await AccountMod.createAccount(client, login, pswd, email, birthdate, phone, picture, is_admin);
+            await AccountMod.createAccount(client, login, pswd, email, birthdate, phone, pictureHexX, is_admin);
             res.sendStatus(201);
         } catch (e) {
             console.error(e);
@@ -161,9 +164,17 @@ module.exports.getAllAccount = async (req, res) => {
     const offsetText = req.params.offset;
     const offset = parseInt(offsetText);
     try{
-        const {rows: Mangas} = await AccountMod.getAllAccount(client, offset);
-        if(Mangas !== undefined){
-            res.json(Mangas);
+        const {rows: accounts} = await AccountMod.getAllAccount(client, offset);
+
+        for(let i in accounts) {
+            if(accounts[i].picture !== null) {
+                let base64 = Buffer.from(accounts[i].picture, 'hex').toString('base64');
+                accounts[i].picture = base64;
+            }
+        }
+
+        if(accounts !== undefined){
+            res.json(accounts);
         } else {
             res.sendStatus(404);
         }
@@ -257,6 +268,12 @@ module.exports.getAccountId = async (req, res) =>  {
         } else {
             const {rows: Users} = await AccountMod.getAccountId(client, id);
             const user = Users[0];
+
+            if(user.picture !== null) {
+                let base64 = Buffer.from(user.picture, 'hex').toString('base64');
+                user.picture = base64;
+            }
+
             if(user !== undefined){
                 res.json(user);
             } else {
@@ -281,10 +298,13 @@ module.exports.getAccountId = async (req, res) =>  {
 module.exports.patchAccount = async (req, res) => {
     if(req.session) {
         const {id_user, login, pswd, email, birthdate, phone, is_admin} = req.body;
+        console.log(req.body);
         const picture = req.files.picture[0];
+        const pictureHex = picture.buffer.toString('hex');
+        const pictureHexX = '\\x' + pictureHex;
         const client = await pool.connect();
         try{
-            await AccountMod.patchAccount(id_user, login, pswd, email, birthdate, phone, picture, is_admin, client);
+            await AccountMod.patchAccount(id_user, login, pswd, email, birthdate, phone, pictureHexX, is_admin, client);
             res.sendStatus(204);
         } catch (error){
             console.error(error);
@@ -302,27 +322,27 @@ module.exports.patchAccount = async (req, res) => {
  * @swagger
  *  components:
  *      responses:
- *          AccountDelete:
- *              description: Le compte a été supprimer
+ *          Delete:
+ *              description: La suppression à correctement été effectué
  */
 
 /**
  * @swagger
  *  components:
  *      responses:
- *          AccountDeleteFailed:
- *              description: Une erreur est survenue lors de la supression du comptes
+ *          DeleteFailed:
+ *              description: Une erreur est survenue lors de la supression
  *              content:
  *                  application/json:
  *                      schema:
- *                        $ref: '#/components/schemas/AccountDeleteFailed'
+ *                        $ref: '#/components/schemas/DeleteFailed'
  */
 
 /**
  * @swagger
  * components:
  *  schemas:
- *      AccountDelete:
+ *      Delete:
  *          type: object
  *          properties:
  *              id_user:
@@ -332,7 +352,7 @@ module.exports.patchAccount = async (req, res) => {
  * @swagger
  * components:
  *  schemas:
- *      AccountDeleteFailed:
+ *      DeleteFailed:
  *          type: object
  *          properties:
  *              error:
@@ -343,13 +363,14 @@ module.exports.deleteAccount = async (req, res) => {
         const {id} = req.body;
         const client = await pool.connect();
         try{
+
             await client.query("BEGIN;");
             const resDelReadTome = await readedTome.deleteUserReadedTome(id, client);
-            if(resDelReadTome.rowCount !== 1) {
+            if(resDelReadTome.rowCount >= 1) {
                 const resDelFollowedManga = await followedManga.deleteUserFollowedManga(id, client);
-                if(resDelFollowedManga.rowCount !== 1) {
+                if(resDelFollowedManga.rowCount >= 1) {
                     const resDelAccount = await AccountMod.deleteAccount(id, client);
-                    if(resDelAccount.rowCount !== 1) {
+                    if(resDelAccount.rowCount >= 1) {
                         await client.query("COMMIT")
                         res.sendStatus(204);
                     } else {
@@ -361,8 +382,14 @@ module.exports.deleteAccount = async (req, res) => {
                     res.status(404).json({error: "Un problème est survenue lors de la suppression des mangas suivit !"});
                 }
             } else {
-                await client.query("ROLLBACK");
-                res.status(404).json({error: "Un problème est survenue lors de la suppression des tomes lu !"});
+                const resDelAccount = await AccountMod.deleteAccount(id, client);
+                if(resDelAccount.rowCount >= 1) {
+                    await client.query("COMMIT")
+                    res.sendStatus(204);
+                } else {
+                    await client.query("ROLLBACK");
+                    res.status(404).json({error: "Un problème est survenue lors de la suppression des tomes lu !"});
+                }
             }
         } catch (error){
             await client.query("ROLLBACK");

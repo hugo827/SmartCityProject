@@ -3,6 +3,7 @@ const Manga = require('../modele/manga');
 const Tome = require("../modele/tome");
 const FollowedManga = require('../modele/followedManga');
 const ReadedTome = require('../modele/readedTome');
+const {Buffer} = require("buffer");
 
 
 /**
@@ -53,6 +54,13 @@ module.exports.getManga = async (req, res) => {
         } else {
             const {rows: Mangas} = await Manga.getManga(id, client);
             const manga = Mangas[0];
+
+
+            if(manga.picture !== null) {
+                let hex = Buffer.from(manga.picture, 'hex').toString('base64');
+                manga.picture = hex;
+            }
+
             if(manga !== undefined){
                 res.json(manga);
             } else {
@@ -111,6 +119,14 @@ module.exports.getAllManga = async (req, res) => {
     const offset = parseInt(offsetText);
     try{
         const {rows: Mangas} = await Manga.getAllManga(client, offset);
+
+        for(let i in Mangas) {
+            if(Mangas[i].picture !== null) {
+                let hex = Buffer.from(Mangas[i].picture, 'hex').toString('base64');
+                Mangas[i].picture = hex;
+            }
+        }
+
         if(Mangas !== undefined){
             res.json(Mangas);
         } else {
@@ -129,10 +145,15 @@ module.exports.getAllManga = async (req, res) => {
 module.exports.postManga = async (req, res) => {
     if(req.session) {
         const {title, synopsis, new_price, type, sub_genre, author, publisher, is_finish} = req.body;
-        const picture =  req.files.picture[0]
+        const picture =  req.files.picture[0];
+
         const client = await pool.connect();
         try{
-            await Manga.postManga(title, synopsis, new_price, type, sub_genre, author, publisher, picture, is_finish, client);
+
+            const pictureHex = picture.buffer.toString('hex');
+            const pictureHexX = '\\x' + pictureHex;
+
+            await Manga.postManga(title, synopsis, new_price, type, sub_genre, author, publisher, pictureHexX, is_finish, client);
             res.sendStatus(201);
         } catch (error){
             console.error(error);
@@ -146,13 +167,46 @@ module.exports.postManga = async (req, res) => {
 
 };
 
+/**
+ * @swagger
+ * components:
+ *  schemas:
+ *      Manga:
+ *          type: object
+ *          properties:
+ *              id_manga:
+ *                  type: integer
+ *              title:
+ *                  type: string
+ *              synopsis:
+ *                  type: string
+ *                  format: text
+ *              new_price:
+ *                  type: integer
+ *              type:
+ *                  type: string
+ *              sub_genre:
+ *                  type: string
+ *              author:
+ *                  type: string
+ *              publisher:
+ *                  type: string
+ *              is_finish:
+ *                  type: boolean
+ *              picture:
+ *                  type: object
+ *                  format: image
+ */
 module.exports.patchManga = async (req, res) => {
     if(req.session) {
-        const {id, title, synopsis, new_price, type, sub_genre, author, publisher, is_finish} = req.body;
-        const picture =  req.files.picture[0]
+        const {id_manga, title, synopsis, new_price, type, sub_genre, author, publisher, is_finish} = req.body;
+        const picture =  req.files.picture[0];
+        const pictureHex = picture.buffer.toString('hex');
+        const pictureHexX = '\\x' + pictureHex;
+
         const client = await pool.connect();
         try{
-            await Manga.patchManga(id, title, synopsis, new_price, type, sub_genre, author, publisher, picture, is_finish, client);
+            await Manga.patchManga(id_manga, title, synopsis, new_price, type, sub_genre, author, publisher, pictureHexX, is_finish, client);
             res.sendStatus(204);
         } catch (error){
             console.error(error);
@@ -197,7 +251,7 @@ module.exports.deleteManga = async (req, res) => {
             }
             if (isDelete) {
                 await client.query("COMMIT")
-                res.sendStatus(201);
+                res.sendStatus(204);
             } else {
                 await client.query("ROLLBACK");
                 res.status(404).json({error: "Un problème est survenue lors de la suppression du manga"});

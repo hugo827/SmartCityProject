@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from "react-router-dom";
 
 
 class AddReadedTome extends React.Component {
@@ -19,7 +20,12 @@ class AddReadedTome extends React.Component {
 
     sendAPI = async (formData) => {
         const URL = `http://localhost:3001/readedTome/`;
-
+        const body = JSON.stringify({
+            read_at: this.state.readAt,
+            fk_followed_manga: this.state.fkFollowedManga,
+            fk_user: this.state.fkUser,
+            fk_tome: this.state.fkTome,
+        });
         return await fetch(URL, {
             method : "POST",
             headers: {
@@ -27,7 +33,7 @@ class AddReadedTome extends React.Component {
                 'Accept':'application/json',
                 'authorization' : `Bearer ${this.state.token}`
             },
-            body: formData
+            body: body
         });
     };
 
@@ -69,12 +75,13 @@ class AddReadedTome extends React.Component {
         return (
             <div className="nameTable">
                 <form className="form">
-                    <label>readAt : </label> <input type="date" onChange={(e) => this.setState({readAt: e.target.value})} />
-                    <label>fkFollowedManga : </label> <input type="number" onChange={(e) => this.setState({fkFollowedManga: e.target.value})} />
-                    <label>fkUser : </label> <input type="number" onChange={(e) => this.setState({fkUser: e.target.value})} />
-                    <label>fkTome : </label> <input type="number" onChange={(e) => this.setState({fkTome: e.target.value})} />
+                    <p>Tout est obligatoire</p>
+                    <label>readAt : </label> <input type="date" onChange={(e) => this.setState({readAt: e.target.value})} required/>
+                    <label>fkFollowedManga (l'id entré doit corresponde à un id existant dans followed_manga) : </label> <input type="number" onChange={(e) => this.setState({fkFollowedManga: e.target.value})} required/>
+                    <label>fkUser (l'id entré doit correspondre à l'id fkUser du fkFollowedManga): </label> <input type="number" onChange={(e) => this.setState({fkUser: e.target.value})} required/>
+                    <label>fkTome (l'id entré doit correspondre à l'id d'un tome existant dans tome): </label> <input type="number" onChange={(e) => this.setState({fkTome: e.target.value})} required/>
                    <button type="submit" onClick={(e) => this.sendForm(e)}>submit</button>
-                    <input  type="submit" value="Cancel"/>
+                    <Link to={`/${this.props.name}`}><input  type="submit" value="Cancel" /></Link>
                 </form>
             </div>
         )

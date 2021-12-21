@@ -94,9 +94,10 @@ class UpdateFollowedManga extends React.Component {
         return (
             <div className="nameTable">
                 <form className="form">
-                    <label>State : </label> <input defaultValue={this.state.rows[`state`]} onChange={(e) => this.setState({stateManga: e.target.value})} />
-                    <label>fk Manga : </label> <input defaultValue={this.state.rows[`fk_manga`]} onChange={(e) => this.setState({fkManga: e.target.value})} />
-                    <label>fk User : </label> <input  defaultValue={this.state.rows[`fk_user`]}  onChange={(e) => this.setState({fkUser: e.target.value})} />
+                    <p>Tout est obligatoire</p>
+                    <label>State (Obligatoire entre 1 et 3 -- 1 =terminer -- 2=en cours -- 3=pas commence)  : </label> <input defaultValue={this.state.rows[`state`]} onChange={(e) => this.setState({stateManga: e.target.value})} required/>
+                    <label>fk Manga (L'id entrée doit exister dans manga): </label> <input defaultValue={this.state.rows[`fk_manga`]} onChange={(e) => this.setState({fkManga: e.target.value})} required/>
+                    <label>fk User (l'id entrée doit exister dans user) : </label> <input  defaultValue={this.state.rows[`fk_user`]}  onChange={(e) => this.setState({fkUser: e.target.value})} required/>
                     <button type="submit" onClick={(e) => this.sendForm(e)}>submit</button>
                     <Link to={`/${this.state.name}`}><input  type="submit" value="Cancel"/></Link>
                 </form>

@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from "react-router-dom";
 
 class AddManga extends React.Component {
 
@@ -45,8 +46,8 @@ class AddManga extends React.Component {
         formData.append('sub_genre', this.state.subGenre);
         formData.append('author', this.state.author);
         formData.append('publisher', this.state.publisher);
-        formData.append('picture', this.state.picture);
         formData.append('is_finish', this.state.isFinish);
+        formData.append('picture', this.state.picture);
 
         try {
             await this.sendAPI(formData);
@@ -65,7 +66,7 @@ class AddManga extends React.Component {
                 subGenre: "",
                 author: "",
                 publisher: "",
-                picture: null,
+                picture: [],
                 isFinish: false,
            });
     }
@@ -74,17 +75,17 @@ class AddManga extends React.Component {
         return (
             <div className="nameTable">
                 <form className="form">
-                    <label>Title : </label> <input onChange={(e) => this.setState({title: e.target.value})} required/>
-                    <label>Synopsis : </label> <input onChange={(e) => this.setState({synopsis: e.target.value})} required/>
-                    <label>Price : </label> <input onChange={(e) => this.setState({price: e.target.value})} required/>
-                    <label>type : </label> <input onChange={(e) => this.setState({type: e.target.value})} required/>
-                    <label>sub Genre : </label> <input onChange={(e) => this.setState({subGenre: e.target.value})} required/>
-                    <label>Author : </label> <input onChange={(e) => this.setState({author: e.target.value})} required/>
-                    <label>publisher : </label> <input onChange={(e) => this.setState({publisher: e.target.value})} required/>
-                    <label>picture : </label> <input type="file" accept={"image/*"} onChange={(e) => this.setState({picture: e.target.files[0]})}/>
-                    <label>is finish : </label> <input type="checkbox" onChange={(e) => this.setState({isFinish: !this.state.isFinish})}/>
-                    <button type="submit" onClick={(e) => this.sendForm(e)}>submit</button>
-                    <input  type="submit" value="Cancel"/>
+                    <label>Title : </label> <input type={"text"} onChange={(e) => this.setState({title: e.target.value})} required />
+                    <label>Synopsis : </label> <input type={"text"} onChange={(e) => this.setState({synopsis: e.target.value})} required/>
+                    <label>Price : </label> <input type={"text"} onChange={(e) => this.setState({price: e.target.value})} required/>
+                    <label>type : </label> <input type={"text"} onChange={(e) => this.setState({type: e.target.value})} required/>
+                    <label>sub Genre : </label> <input type={"text"} onChange={(e) => this.setState({subGenre: e.target.value})} required/>
+                    <label>Author : </label> <input type={"text"} onChange={(e) => this.setState({author: e.target.value})} required/>
+                    <label>publisher : </label> <input type={"text"} onChange={(e) => this.setState({publisher: e.target.value})} required/>
+                    <label>picture : </label> <input type="file" accept={"image/*"} onChange={(e) => this.setState({picture: e.target.files[0]})} required/>
+                    <label>is finish : </label> <input type="checkbox" onChange={(e) => this.setState({isFinish: !this.state.isFinish})} required/>
+                    <button type={"submit"} onClick={(e) => this.sendForm(e)}>submit</button>
+                    <Link to={`/${this.props.name}`}><input  type="submit" value="Cancel" /></Link>
                 </form>
             </div>
         )

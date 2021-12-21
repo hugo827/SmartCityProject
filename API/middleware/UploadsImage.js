@@ -1,6 +1,6 @@
 const multer = require('multer');
 
-const storageMemory =  multer.memoryStorage('multer');
+const storageMemory =  multer.memoryStorage();
 
 const upload = multer( {
     limits: {

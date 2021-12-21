@@ -17,23 +17,23 @@ export default function Page() {
     switch (name) {
         case 'manga' :
             return (
-                <Table name={name} colonnes={colManga} />
+                <Table key={name} name={name} colonnes={colManga} />
             )
         case 'account' :
             return (
-                <Table name={name} colonnes={colAccount} />
+                <Table key={name} name={name} colonnes={colAccount} />
             )
         case 'tome' :
             return (
-                <Table name={name} colonnes={colTome} />
+                <Table key={name} name={name} colonnes={colTome} />
             )
         case 'readedtome' :
             return (
-                <Table name={name} colonnes={colReadedTome} />
+                <Table key={name} name={name} colonnes={colReadedTome} />
             )
         case 'followedmanga' :
             return (
-                <Table name={name} colonnes={colFollowedManga} />
+                <Table key={name} name={name} colonnes={colFollowedManga} />
             )
         case 'home' :
             return <Home />;

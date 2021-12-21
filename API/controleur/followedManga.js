@@ -2,6 +2,34 @@ const pool = require('../scripts/JS/database');
 const FollowedManga = require('../modele/followedManga');
 const ReadedTome = require('../modele/readedTome');
 
+
+/**
+ * @swagger
+ *  components:
+ *      responses:
+ *          FollowedMangaGet:
+ *              description: Le manga suivit a été trouvé
+ *              content:
+ *               application/json:
+ *                   schema:
+ *                       $ref: '#/components/schemas/FollowedManga'
+ */
+/**
+ * @swagger
+ * components:
+ *  schemas:
+ *      FollowedManga:
+ *          type: object
+ *          properties:
+ *              id_followed_manga:
+ *                  type: integer
+ *              state:
+ *                  type: integer
+ *              fk_manga:
+ *                  type: integer
+ *              fk_user:
+ *                  type: integer
+ */
 module.exports.getFollowedManga = async (req, res) => {
     const client = await pool.connect();
     const idText = req.params.id;

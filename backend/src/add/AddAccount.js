@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from "react-router-dom";
 
 
 class AddAccount extends React.Component {
@@ -14,7 +15,7 @@ class AddAccount extends React.Component {
             email: 0,
             birthdate: null,
             phone: "",
-            picture: null,
+            picture: [],
             isAdmin: false,
         }
 
@@ -48,8 +49,8 @@ class AddAccount extends React.Component {
         formData.append('email', this.state.email);
         formData.append('birthdate', this.state.birthdate);
         formData.append('phone', this.state.phone);
-        formData.append('picture', this.state.picture);
         formData.append('is_admin', this.state.isAdmin);
+        formData.append('picture', this.state.picture);
 
         try {
             await this.sendAPI(formData);
@@ -67,7 +68,7 @@ class AddAccount extends React.Component {
             email: 0,
             birthdate: "",
             phone: "",
-            picture: null,
+            picture: [],
             isAdmin: false,
         });
     }
@@ -77,15 +78,16 @@ class AddAccount extends React.Component {
         return (
             <div className="nameTable">
                 <form className="form">
-                    <label>login : </label> <input onChange={(e) => this.setState({login: e.target.value})} />
-                    <label>password : </label> <input onChange={(e) => this.setState({password: e.target.value})} />
+                    <p>Tout est obligatoire</p>
+                    <label>login : </label> <input onChange={(e) => this.setState({login: e.target.value})} required/>
+                    <label>password : </label> <input onChange={(e) => this.setState({password: e.target.value})} required/>
                     <label>email : </label> <input type="email" onChange={(e) => this.setState({email: e.target.value})} />
-                    <label>birthdate : </label> <input type={"date"} onChange={(e) => this.setState({birthdate: e.target.value})} />
-                    <label>phone : </label> <input type="number" onChange={(e) => this.setState({phone: e.target.value})}/>
-                    <label>picture : </label> <input type="file" accept={"image/*"} onChange={(e) => this.setState({picture: e.target.files[0]})}/>
-                    <label>is admin : </label> <input type="checkbox" onChange={(e) => this.setState({isAdmin: !this.state.isFinish})}/>
+                    <label>birthdate : </label> <input type={"date"} onChange={(e) => this.setState({birthdate: e.target.value})} required/>
+                    <label>phone : </label> <input type="number" onChange={(e) => this.setState({phone: e.target.value})} required/>
+                    <label>picture : </label> <input type="file" accept={"image/*"} onChange={(e) => this.setState({picture: e.target.files[0]})} required/>
+                    <label>is admin : </label> <input type="checkbox" onChange={(e) => this.setState({isAdmin: !this.state.isFinish})} required/>
                     <button type="submit" onClick={(e) => this.sendForm(e)}>submit</button>
-                    <input  type="submit" value="Cancel"/>
+                    <Link to={`/${this.props.name}`}><input  type="submit" value="Cancel" /></Link>
                 </form>
             </div>
         )

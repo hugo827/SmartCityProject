@@ -14,10 +14,11 @@ class UpdateTome extends React.Component {
 
             numberTome: "",
             title: "",
-            picture: null,
+            picture: [],
             releaseDate: null,
             isLastTome: false,
             fkManga: null,
+            previewPicture: null
         }
     }
 
@@ -54,7 +55,7 @@ class UpdateTome extends React.Component {
 
     testSetState() {
         this.setState({title: this.state.rows['title']});
-        this.setState({picture: this.state.rows['picture']});
+        this.setState({previewPicture: this.state.rows['picture']});
         this.setState({releaseDate: this.state.rows['release_date']});
         this.setState({isLastTome: this.state.rows['is_last_tome']});
         this.setState({fkManga: this.state.rows['fk_manga']});
@@ -81,13 +82,13 @@ class UpdateTome extends React.Component {
     async sendForm(event){
         event.preventDefault();
         const formData = new FormData();
-        formData.append('id', this.state.id);
+        formData.append('id_tome', this.state.id);
         formData.append('number', this.state.numberTome);
         formData.append('title', this.state.title);
-        formData.append('picture', this.state.picture);
         formData.append('release_date', this.state.releaseDate);
         formData.append('is_last_tome', this.state.isLastTome);
         formData.append('fk_manga', this.state.fkManga);
+        formData.append('picture', this.state.picture);
 
         try {
             await this.sendAPI(formData);
@@ -104,12 +105,13 @@ class UpdateTome extends React.Component {
         return (
             <div className="nameTable">
                 <form className="form">
-                    <label>Number : </label> <input defaultValue={this.state.numberTome} onChange={(e) => this.setState({numberTome: e.target.value})} />
+                    <p>Tout est obligatoire</p>
+                    <label>Number : </label> <input defaultValue={this.state.numberTome} onChange={(e) => this.setState({numberTome: e.target.value})} required/>
                     <label>title : </label> <input defaultValue={this.state.title} onChange={(e) => this.setState({title: e.target.value})} />
-                    <label>picture : </label> <input type="file" accept={"image/*"} defaultValue={this.state.picture} onChange={(e) => this.setState({picture: e.target.files})} />
-                    <label>Release date  : </label> <input type={"date"} defaultValue={this.state.releaseDate} onChange={(e) => this.setState({releaseDate: e.target.value})} />
-                    <label>is last tome  : </label> <input type="checkbox" defaultValue={!this.state.isLastTome} onChange={(e) => this.setState({isLastTome: e.target.value})}/>
-                    <label>fk Manga : </label> <input defaultValue={this.state.fkManga} onChange={(e) => this.setState({fkManga: e.target.value})} />
+                    <label>picture : </label> <input type="file" accept={"image/*"} defaultValue={this.state.picture} onChange={(e) => this.setState({picture: e.target.files[0]})} required/>
+                    <label>Release date  : </label> <input type={"date"} defaultValue={this.state.releaseDate} onChange={(e) => this.setState({releaseDate: e.target.value})} required/>
+                    <label>is last tome  : </label> <input type="checkbox" defaultValue={!this.state.isLastTome} onChange={(e) => this.setState({isLastTome: e.target.value})} required/>
+                    <label>fk Manga (L'id entrée doit correspondre à un id existant dans manga): </label> <input defaultValue={this.state.fkManga} onChange={(e) => this.setState({fkManga: e.target.value})} required/>
                     <button type="submit" onClick={(e) => this.sendForm(e)}>submit</button>
                     <Link to={`/${this.state.name}`}><input  type="submit" value="Cancel"/></Link>
                 </form>

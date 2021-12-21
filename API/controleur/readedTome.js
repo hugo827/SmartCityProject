@@ -2,7 +2,29 @@ const pool = require('../scripts/JS/database');
 const ReadedTome = require('../modele/readedTome');
 const Manga = require("../modele/manga");
 
-
+/**
+ * @swagger
+ *  components:
+ *      responses:
+ *          Count:
+ *              description: La liste des tomes lu d'un manga en particulier
+ *              content:
+ *               application/json:
+ *                   schema:
+ *                       $ref: '#/components/schemas/ReadedTomeList'
+ */
+/**
+ * @swagger
+ * components:
+ *  schemas:
+ *      ListTomeLuParMangaSuvit:
+ *          type: object
+ *          properties:
+ *              fk_user:
+ *                  type: integer
+ *              fk_manga:
+ *                  type: integer
+ */
 module.exports.getReadedTome = async (req, res) => {
     const client = await pool.connect();
     const {fk_manga, fk_user} = req.body;
@@ -25,6 +47,17 @@ module.exports.getReadedTome = async (req, res) => {
     }
 }
 
+/**
+ * @swagger
+ *  components:
+ *      responses:
+ *          ReadedTome:
+ *              description:  renvoie les information d'un tome lu a partir de l'id passé en paramètre
+ *              content:
+ *               application/json:
+ *                   schema:
+ *                       $ref: '#/components/schemas/ReadedTomeList'
+ */
 module.exports.getReadedTomeId = async (req, res) => {
     const client = await pool.connect();
     const idText = req.params.id;
@@ -75,7 +108,24 @@ module.exports.postReadedTome = async (req, res) => {
     }
 
 };
-
+/**
+ * @swagger
+ * components:
+ *  schemas:
+ *      ReadedTome:
+ *          type: object
+ *          properties:
+ *              id_readed_tome:
+ *                  type: integer
+ *              read_at:
+ *                  type: string
+ *              fk_followed_manga:
+ *                  type: integer
+ *              fk_user:
+ *                  type: integer
+ *              fk_tome:
+ *                  type: integer
+ */
 module.exports.patchReadedTome = async (req, res) => {
     if(req.session) {
         const {id, read_at, fk_followed_manga, fk_user, fk_tome} = req.body;
