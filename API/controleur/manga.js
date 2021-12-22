@@ -17,33 +17,7 @@ const {Buffer} = require("buffer");
  *                   schema:
  *                       $ref: '#/components/schemas/Manga'
  */
-/**
- * @swagger
- * components:
- *  schemas:
- *      Manga:
- *          type: object
- *          properties:
- *              id_manga:
- *                  type: integer
- *              login:
- *                  type: string
- *              pswd:
- *                  type: string
- *                  format: text
- *              email:
- *                  type: string
- *              birthdate:
- *                  type: object
- *                  format: date
- *              phone:
- *                  type: number
- *              picture:
- *                  type: object
- *                  format: image
- *              is_admin:
- *                  type: boolean
- */
+
 module.exports.getManga = async (req, res) => {
     const client = await pool.connect();
     const idTexte = req.params.id;
@@ -60,6 +34,7 @@ module.exports.getManga = async (req, res) => {
                 let hex = Buffer.from(manga.picture, 'hex').toString('base64');
                 manga.picture = hex;
             }
+
 
             if(manga !== undefined){
                 res.json(manga);
@@ -90,29 +65,33 @@ module.exports.getManga = async (req, res) => {
  * components:
  *  schemas:
  *      MangaList:
- *          type: object
- *          properties:
- *              id_manga:
- *                  type: integer
- *              title:
- *                  type: string
- *              synopsis:
- *                  type: string
- *              new_price:
- *                  type: integer
- *              type:
- *                  type: string
- *              sub_genre:
- *                  type: string
- *              author:
- *                  type: string
- *              publisher:
- *                  type: string
- *              picture:
- *                  type: object
- *              is_finish:
- *                  type: boolean
+ *          type: array
+ *          items:
+ *              type: object
+ *              properties:
+ *                  id_manga:
+ *                      type: integer
+ *                  title:
+ *                      type: string
+ *                  synopsis:
+ *                      type: string
+ *                  new_price:
+ *                      type: integer
+ *                  type:
+ *                      type: string
+ *                  sub_genre:
+ *                      type: string
+ *                  author:
+ *                      type: string
+ *                  publisher:
+ *                      type: string
+ *                  picture:
+ *                      type: string
+ *                      format: base64
+ *                  is_finish:
+ *                      type: boolean
  */
+
 module.exports.getAllManga = async (req, res) => {
     const client = await pool.connect();
     const offsetText = req.params.offset;
@@ -191,11 +170,21 @@ module.exports.postManga = async (req, res) => {
  *                  type: string
  *              publisher:
  *                  type: string
+ *              picture:
+ *                  type: string
+ *                  format: base64
  *              is_finish:
  *                  type: boolean
- *              picture:
- *                  type: object
- *                  format: image
+ *          required:
+ *              - id_manga
+ *              - title
+ *              - synopsis
+ *              - new_price
+ *              - type
+ *              - sub_genre
+ *              - author
+ *              - publisher
+ *              - picture
  */
 module.exports.patchManga = async (req, res) => {
     if(req.session) {

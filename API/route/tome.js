@@ -27,7 +27,7 @@ router.get('/nb', TomeControleur.getCountTome);
  *  get:
  *      tags:
  *         - Tome
- *      description: Renvoie un objet contenant un ensemble d'objet de type account. La taille de l'objet renvoyé est limiter par la requête sql. (2 temporairement pour les tests)
+ *      description: Renvoie un tableau d'objet de la table tome. La taille du tableau renvoyé est limité par la requête sql. (2 temporairement pour les tests)
  *      parameters:
  *          - name: offset
  *            description: Nombre permettant de séléctionner les occurences d'une table a partir de celui-ci
@@ -51,20 +51,20 @@ router.get('/all/:offset', TomeControleur.getAllTome);
  *  get:
  *      tags:
  *         - Tome
- *      description: Renvoie les informations d'un tome demande.
+ *      description: Renvoie un tableau de tome correspondant à un manga
  *      requestBody:
- *          description: l'id d'un tome
+ *          description: L'id d'un tome
  *          content:
  *              application/json:
  *                  schema:
- *                      $ref: '#/components/schemas/TomeList'
+ *                      $ref: '#/components/schemas/Delete'
  *      responses:
  *          200:
- *              $ref: '#/components/responses/TomeGet'
+ *              $ref: '#/components/responses/TomeList'
  *          400:
- *              description: L'id passé n'est pas un nombre - Erreur imputable à l'utilisateur.
+ *              description: L'id passée n'est pas un nombre - Erreur imputable à l'utilisateur.
  *          404:
- *              description: Manga non trouvé
+ *              description: Tomes non trouvés
  *          500:
  *              description: Erreur serveur
  *
@@ -90,7 +90,7 @@ router.get('/', TomeControleur.getTomeManga);
  *          400:
  *              description: L'id passé n'est pas un nombre - Erreur imputable à l'utilisateur.
  *          404:
- *              description: Manga non trouvé
+ *              description: Tome non trouvé
  *          500:
  *              description: Erreur serveur
  *
@@ -104,16 +104,22 @@ router.get('/:id', TomeControleur.getTome);
  *          - Tome
  *      description: Permet la création d'un tome
  *      requestBody:
- *          description: Toutes les attribut de la table sont passé dans le body pour l'ajout d'un manga.
+ *          description: Toutes les attributs nécessaire de la table sont passée dans le body pour l'ajout d'un tome.
  *          content:
- *              application/json:
+ *              multipart/form-data:
  *                  schema:
- *                      $ref: '#/components/schemas/TomeList'
+ *                      $ref: '#/components/schemas/TomePost'
  *      responses:
  *          201:
  *            description: Tome ajouté
+ *          402:
+ *              description: (code 400) Une ou plusieurs données required ne sont pas défénis - Erreur imputable au client.
  *          400:
- *              description: Une ou plusieurs données required ne sont pas défénis - Erreur imputable au client.
+ *              $ref: '#/components/responses/ErrorJWT'
+ *          401:
+ *              $ref: '#/components/responses/MissingJWT'
+ *          403:
+ *              $ref: '#/components/responses/mustBeAdmin'
  *          500:
  *              description: Erreur serveur
  */
@@ -139,7 +145,7 @@ router.post('/',JWTMiddleWare.identification, AuthoMiddleware.mustBeAdmin, uploa
  *          content:
  *              multipart/form-data:
  *                  schema:
- *                      $ref: '#/components/schemas/TomeList'
+ *                      $ref: '#/components/schemas/Tome'
  *      responses:
  *          201:
  *              description: Le tome a été mis à jour

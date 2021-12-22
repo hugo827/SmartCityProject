@@ -15,7 +15,7 @@ const uploadImage = require("../middleware/UploadsImage");
  *  get:
  *      tags:
  *          - Manga
- *      description: Renvoie un string correspond au nombre d'occurrences dans la table
+ *      description: Renvoie un string correspondant au nombre d'occurrences dans la table
  *      responses:
  *          200:
  *              $ref: '#/components/responses/Count'
@@ -29,10 +29,10 @@ router.get('/nb', MangaControleur.getCountManga);
  *  get:
  *      tags:
  *         - Manga
- *      description: Renvoie un objet contenant un ensemble d'objet de type account. La taille de l'objet renvoyé est limiter par la requête sql. (2 temporairement pour les tests)
+ *      description: Renvoie un objet contenant un ensemble d'objets du type account. La taille de l'objet renvoyé est limitée par la requête Sql. (2 temporairement pour les tests)
  *      parameters:
  *          - name: offset
- *            description: Nombre permettant de séléctionner les occurences d'une table a partir de celui-ci
+ *            description: Nombre permettant de sélectionner les occurrences d'une table à partir de celui-ci
  *            in: path
  *            required: true
  *            schema:
@@ -81,16 +81,22 @@ router.get('/:id', MangaControleur.getManga);
  *          - Manga
  *      description: Permet la création d'un manga
  *      requestBody:
- *          description: Toutes les attribut de la table sont passé dans le body pour l'ajout d'un manga.
+ *          description: Tous les attributs de la table sont passé dans le body pour l'ajout d'un manga.
  *          content:
- *              application/json:
+ *              multipart/form-data:
  *                  schema:
  *                      $ref: '#/components/schemas/Manga'
  *      responses:
  *          201:
- *            description: Manga ajouté
+ *              description: Manga ajouté
  *          400:
- *              description: Une ou plusieurs données required ne sont pas défénis - Erreur imputable au client.
+ *              $ref: '#/components/responses/ErrorJWT'
+ *          401:
+ *              $ref: '#/components/responses/MissingJWT'
+ *          403:
+ *              $ref: '#/components/responses/mustBeAdmin'
+ *          402:
+ *              description: (aussi 403) Une ou plusieurs données required ne sont pas défénis - Erreur imputable au client.
  *          500:
  *              description: Erreur serveur
  */
@@ -121,8 +127,8 @@ router.post('/',JWTMiddleWare.identification, AuthoMiddleware.mustBeAdmin, uploa
  *                  schema:
  *                      $ref: '#/components/schemas/Manga'
  *      responses:
- *          201:
- *              $ref: '#/components/responses/MangaUpdate'
+ *          204:
+ *               description: Le manga a été mis à jour
  *          400:
  *              $ref: '#/components/responses/ErrorJWT'
  *          401:
@@ -131,13 +137,6 @@ router.post('/',JWTMiddleWare.identification, AuthoMiddleware.mustBeAdmin, uploa
  *              $ref: '#/components/responses/mustBeOwner'
  *          500:
  *              description: Erreur serveur
- */
-/**
- * @swagger
- *  components:
- *      responses:
- *          MangaUpdate:
- *              description: Le manga a été mis à jour
  */
 router.patch('/',JWTMiddleWare.identification, AuthoMiddleware.mustBeAdmin, uploadImage.upload.fields( [
     {name: 'id_manga', maxCount: 1},

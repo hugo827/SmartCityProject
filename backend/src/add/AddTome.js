@@ -7,7 +7,7 @@ class AddTome extends React.Component {
         super(props);
         this.state = {
             name : this.props.name,
-            token : localStorage.getItem('token'),
+            token : sessionStorage.getItem('token'),
 
             number: 0,
             title: "",
@@ -49,11 +49,11 @@ class AddTome extends React.Component {
         formData.append('picture', this.state.picture);
 
         try {
-            await this.sendAPI(formData);
-            await window.alert("Votre tome a bien et ajouter");
-            this.resetState();
+            const response = await this.sendAPI(formData);
+            response === 204 ? window.alert("Votre tome a bien et ajouter") : window.alert("un probbléme est survenue");
+            //this.resetState();
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
     }
 
@@ -70,7 +70,6 @@ class AddTome extends React.Component {
 
 
     render() {
-
         return (
             <div className="nameTable">
                 <form className="form">

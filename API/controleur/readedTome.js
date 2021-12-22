@@ -2,22 +2,12 @@ const pool = require('../scripts/JS/database');
 const ReadedTome = require('../modele/readedTome');
 const Manga = require("../modele/manga");
 
-/**
- * @swagger
- *  components:
- *      responses:
- *          Count:
- *              description: La liste des tomes lu d'un manga en particulier
- *              content:
- *               application/json:
- *                   schema:
- *                       $ref: '#/components/schemas/ReadedTomeList'
- */
+
 /**
  * @swagger
  * components:
  *  schemas:
- *      ListTomeLuParMangaSuvit:
+ *      ReadedTomeByManga:
  *          type: object
  *          properties:
  *              fk_user:
@@ -56,7 +46,7 @@ module.exports.getReadedTome = async (req, res) => {
  *              content:
  *               application/json:
  *                   schema:
- *                       $ref: '#/components/schemas/ReadedTomeList'
+ *                       $ref: '#/components/schemas/ReadedTome'
  */
 module.exports.getReadedTomeId = async (req, res) => {
     const client = await pool.connect();
@@ -167,7 +157,7 @@ module.exports.deleteReadedTome = async (req, res) => {
  *  components:
  *      responses:
  *          ReadedTomeList:
- *              description:  renvoie la liste des comptes à partir du offset (limiter a n)
+ *              description:  Renvoie la liste des tomes lus à partir du offset (limiter à n)
  *              content:
  *               application/json:
  *                   schema:
@@ -178,18 +168,20 @@ module.exports.deleteReadedTome = async (req, res) => {
  * components:
  *  schemas:
  *      ReadedTomeList:
- *          type: object
- *          properties:
- *              id_readed_tome:
- *                  type: integer
- *              read_at:
- *                  type: string
- *              fk_followed_manga:
- *                  type: integer
- *              fk_user:
- *                  type: integer
- *              fk_tome:
- *                  type: integer
+ *          type: array
+ *          items:
+ *              type: object
+ *              properties:
+ *                  id_readed_tome:
+ *                      type: integer
+ *                  read_at:
+ *                      type: string
+ *                  fk_followed_manga:
+ *                      type: integer
+ *                  fk_user:
+ *                      type: integer
+ *                  fk_tome:
+ *                      type: integer
  */
 module.exports.getAllReadedTome = async (req, res) => {
     const client = await pool.connect();

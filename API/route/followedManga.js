@@ -12,7 +12,7 @@ const AuthoMiddleware = require('../middleware/authorization');
  *  get:
  *      tags:
  *          - FollowedManga
- *      description: Renvoie un string correspond au nombre d'occurrences dans la table
+ *      description: Renvoie un string correspondant au nombre d'occurrences dans la table
  *      responses:
  *          200:
  *              $ref: '#/components/responses/Count'
@@ -26,7 +26,7 @@ router.get('/nb', FollowedMangaControleur.getCountFollowedManga);
  *  get:
  *      tags:
  *         - FollowedManga
- *      description: Renvoie un objet contenant un ensemble d'objet de type account. La taille de l'objet renvoyé est limiter par la requête sql. (2 temporairement pour les tests)
+ *      description: Renvoie un tableau d'objet de type account. La taille du tableau renvoyé est limité par la requête sql. (2 temporairement pour les tests)
  *      parameters:
  *          - name: offset
  *            description: Nombre permettant de séléctionner les occurences d'une table a partir de celui-ci
@@ -64,7 +64,7 @@ router.get('/all/:offset', FollowedMangaControleur.getAllFollowedManga);
  *          400:
  *              description: L'id passé n'est pas un nombre - Erreur imputable à l'utilisateur.
  *          404:
- *              description: Manga non trouvé
+ *              description: Manga suvit non trouvé
  *          500:
  *              description: Erreur serveur
  *
@@ -78,16 +78,20 @@ router.get('/:id', FollowedMangaControleur.getFollowedManga);
  *          - FollowedManga
  *      description: Permet la création d'un manga suivit
  *      requestBody:
- *          description: Toutes les attribut de la table sont passé dans le body pour l'ajout d'un manga suivit.
+ *          description: Tous les attributs nécessaire de la table sont passé dans le body pour l'ajout d'un manga suivit.
  *          content:
  *              application/json:
  *                  schema:
- *                      $ref: '#/components/schemas/FollowedManga'
+ *                      $ref: '#/components/schemas/FollowedMangaPost'
  *      responses:
  *          201:
- *            description: Manga suivit ajouté
+ *              description: Manga suivit ajouté
  *          400:
  *              description: Une ou plusieurs données required ne sont pas défénis - Erreur imputable au client.
+ *          401:
+ *              $ref: '#/components/responses/MissingJWT'
+ *          403:
+ *              $ref: '#/components/responses/mustBeOwner'
  *          500:
  *              description: Erreur serveur
  */
@@ -104,7 +108,7 @@ router.post('/',JWTMiddleWare.identification, AuthoMiddleware.mustBeOwner,  Foll
  *      requestBody:
  *          description: Toutes les données d'un manga suivit sont passé dans le body pour la mise à jour du client ainsi que le token dans le headers.
  *          content:
- *              multipart/form-data:
+ *              application/json:
  *                  schema:
  *                      $ref: '#/components/schemas/FollowedManga'
  *      responses:

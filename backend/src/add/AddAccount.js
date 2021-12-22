@@ -8,7 +8,7 @@ class AddAccount extends React.Component {
         super(props);
         this.state = {
             name : this.props.name,
-            token : localStorage.getItem('token'),
+            token : sessionStorage.getItem('token'),
 
             login: "",
             password: "",
@@ -57,7 +57,7 @@ class AddAccount extends React.Component {
             await window.alert("Un nouveau compte à bien été crée");
             this.resetState();
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
     }
 

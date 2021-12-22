@@ -17,7 +17,7 @@ export default function Page() {
     switch (name) {
         case 'manga' :
             return (
-                <Table key={name} name={name} colonnes={colManga} />
+                <Table key={name} name={name} colonnes={[`colManga`]} />
             )
         case 'account' :
             return (

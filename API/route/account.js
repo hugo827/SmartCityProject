@@ -15,7 +15,7 @@ const uploadImage = require("../middleware/UploadsImage");
  *  get:
  *      tags:
  *          - Account
- *      description: Renvoie un string correspond au nombre d'occurrences dans la table
+ *      description: Renvoie un string correspondant au nombre d'occurrences dans la table
  *      responses:
  *          200:
  *              $ref: '#/components/responses/Count'
@@ -30,14 +30,14 @@ router.get('/nb', accountController.getCountAccount);
  *  get:
  *      tags:
  *          - Account
- *      description: Renvoie un objet.
+ *      description: Utilisée pour la vérification que c'est un admin et renvoie un objet.
  *      security:
  *          - bearerAuth: []
  *      responses:
  *          200:
  *            description: Renvoie un objet contenant un booléen admin
  *            content:
- *                text/plain:
+ *                application/json:
  *                    schema:
  *                        type: object
  *                        properties:
@@ -59,10 +59,10 @@ router.get('/admin', JWTMiddleWare.identification, AuthoMiddleware.mustBeAdmin, 
  *  get:
  *      tags:
  *         - Account
- *      description: Renvoie un objet contenant un ensemble d'objet de type account. La taille de l'objet renvoyé est limiter par la requête sql. (2 temporairement pour les tests)
+ *      description: Renvoie un tableau d'objet du type account. La taille du tableau renvoyé est limitée par la requête Sql. (2 temporairement pour les tests)
  *      parameters:
  *          - name: offset
- *            description: Nombre permettant de séléctionner les occurences d'une table a partir de celui-ci
+ *            description: Nombre permettant de sélectionner les occurrences d'une table à partir de celui-ci
  *            in: path
  *            required: true
  *            schema:
@@ -122,7 +122,7 @@ router.get('/:id', accountController.getAccountId);
  *          200:
  *            description: un token JWT
  *            content:
- *                text/plain:
+ *                application/json:
  *                    schema:
  *                        type: string
  *          400:
@@ -142,9 +142,9 @@ router.post('/login', accountController.login);
  *          - Account
  *      description: Permet l'inscription d'une personne en verifiant les données passées dans le body
  *      requestBody:
- *          description: Toutes les attribut de la table sont passé dans le body pour l'inscription. Admin sera toujours a false. Seul un administrateur peut ajouter un nouveau administrateur.
+ *          description: Toutes les attribut nécessaire de la table sont passé dans le body pour l'inscription. Admin sera toujours a false. Seul un administrateur peut ajouter un nouveau administrateur.
  *          content:
- *              application/json:
+ *              multipart/form-data:
  *                  schema:
  *                      $ref: '#/components/schemas/Inscription'
  *      responses:
@@ -183,12 +183,12 @@ router.post('/inscription', uploadImage.upload.fields( [
  *      requestBody:
  *          description: Toutes les données d'un utilisateur -> id, login, password, email, ... sont passé dans le body pour la mise à jour du client ainsi que le token dans le headers.
  *          content:
- *              application/json:
+ *              multipart/form-data:
  *                  schema:
  *                      $ref: '#/components/schemas/Account'
  *      responses:
  *          201:
- *              $ref: '#/components/responses/AccountUpdate'
+ *              $ref: '#/components/responses/Update'
  *          400:
  *              $ref: '#/components/responses/ErrorJWT'
  *          401:

@@ -10,7 +10,7 @@ app.use(cors());
 app.use(Router);
 
 app.get('/', (req, res) => {
-    res.send('Hello World!');
+    res.send('Welcome !');
 });
 
 app.listen(port, () => {

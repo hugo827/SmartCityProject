@@ -9,7 +9,7 @@ class Home extends React.Component {
         return (
             <div className="home">
                 <p>Welcome</p>
-                <p>{ localStorage.getItem("admin") }</p>
+                <p>{ sessionStorage.getItem("admin") }</p>
             </div>
         )
     }

@@ -1,7 +1,7 @@
 
  export default async function Delete(name, id) {
     let valid = window.confirm(" !!!! Vous allez SUPPRIMER un record !!!!\n Vous ne pourrez pas revenir en arriere !");
-    const token  = localStorage.getItem('token');
+    const token  = sessionStorage.getItem('token');
 
     if(valid) {
         const urlApi = "http://localhost:3001/";

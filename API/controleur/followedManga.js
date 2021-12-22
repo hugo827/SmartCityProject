@@ -54,6 +54,20 @@ module.exports.getFollowedManga = async (req, res) => {
     }
 }
 
+/**
+ * @swagger
+ * components:
+ *  schemas:
+ *      FollowedMangaPost:
+ *          type: object
+ *          properties:
+ *              state:
+ *                  type: integer
+ *              fk_manga:
+ *                  type: integer
+ *              fk_user:
+ *                  type: integer
+ */
 module.exports.postFollowedManga = async (req, res) => {
     if(req.session) {
         const user = req.session;

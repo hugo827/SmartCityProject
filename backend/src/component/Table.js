@@ -33,7 +33,7 @@ class Table extends React.Component {
                     console.error(error);
                 });
         } else {
-            console.log("fetch n'est pas disponible")
+            console.error("fetch n'est pas disponible")
         }
     }
 
@@ -55,7 +55,7 @@ class Table extends React.Component {
                     console.error(error);
                 });
         } else {
-            console.log("fetch n'est pas disponible")
+            console.error("fetch n'est pas disponible")
         }
     }
 
@@ -92,11 +92,7 @@ class Table extends React.Component {
                                     if(c === 'picture') {
                                         return <td key={i}> <img className={"view"} src={`data:image/*;base64,${data[c]}`} alt={'no pic'}/></td>;
                                     } else {
-                                        if( data[c] !== null && (c === 'birthdate' || c === 'release_date')) {
-                                            return <td key={i}>{data[c].substr(0,10)}</td>;
-                                        } else {
-                                            return <td key={i}>{data[c]}</td>;
-                                        }
+                                        return <td key={i}>{data[c]}</td>;
                                     }
                                 } else {
                                     return <td key={i}>{data[c] ? "True" : "false" }</td>;
@@ -106,7 +102,7 @@ class Table extends React.Component {
                         <td>
                             <div>
                                 <button className="BTN DEL" onClick={ () => this.delete(data[`${this.props.colonnes[0]}`])}>DEL</button>
-                                <Link  to={`/update/${this.props.name}${data[`${this.props.colonnes[0]}`]}`}><button className="BTN UPD">UPD</button></Link>
+                                <Link  to={`/update/${this.props.name}/${data[`${this.props.colonnes[0]}`]}`}><button className="BTN UPD">UPD</button></Link>
                             </div>
                         </td>
                     </tr>

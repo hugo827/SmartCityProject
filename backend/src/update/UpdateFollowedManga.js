@@ -9,7 +9,7 @@ class UpdateFollowedManga extends React.Component {
         this.state = {
             id: this.props.id,
             name : this.props.name,
-            token : localStorage.getItem('token'),
+            token : sessionStorage.getItem('token'),
             rows: [],
 
             stateManga: 3,
@@ -85,7 +85,7 @@ class UpdateFollowedManga extends React.Component {
             await window.alert("Le compte a bien ete mis a jour !");
 
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
     }
 

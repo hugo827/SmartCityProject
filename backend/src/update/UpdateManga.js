@@ -8,7 +8,7 @@ class UpdateManga extends React.Component {
         this.state = {
             id : this.props.id,
             name : this.props.name,
-            token : localStorage.getItem('token'),
+            token : sessionStorage.getItem('token'),
             rows : [],
 
             title: "",
@@ -55,21 +55,17 @@ class UpdateManga extends React.Component {
     }
 
     testSetState() {
-       const title = "title";
-       this.setState({[`${title}`]: this.state.rows['title']});
+       this.setState({title: this.state.rows['title']});
        this.setState({synopsis: this.state.rows['synopsis']});
        this.setState({price: this.state.rows['new_price']});
        this.setState({subGenre: this.state.rows['sub_genre']});
        this.setState({author: this.state.rows['author']});
        this.setState({publisher: this.state.rows['publisher']});
        this.setState({picture: this.state.rows['picture']});
-       this.setState({isFinish: !this.state.rows['is_finish']});
+       this.setState({isFinish: this.state.rows['is_finish']});
        this.setState({type: this.state.rows['type']});
    }
 
-    submitAdd(event) {
-        this.sendForm(event);
-    }
 
     sendAPI = async (formData) => {
         const URL = `http://localhost:3001/${this.state.name}`;
@@ -103,13 +99,12 @@ class UpdateManga extends React.Component {
             await this.sendAPI(formData);
             await window.alert("Votre manga a bien ete modifier");
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
     }
 
 
      render() {
-
         return (
             <div className="nameTable">
                 <form className="form">
@@ -122,7 +117,7 @@ class UpdateManga extends React.Component {
                     <label>Author : </label> <input defaultValue={this.state.author} onChange={(e) => this.setState({author: e.target.value})} required/>
                     <label>publisher : </label> <input defaultValue={this.state.publisher} onChange={(e) => this.setState({publisher: e.target.value})} required/>
                     <label>picture : </label> <input defaultValue={this.state.picture} type="file" accept={"image/*"} onChange={(e) => this.setState({picture: e.target.files[0]})} required/>
-                    <label>is finish : </label> <input defaultValue={!this.state.isFinish} type="checkbox" onChange={(e) => this.setState({isFinish: !this.state.isFinish})} required/>
+                    <label>is finish : </label> <input checked={this.state.isFinish} type="checkbox" onChange={(e) => this.setState({isFinish: !this.state.isFinish})} required/>
                     <button type="submit" onClick={(e) => this.sendForm(e)}>submit</button>
                     <Link to={`/${this.state.name}`}><input  type="submit" value="Cancel"/></Link>
                 </form>

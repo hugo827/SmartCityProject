@@ -15,11 +15,11 @@ import Login from "../pages/Login";
 
 function Way(){
 
-    const [token, setToken ] = useState(localStorage.getItem("token"));
-    const [admin, setAdmin ] = useState(localStorage.getItem("admin"));
+    const [token, setToken ] = useState(sessionStorage.getItem("token"));
+    const [admin, setAdmin ] = useState(sessionStorage.getItem("admin"));
 
     if((!token && !admin)) {
-        localStorage.clear();
+        sessionStorage.clear();
         return <Login  setToken={setToken} setAdmin={setAdmin}/>
     }
     else {
@@ -30,7 +30,7 @@ function Way(){
                     <Routes>
                         <Route path={"/:name"} element={<Page />} />
                         <Route path="/" element={<Home />} />
-                        <Route path={"/update/:name:id"} element={<Update />} />
+                        <Route path={"/update/:name/:id"} element={<Update />} />
                         <Route path={"/add/:name"} element={<Add />} />
                     </Routes>
                 </Router>

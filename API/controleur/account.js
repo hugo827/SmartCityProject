@@ -97,6 +97,9 @@ module.exports.login = async (req, res) => {
  *              - login
  *              - pswd
  *              - email
+ *              - birthdate
+ *              - phone
+ *              - picture
  */
 module.exports.inscription = async (req, res) => {
     const {login, pswd, email, birthdate, phone, is_admin} = req.body;
@@ -137,27 +140,29 @@ module.exports.inscription = async (req, res) => {
  * components:
  *  schemas:
  *      AccountList:
- *          type: object
- *          properties:
- *              id_user:
- *                  type: integer
- *              login:
- *                  type: string
- *              pswd:
- *                  type: string
- *                  format: text
- *              email:
- *                  type: string
- *              birthdate:
- *                  type: object
- *                  format: date
- *              phone:
- *                  type: number
- *              picture:
- *                  type: object
- *                  format: image
- *              is_admin:
- *                  type: boolean
+ *          type: array
+ *          items:
+ *              type: object
+ *              properties:
+ *                  id_user:
+ *                      type: integer
+ *                  login:
+ *                      type: string
+ *                  pswd:
+ *                      type: string
+ *                      format: text
+ *                  email:
+ *                      type: string
+ *                  birthdate:
+ *                      type: object
+ *                      format: date
+ *                  phone:
+ *                      type: number
+ *                  picture:
+ *                      type: string
+ *                      format: base64
+ *                  is_admin:
+ *                      type: boolean
  */
 module.exports.getAllAccount = async (req, res) => {
     const client = await pool.connect();
@@ -170,6 +175,13 @@ module.exports.getAllAccount = async (req, res) => {
             if(accounts[i].picture !== null) {
                 let base64 = Buffer.from(accounts[i].picture, 'hex').toString('base64');
                 accounts[i].picture = base64;
+            }
+            if(accounts[i].birthdate !== null) {
+                let year = accounts[i].birthdate.getFullYear();
+                let month = accounts[i].birthdate.getMonth();
+                let day = accounts[i].birthdate.getDay();
+                let dateString = `${day}/${month}/${year}`;
+                accounts[i].birthdate = dateString;
             }
         }
 
@@ -257,6 +269,13 @@ module.exports.getCountAccount = async (req, res) => {
  *                  format: image
  *              is_admin:
  *                  type: boolean
+ *          required:
+ *              - id_user
+ *              - login
+ *              - email
+ *              - birthdate
+ *              - phone
+ *              - picture
  */
 module.exports.getAccountId = async (req, res) =>  {
     const client = await pool.connect();
@@ -272,6 +291,15 @@ module.exports.getAccountId = async (req, res) =>  {
             if(user.picture !== null) {
                 let base64 = Buffer.from(user.picture, 'hex').toString('base64');
                 user.picture = base64;
+            }
+            if(user.birthdate !== null) {
+                let year = user.birthdate.getFullYear();
+                let month = user.birthdate.getMonth() +1;
+                let day = user.birthdate.getDay();
+                month = month <= 9 ? `0${month}` : month;
+                day = day <= 9 ? `0${day}` : day;
+                let dateString = `${year}-${month}-${day}`;
+                user.birthdate = dateString;
             }
 
             if(user !== undefined){
@@ -292,13 +320,13 @@ module.exports.getAccountId = async (req, res) =>  {
  * @swagger
  *  components:
  *      responses:
- *          AccountUpdate:
- *              description: Le compte a été mis à jour
+ *          Update:
+ *              description: La mise a jour a correctement été effectué
  */
 module.exports.patchAccount = async (req, res) => {
     if(req.session) {
         const {id_user, login, pswd, email, birthdate, phone, is_admin} = req.body;
-        console.log(req.body);
+
         const picture = req.files.picture[0];
         const pictureHex = picture.buffer.toString('hex');
         const pictureHexX = '\\x' + pictureHex;
@@ -323,7 +351,7 @@ module.exports.patchAccount = async (req, res) => {
  *  components:
  *      responses:
  *          Delete:
- *              description: La suppression à correctement été effectué
+ *              description: La suppression a correctement été effectuée
  */
 
 /**
@@ -345,7 +373,7 @@ module.exports.patchAccount = async (req, res) => {
  *      Delete:
  *          type: object
  *          properties:
- *              id_user:
+ *              id:
  *                  type: integer
  */
 /**

@@ -7,7 +7,7 @@ class AddManga extends React.Component {
         super(props);
         this.state = {
             name : this.props.name,
-            token : localStorage.getItem('token'),
+            token : sessionStorage.getItem('token'),
 
             title: "",
             synopsis: "",
@@ -53,7 +53,7 @@ class AddManga extends React.Component {
             await this.sendAPI(formData);
             await window.alert("Votre manga a bien et ajouter");
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
     }
 

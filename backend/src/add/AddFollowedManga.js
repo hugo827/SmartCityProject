@@ -8,17 +8,13 @@ class AddFollowedManga extends React.Component {
         super(props);
         this.state = {
             name : this.props.name,
-            token : localStorage.getItem('token'),
+            token : sessionStorage.getItem('token'),
 
             stateManga: 3,
             fkManga: 0,
             fkUser: 0,
         }
 
-    }
-
-    submitAdd(event) {
-        this.sendForm(event);
     }
 
     sendAPI = async (formData) => {
@@ -57,7 +53,7 @@ class AddFollowedManga extends React.Component {
             await window.alert("Votre manga suivit a bien ete ajoute");
             this.resetState();
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
     }
 

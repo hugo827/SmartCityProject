@@ -9,7 +9,7 @@ class UpdateTome extends React.Component {
         this.state = {
             id : this.props.id,
             name : this.props.name,
-            token : localStorage.getItem('token'),
+            token : sessionStorage.getItem('token'),
             rows : [],
 
             numberTome: "",
@@ -62,10 +62,6 @@ class UpdateTome extends React.Component {
         this.setState({numberTome: this.state.rows['number']});
     }
 
-    submitAdd(event) {
-        this.sendForm(event);
-    }
-
     sendAPI = async (formData) => {
         const URL = `http://localhost:3001/${this.state.name}`;
         return await fetch(URL, {
@@ -95,8 +91,8 @@ class UpdateTome extends React.Component {
             await window.alert("Votre tome a bien ete modifier");
             /* create redirection */
         } catch (error) {
-            console.log(error);
-            await window.alert('Une erreur est arrivée : ', error);
+            console.error(error);
+            await window.alert('Une erreur est arrivée !');
         }
     }
 
