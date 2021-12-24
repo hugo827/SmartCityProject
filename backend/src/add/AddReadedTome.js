@@ -68,7 +68,24 @@ class AddReadedTome extends React.Component {
         });
     }
 
+    async requiredVerif(event) {
+        let isValid = true;
 
+        const modified = {
+            read_at: this.state.readAt,
+            fk_followed_manga: this.state.fkFollowedManga,
+            fk_user: this.state.fkUser,
+            fk_tome: this.state.fkTome
+        }
+
+        for(let elem in modified ) {
+            if(!(modified[elem] !== "" && modified[elem] !== undefined) && modified[elem] === null) isValid = false;
+            if(elem !== 'read_at' && !isFinite(modified[elem]) ) isValid = false;
+
+        }
+
+        isValid ? await this.sendForm(event) : alert('Tous les champs doivent être complétés et avec des valeurs correct !');
+    }
 
     render() {
 
@@ -76,10 +93,10 @@ class AddReadedTome extends React.Component {
             <div className="nameTable">
                 <form className="form">
                     <p>Tout est obligatoire</p>
-                    <label>readAt : </label> <input type="date" onChange={(e) => this.setState({readAt: e.target.value})} required/>
-                    <label>fkFollowedManga (l'id entré doit corresponde à un id existant dans followed_manga) : </label> <input type="number" onChange={(e) => this.setState({fkFollowedManga: e.target.value})} required/>
-                    <label>fkUser (l'id entré doit correspondre à l'id fkUser du fkFollowedManga): </label> <input type="number" onChange={(e) => this.setState({fkUser: e.target.value})} required/>
-                    <label>fkTome (l'id entré doit correspondre à l'id d'un tome existant dans tome): </label> <input type="number" onChange={(e) => this.setState({fkTome: e.target.value})} required/>
+                    <label>readAt : </label> <input type="date" onChange={(e) => this.setState({readAt: e.target.value})} />
+                    <label>fkFollowedManga (l'id entré doit corresponde à un id existant dans followed_manga) : </label> <input type="number" onChange={(e) => this.setState({fkFollowedManga: e.target.value})} />
+                    <label>fkUser (l'id entré doit correspondre à l'id fkUser du fkFollowedManga): </label> <input type="number" onChange={(e) => this.setState({fkUser: e.target.value})} />
+                    <label>fkTome (l'id entré doit correspondre à l'id d'un tome existant dans tome): </label> <input type="number" onChange={(e) => this.setState({fkTome: e.target.value})} />
                    <button type="submit" onClick={(e) => this.sendForm(e)}>submit</button>
                     <Link to={`/${this.props.name}`}><input  type="submit" value="Cancel" /></Link>
                 </form>

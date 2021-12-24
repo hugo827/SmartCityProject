@@ -33,3 +33,12 @@ module.exports.deleteUserFollowedManga = async (fk_user, client) => {
 module.exports.getFollowedMangaByIdManga = async (fk_manga, client) =>  {
     return await client.query("SELECT id_followed_manga FROM followed_manga WHERE fk_manga = $1", [fk_manga]);
 }
+
+module.exports.getFollowedMangaByUSER = async (id, client) =>  {
+    const {rows} = await client.query("SELECT COUNT(*) FROM followed_manga WHERE fk_user = $1", [id]);
+    return rows[0].count;
+}
+
+module.exports.getFollowedMangaByFKUSER = async (id, client) =>  {
+    return await client.query("SELECT * FROM followed_manga WHERE fk_user = $1", [id]);
+}

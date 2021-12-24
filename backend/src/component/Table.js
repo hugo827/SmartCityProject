@@ -10,6 +10,7 @@ class Table extends React.Component {
     constructor(props) {
         super(props);
         this.state  = {
+            token: sessionStorage.getItem('token'),
             offset : 0,
             nbRecords : [],
             rows: []
@@ -21,9 +22,14 @@ class Table extends React.Component {
         const endUrl = "/all/";
         const table = this.props.name.toLowerCase();
         const page = this.state.offset;
+        const headers = {
+            'Accept':'application/json',
+            'authorization' : `Bearer ${this.state.token}`
+        };
+        const urlFinal = `${url}${table}${endUrl}${page}`;
 
         if (window.fetch) {
-            fetch(url + table + endUrl + page)
+            fetch(urlFinal, {headers: headers})
                 .then( res => {
                     res.json().then( data => {
                         this.setState({rows: data});

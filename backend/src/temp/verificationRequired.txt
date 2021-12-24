@@ -1,0 +1,17 @@
+async requiredVerif() {
+    let isValid = true;
+
+    const modifiedUser = {
+        firstname : this.state.firstname,
+        lastname : this.state.lastname,
+        birthdate : this.state.birthdate,
+        isAdmin : this.state.isAdmin
+        email : this.state.email,
+    }
+
+    for(let element in modifiedUser ) {
+        if(!(modifiedUser[element] !== "" && modifiedUser[element] !== undefined))
+            isValid = false;
+    }
+   isValid ? await sendForm(....) : alert('tous les champs doivent être complétés');
+}

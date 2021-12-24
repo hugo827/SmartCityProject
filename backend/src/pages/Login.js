@@ -38,7 +38,7 @@ class Login extends React.Component {
     verifAdmin(token) {
         const urlAPI ="http://localhost:3001/account/admin";
 
-        fetch(urlAPI, {
+       fetch(urlAPI, {
             method: "GET",
             headers: {
                 'Content-Type':'application/json',
@@ -46,14 +46,14 @@ class Login extends React.Component {
                 'authorization' : `Bearer ${token}`
             },
         }).then( res => {
+            if(res.status === 403) window.alert("vous n'etes pas autorisé à vous connecter!");
             res.json().then( data => {
                 this.props.setAdmin(data['admin']);
                 sessionStorage.setItem("admin", data['admin']);
-            })
-        })
-            .catch( (error) => {
-                console.error(error);
             });
+
+        });
+
     }
 
     connexion = (event) => {

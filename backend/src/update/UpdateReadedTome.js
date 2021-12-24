@@ -50,10 +50,12 @@ class UpdateReadedTome extends React.Component {
     }
 
     testSetState() {
-        this.setState({readAt: this.state.rows['read_at']});
-        this.setState({fkFollowedManga: this.state.rows['fk_followed_manga']});
-        this.setState({fkUser: this.state.rows['fk_user']});
-        this.setState({fkTome: this.state.rows['fk_tome']});
+        this.setState({
+            readAt: this.state.rows['read_at'],
+            fkFollowedManga: this.state.rows['fk_followed_manga'],
+            fkUser: this.state.rows['fk_user'],
+            fkTome: this.state.rows['fk_tome']
+        });
 
     }
 
@@ -88,11 +90,29 @@ class UpdateReadedTome extends React.Component {
 
         try {
             await this.sendAPI();
-            await window.alert("Le compte a bien ete mis a jour !");
-
+            await window.alert("Le tome lu a bien ete mis a jour !");
         } catch (error) {
             console.error(error);
         }
+    }
+
+    async requiredVerif(event) {
+        let isValid = true;
+
+        const modified = {
+            read_at: this.state.readAt,
+            fk_followed_manga: this.state.fkFollowedManga,
+            fk_user: this.state.fkUser,
+            fk_tome: this.state.fkTome
+        }
+
+        for(let elem in modified ) {
+            if(!(modified[elem] !== "" && modified[elem] !== undefined) && modified[elem] === null) isValid = false;
+            if(elem !== 'read_at' && !isFinite(modified[elem]) ) isValid = false;
+
+        }
+
+        isValid ? await this.sendForm(event) : alert('Tous les champs doivent être complétés et avec des valeurs correct !');
     }
 
     render() {
@@ -101,11 +121,11 @@ class UpdateReadedTome extends React.Component {
             <div className="nameTable">
                 <form className="form">
                     <p>Tout est obligatoire</p>
-                    <label>Read at : </label> <input type="date" defaultValue={this.state.rows[`read_at`]} onChange={(e) => this.setState({readAt: e.target.value})} required/>
-                    <label>fk followed manga (doit correspondre a un id existant dans followed manga): </label> <input defaultValue={this.state.rows[`fk_followed_manga`]} onChange={(e) => this.setState({fkFollowedManga: e.target.value})} required/>
-                    <label>fk user (doit correspondre a l'id de fk_user du record fk_followed_manga): </label> <input  defaultValue={this.state.rows[`fk_user`]}  onChange={(e) => this.setState({fkUser: e.target.value})} required/>
-                    <label>fk  tome (doit correspondre a un id existant dans tome): </label> <input  defaultValue={this.state.rows[`fk_tome`]} onChange={(e) => this.setState({fkTome: e.target.value})} required/>
-                   <button type="submit" onClick={(e) => this.sendForm(e)}>submit</button>
+                    <label>Read at : </label> <input type="date" defaultValue={this.state.rows[`read_at`]} onChange={(e) => this.setState({readAt: e.target.value})} />
+                    <label>fk followed manga (doit correspondre a un id existant dans followed manga): </label> <input defaultValue={this.state.rows[`fk_followed_manga`]} onChange={(e) => this.setState({fkFollowedManga: e.target.value})} />
+                    <label>fk user (doit correspondre a l'id de fk_user du record fk_followed_manga): </label> <input  defaultValue={this.state.rows[`fk_user`]}  onChange={(e) => this.setState({fkUser: e.target.value})} />
+                    <label>fk  tome (doit correspondre a un id existant dans tome): </label> <input  defaultValue={this.state.rows[`fk_tome`]} onChange={(e) => this.setState({fkTome: e.target.value})} />
+                   <button type="submit" onClick={(e) => this.requiredVerif(e)}>submit</button>
                     <Link to={`/${this.state.name}`}><input  type="submit" value="Cancel"/></Link>
                 </form>
             </div>

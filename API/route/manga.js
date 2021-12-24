@@ -29,10 +29,10 @@ router.get('/nb', MangaControleur.getCountManga);
  *  get:
  *      tags:
  *         - Manga
- *      description: Renvoie un objet contenant un ensemble d'objets du type account. La taille de l'objet renvoyé est limitée par la requête Sql. (2 temporairement pour les tests)
+ *      description: Renvoie un tableau contenant un ensemble de manga. La taille du tableau renvoyé est limitée par la requête Sql. (2 temporairement pour les tests)
  *      parameters:
  *          - name: offset
- *            description: Nombre permettant de sélectionner les occurrences d'une table à partir de celui-ci
+ *            description: Nombre permettant de sélectionner les enregistrements de la table à partir de celui-ci
  *            in: path
  *            required: true
  *            schema:
@@ -96,7 +96,7 @@ router.get('/:id', MangaControleur.getManga);
  *          403:
  *              $ref: '#/components/responses/mustBeAdmin'
  *          402:
- *              description: (aussi 403) Une ou plusieurs données required ne sont pas défénis - Erreur imputable au client.
+ *              description: (code 403) Une ou plusieurs données required ne sont pas défénis - Erreur imputable au client.
  *          500:
  *              description: Erreur serveur
  */
@@ -134,7 +134,7 @@ router.post('/',JWTMiddleWare.identification, AuthoMiddleware.mustBeAdmin, uploa
  *          401:
  *              $ref: '#/components/responses/MissingJWT'
  *          403:
- *              $ref: '#/components/responses/mustBeOwner'
+ *              $ref: '#/components/responses/mustBeAdmin'
  *          500:
  *              description: Erreur serveur
  */
@@ -173,7 +173,7 @@ router.patch('/',JWTMiddleWare.identification, AuthoMiddleware.mustBeAdmin, uplo
  *          401:
  *              $ref: '#/components/responses/MissingJWT'
  *          403:
- *              $ref: '#/components/responses/mustBeOwner'
+ *              $ref: '#/components/responses/mustBeAdmin'
  *          404:
  *              $ref: '#/components/responses/DeleteFailed'
  *          500:

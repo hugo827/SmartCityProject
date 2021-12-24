@@ -4,6 +4,7 @@ import Home from "../pages/Home";
 import Table from "../component/Table";
 import Error from "../pages/Error";
 
+
 export default function Page() {
     let params = useParams();
     let name = params.name.toLowerCase();
@@ -17,7 +18,7 @@ export default function Page() {
     switch (name) {
         case 'manga' :
             return (
-                <Table key={name} name={name} colonnes={[`colManga`]} />
+                <Table key={name} name={name} colonnes={colManga} />
             )
         case 'account' :
             return (

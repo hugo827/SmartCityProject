@@ -29,11 +29,14 @@ class UpdateAccount extends React.Component {
         const endUrl = "/";
         const table = this.state.name;
         const id = this.state.id;
-
+        const headers = {
+            'Accept':'application/json',
+            'authorization' : `Bearer ${this.state.token}`
+        };
         const urlFinal = url + table + endUrl + id;
 
         if (window.fetch) {
-            fetch(urlFinal)
+            fetch(urlFinal, {headers: headers})
                 .then( res => {
                     res.json().then( data => {
                         this.setState({rows: data});
@@ -106,20 +109,42 @@ class UpdateAccount extends React.Component {
         }
     }
 
+    async requiredVerif(event) {
+        let isValid = true;
+
+        const modified = {
+            login: this.state.login,
+            password: this.state.password,
+            email: this.state.email,
+            birthdate: this.state.birthdate,
+            phone: this.state.phone,
+            picture: this.state.picture,
+            isAdmin: this.state.isAdmin,
+        }
+
+        for(let elem in modified ) {
+            if(!(modified[elem] !== "" && modified[elem] !== undefined))
+                isValid = false;
+            if(elem === 'phone' && !isFinite(modified[elem])) isValid = false;
+        }
+        isValid ? await this.sendForm(event) : alert('Tous les champs doivent être complétés');
+    }
+
+
     render() {
 
         return (
             <div className="nameTable">
                 <form className="form">
                     <p>Tout est obligatoire</p>
-                    <label>login : </label> <input defaultValue={this.state.rows[`login`]} onChange={(e) => this.setState({login: e.target.value})} required/>
-                    <label>password : </label> <input onChange={(e) => this.setState({password: e.target.value})} required/>
-                    <label>email : </label> <input type="email" defaultValue={this.state.rows[`email`]}  onChange={(e) => this.setState({email: e.target.value})} required/>
-                    <label>birthdate : </label> <input type="date" defaultValue={`1990-01-01`} onChange={(e) => this.setState({birthdate: e.target.value})} required/>
-                    <label>phone : </label> <input type="number" defaultValue={this.state.rows[`phone`]} onChange={(e) => this.setState({phone: e.target.value})} required/>
-                    <label>picture : </label> <input type="file" accept={"image/*"}  defaultValue={this.state.rows[`picture`]} onChange={(e) => this.setState({picture: e.target.files[0]})} required/>
-                    <label>is admin : </label> <input type="checkbox" defaultValue={this.state.rows[`is_admin`]} onChange={(e) => this.setState({isAdmin: !this.state.isFinish})} required/>
-                    <button type="submit" onClick={(e) => this.sendForm(e)}>submit</button>
+                    <label>login : </label> <input defaultValue={this.state.rows[`login`]} onChange={(e) => this.setState({login: e.target.value})} />
+                    <label>password : </label> <input onChange={(e) => this.setState({password: e.target.value})} />
+                    <label>email : </label> <input type="email" defaultValue={this.state.rows[`email`]}  onChange={(e) => this.setState({email: e.target.value})} />
+                    <label>birthdate : </label> <input type="date" defaultValue={this.state.rows['birthdate']} onChange={(e) => this.setState({birthdate: e.target.value})} />
+                    <label>phone (uniquement nombre): </label> <input type="number" defaultValue={this.state.rows[`phone`]} onChange={(e) => this.setState({phone: e.target.value})} />
+                    <label>picture : </label> <input type="file" accept={"image/*"}  defaultValue={this.state.rows[`picture`]} onChange={(e) => this.setState({picture: e.target.files[0]})} />
+                    <label>is admin : </label> <input type="checkbox" checked={this.state.rows[`is_admin`]} onChange={(e) => this.setState({isAdmin: !this.state.isFinish})} />
+                    <button type="submit" onClick={(e) => this.requiredVerif(e)}>submit</button>
                     <Link to={`/${this.state.name}`}><input  type="submit" value="Cancel"/></Link>
                 </form>
             </div>

@@ -82,12 +82,28 @@ class UpdateFollowedManga extends React.Component {
         event.preventDefault();
         try {
             await this.sendAPI();
-            await window.alert("Le compte a bien ete mis a jour !");
+            await window.alert("Le manga suivit a bien ete mis a jour !");
 
         } catch (error) {
             console.error(error);
         }
     }
+    async requiredVerif(event) {
+        let isValid = true;
+
+        const modified = {
+            state: this.state.stateManga,
+            fk_manga: this.state.fkManga,
+            fk_user: this.state.fkUser,
+        }
+
+        for(let elem in modified ) {
+            if(!isFinite(modified[elem]))
+                isValid = false;
+        }
+        isValid ? await this.sendForm(event) : alert('Tous les champs doivent être complétés correctement');
+    }
+
 
     render() {
 
@@ -95,10 +111,10 @@ class UpdateFollowedManga extends React.Component {
             <div className="nameTable">
                 <form className="form">
                     <p>Tout est obligatoire</p>
-                    <label>State (Obligatoire entre 1 et 3 -- 1 =terminer -- 2=en cours -- 3=pas commence)  : </label> <input defaultValue={this.state.rows[`state`]} onChange={(e) => this.setState({stateManga: e.target.value})} required/>
-                    <label>fk Manga (L'id entrée doit exister dans manga): </label> <input defaultValue={this.state.rows[`fk_manga`]} onChange={(e) => this.setState({fkManga: e.target.value})} required/>
-                    <label>fk User (l'id entrée doit exister dans user) : </label> <input  defaultValue={this.state.rows[`fk_user`]}  onChange={(e) => this.setState({fkUser: e.target.value})} required/>
-                    <button type="submit" onClick={(e) => this.sendForm(e)}>submit</button>
+                    <label>State (Obligatoire entre 1 et 3 -- 1 =terminer -- 2=en cours -- 3=pas commence)  : </label> <input defaultValue={this.state.rows[`state`]} onChange={(e) => this.setState({stateManga: e.target.value})} />
+                    <label>fk Manga (L'id entrée doit exister dans manga): </label> <input defaultValue={this.state.rows[`fk_manga`]} onChange={(e) => this.setState({fkManga: e.target.value})} />
+                    <label>fk User (l'id entrée doit exister dans user) : </label> <input  defaultValue={this.state.rows[`fk_user`]}  onChange={(e) => this.setState({fkUser: e.target.value})} />
+                    <button type="submit" onClick={(e) => this.requiredVerif(e)}>submit</button>
                     <Link to={`/${this.state.name}`}><input  type="submit" value="Cancel"/></Link>
                 </form>
             </div>

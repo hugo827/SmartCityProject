@@ -33,3 +33,7 @@ module.exports.deleteUserReadedTome = async (fK_user, client) => {
 module.exports.deleteFollowedMangaTome = async (fk_followed_manga, client) => {
     return await client.query("DELETE FROM readed_tome  WHERE fk_followed_manga = $1", [fk_followed_manga]);
 }
+
+module.exports.getReadedTomeUser = async (id, client) => {
+    return await  client.query('SELECT * FROM readed_tome WHERE fk_user = $1', [id]);
+}

@@ -26,7 +26,7 @@ router.get('/nb', FollowedMangaControleur.getCountFollowedManga);
  *  get:
  *      tags:
  *         - FollowedManga
- *      description: Renvoie un tableau d'objet de type account. La taille du tableau renvoyé est limité par la requête sql. (2 temporairement pour les tests)
+ *      description: Renvoie un tableau d'objet contenant les mangas suivit. La taille du tableau renvoyé est limité par la requête sql. (2 temporairement pour les tests)
  *      parameters:
  *          - name: offset
  *            description: Nombre permettant de séléctionner les occurences d'une table a partir de celui-ci
@@ -50,7 +50,7 @@ router.get('/all/:offset', FollowedMangaControleur.getAllFollowedManga);
  *  get:
  *      tags:
  *         - FollowedManga
- *      description: Renvoie les infos du manga suvit correspondant à l'id passé en parametre.
+ *      description: Renvoie les informations du manga suvit correspondant à l'id passé en paramètre.
  *      parameters:
  *          - name: id
  *            description: ID d'un manga suivit
@@ -86,10 +86,12 @@ router.get('/:id', FollowedMangaControleur.getFollowedManga);
  *      responses:
  *          201:
  *              description: Manga suivit ajouté
- *          400:
- *              description: Une ou plusieurs données required ne sont pas défénis - Erreur imputable au client.
+ *          402:
+ *              description: (code 400) Une ou plusieurs données required ne sont pas défénis - Erreur imputable au client.
  *          401:
  *              $ref: '#/components/responses/MissingJWT'
+ *          400:
+ *              $ref: '#/components/responses/ErrorJWT'
  *          403:
  *              $ref: '#/components/responses/mustBeOwner'
  *          500:

@@ -154,7 +154,7 @@ router.post('/',JWTMiddleWare.identification, AuthoMiddleware.mustBeAdmin, uploa
  *          401:
  *              $ref: '#/components/responses/MissingJWT'
  *          403:
- *              $ref: '#/components/responses/mustBeOwner'
+ *              $ref: '#/components/responses/mustBeAdmin'
  *          500:
  *              description: Erreur serveur
  */
@@ -190,7 +190,7 @@ router.patch('/',JWTMiddleWare.identification, AuthoMiddleware.mustBeAdmin, uplo
  *          401:
  *              $ref: '#/components/responses/MissingJWT'
  *          403:
- *              $ref: '#/components/responses/mustBeOwner'
+ *              $ref: '#/components/responses/mustBeAdmin'
  *          404:
  *              $ref: '#/components/responses/DeleteFailed'
  *          500:

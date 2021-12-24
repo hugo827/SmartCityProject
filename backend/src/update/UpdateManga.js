@@ -55,15 +55,16 @@ class UpdateManga extends React.Component {
     }
 
     testSetState() {
-       this.setState({title: this.state.rows['title']});
-       this.setState({synopsis: this.state.rows['synopsis']});
-       this.setState({price: this.state.rows['new_price']});
-       this.setState({subGenre: this.state.rows['sub_genre']});
-       this.setState({author: this.state.rows['author']});
-       this.setState({publisher: this.state.rows['publisher']});
-       this.setState({picture: this.state.rows['picture']});
-       this.setState({isFinish: this.state.rows['is_finish']});
-       this.setState({type: this.state.rows['type']});
+       this.setState({title: this.state.rows['title'],
+            synopsis: this.state.rows['synopsis'],
+            price: this.state.rows['new_price'],
+            subGenre: this.state.rows['sub_genre'],
+            author: this.state.rows['author'],
+            publisher: this.state.rows['publisher'],
+            picture: this.state.rows['picture'],
+            isFinish: this.state.rows['is_finish'],
+            type: this.state.rows['type']
+        });
    }
 
 
@@ -103,8 +104,31 @@ class UpdateManga extends React.Component {
         }
     }
 
+    async requiredVerif(event) {
+        let isValid = true;
 
-     render() {
+        const modified = {
+            title: this.state.title,
+            synopsis: this.state.synopsis,
+            price: this.state.price,
+            type: this.state.type,
+            subGenre: this.state.subGenre,
+            author: this.state.author,
+            publisher: this.state.publisher,
+            picture: this.state.picture,
+            isFinish: this.state.isFinish
+        }
+
+        for(let elem in modified ) {
+            if(!(modified[elem] !== "" && modified[elem] !== undefined)) isValid = false;
+            if(elem === 'price' && !isFinite(modified[elem])) isValid = false;
+        }
+        isValid ? await this.sendForm(event) : alert('Tous les champs doivent être complétés correctement');
+    }
+
+
+
+    render() {
         return (
             <div className="nameTable">
                 <form className="form">
@@ -118,7 +142,7 @@ class UpdateManga extends React.Component {
                     <label>publisher : </label> <input defaultValue={this.state.publisher} onChange={(e) => this.setState({publisher: e.target.value})} required/>
                     <label>picture : </label> <input defaultValue={this.state.picture} type="file" accept={"image/*"} onChange={(e) => this.setState({picture: e.target.files[0]})} required/>
                     <label>is finish : </label> <input checked={this.state.isFinish} type="checkbox" onChange={(e) => this.setState({isFinish: !this.state.isFinish})} required/>
-                    <button type="submit" onClick={(e) => this.sendForm(e)}>submit</button>
+                    <button type="submit" onClick={(e) => this.requiredVerif(e)}>submit</button>
                     <Link to={`/${this.state.name}`}><input  type="submit" value="Cancel"/></Link>
                 </form>
             </div>

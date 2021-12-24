@@ -62,7 +62,7 @@ router.get('/admin', JWTMiddleWare.identification, AuthoMiddleware.mustBeAdmin, 
  *      description: Renvoie un tableau d'objet du type account. La taille du tableau renvoyé est limitée par la requête Sql. (2 temporairement pour les tests)
  *      parameters:
  *          - name: offset
- *            description: Nombre permettant de sélectionner les occurrences d'une table à partir de celui-ci
+ *            description: Nombre permettant de sélectionner les enregistrements de la table à partir de celui-ci
  *            in: path
  *            required: true
  *            schema:
@@ -70,13 +70,19 @@ router.get('/admin', JWTMiddleWare.identification, AuthoMiddleware.mustBeAdmin, 
  *      responses:
  *          200:
  *              $ref: '#/components/responses/AccountList'
+ *          400:
+ *              $ref: '#/components/responses/ErrorJWT'
+ *          401:
+ *              $ref: '#/components/responses/MissingJWT'
+ *          403:
+ *              $ref: '#/components/responses/mustBeAdmin'
  *          404:
  *              description: La liste des comptes n'a pas été trouvée
  *          500:
  *              description: Erreur serveur
  *
  */
-router.get('/all/:offset', accountController.getAllAccount);
+router.get('/all/:offset', JWTMiddleWare.identification, AuthoMiddleware.mustBeAdmin, accountController.getAllAccount);
 
 /**
  * @swagger
@@ -95,15 +101,21 @@ router.get('/all/:offset', accountController.getAllAccount);
  *      responses:
  *          200:
  *              $ref: '#/components/responses/AccountGet'
+ *          402:
+ *              description: (code 400) L'id passé n'est pas un nombre - Erreur imputable à l'utilisateur.
  *          400:
- *              description: L'id passé n'est pas un nombre - Erreur imputable à l'utilisateur.
+ *              $ref: '#/components/responses/ErrorJWT'
+ *          401:
+ *              $ref: '#/components/responses/MissingJWT'
+ *          403:
+ *              $ref: '#/components/responses/mustBeAdmin'
  *          404:
  *              description: Account non trouvé
  *          500:
  *              description: Erreur serveur
  *
  */
-router.get('/:id', accountController.getAccountId);
+router.get('/:id', JWTMiddleWare.identification, AuthoMiddleware.mustBeAdmin, accountController.getAccountId);
 
 /**
  * @swagger
@@ -181,7 +193,7 @@ router.post('/inscription', uploadImage.upload.fields( [
  *      security:
  *          - bearerAuth: []
  *      requestBody:
- *          description: Toutes les données d'un utilisateur -> id, login, password, email, ... sont passé dans le body pour la mise à jour du client ainsi que le token dans le headers.
+ *          description: Toutes les données d'un utilisateur -> id, login, email, ... sont passé dans le body pour la mise à jour du client ainsi que le token dans le headers.
  *          content:
  *              multipart/form-data:
  *                  schema:

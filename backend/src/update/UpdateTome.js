@@ -54,12 +54,13 @@ class UpdateTome extends React.Component {
     }
 
     testSetState() {
-        this.setState({title: this.state.rows['title']});
-        this.setState({previewPicture: this.state.rows['picture']});
-        this.setState({releaseDate: this.state.rows['release_date']});
-        this.setState({isLastTome: this.state.rows['is_last_tome']});
-        this.setState({fkManga: this.state.rows['fk_manga']});
-        this.setState({numberTome: this.state.rows['number']});
+        this.setState({title: this.state.rows['title'],
+            previewPicture: this.state.rows['picture'],
+            releaseDate: this.state.rows['release_date'],
+            isLastTome: this.state.rows['is_last_tome'],
+            fkManga: this.state.rows['fk_manga'],
+            numberTome: this.state.rows['number']
+        });
     }
 
     sendAPI = async (formData) => {
@@ -96,19 +97,38 @@ class UpdateTome extends React.Component {
         }
     }
 
+    async requiredVerif(event) {
+        let isValid = true;
+
+        const modified = {
+            title: this.state.title,
+            picture: this.state.picture,
+            releaseDate: this.state.releaseDate,
+            isLastTome: this.state.isLastTome,
+            fkManga: this.state.fkManga,
+            numberTome: this.state.numberTome
+        }
+
+        for(let elem in modified ) {
+            if(!(modified[elem] !== "" && modified[elem] !== undefined) && modified[elem] === null) isValid = false;
+            if((elem === 'numberTome' || elem === 'fkManga') && !isFinite(modified[elem]) ) isValid = false;
+        }
+
+        isValid ? await this.sendForm(event) : alert('Tous les champs doivent être complétés et avec des valeurs correct !');
+    }
 
     render() {
         return (
             <div className="nameTable">
                 <form className="form">
                     <p>Tout est obligatoire</p>
-                    <label>Number : </label> <input defaultValue={this.state.numberTome} onChange={(e) => this.setState({numberTome: e.target.value})} required/>
+                    <label>Number : </label> <input defaultValue={this.state.numberTome} onChange={(e) => this.setState({numberTome: e.target.value})} />
                     <label>title : </label> <input defaultValue={this.state.title} onChange={(e) => this.setState({title: e.target.value})} />
-                    <label>picture : </label> <input type="file" accept={"image/*"} defaultValue={this.state.picture} onChange={(e) => this.setState({picture: e.target.files[0]})} required/>
-                    <label>Release date  : </label> <input type={"date"} defaultValue={this.state.releaseDate} onChange={(e) => this.setState({releaseDate: e.target.value})} required/>
-                    <label>is last tome  : </label> <input type="checkbox" defaultValue={!this.state.isLastTome} onChange={(e) => this.setState({isLastTome: e.target.value})} required/>
-                    <label>fk Manga (L'id entrée doit correspondre à un id existant dans manga): </label> <input defaultValue={this.state.fkManga} onChange={(e) => this.setState({fkManga: e.target.value})} required/>
-                    <button type="submit" onClick={(e) => this.sendForm(e)}>submit</button>
+                    <label>picture : </label> <input type="file" accept={"image/*"} defaultValue={this.state.picture} onChange={(e) => this.setState({picture: e.target.files[0]})} />
+                    <label>Release date  : </label> <input type={"date"} defaultValue={this.state.releaseDate} onChange={(e) => this.setState({releaseDate: e.target.value})} />
+                    <label>is last tome  : </label> <input type="checkbox" checked={!this.state.isLastTome} onChange={(e) => this.setState({isLastTome: e.target.value})} />
+                    <label>fk Manga (L'id entrée doit correspondre à un id existant dans manga): </label> <input defaultValue={this.state.fkManga} onChange={(e) => this.setState({fkManga: e.target.value})} />
+                    <button type="submit" onClick={(e) => this.requiredVerif(e)}>submit</button>
                     <Link to={`/${this.state.name}`}><input  type="submit" value="Cancel"/></Link>
                 </form>
             </div>

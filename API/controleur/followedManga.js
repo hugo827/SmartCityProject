@@ -158,16 +158,18 @@ module.exports.deleteFollowedManga = async (req, res) => {
  * components:
  *  schemas:
  *      FollowedMangaList:
- *          type: object
- *          properties:
- *              id_followed_manga:
- *                  type: integer
- *              state:
- *                  type: integer
- *              fk_manga:
- *                  type: integer
- *              fk_user:
- *                  type: integer
+ *          type: array
+ *          items:
+ *              type: object
+ *              properties:
+ *                  id_followed_manga:
+ *                      type: integer
+ *                  state:
+ *                      type: integer
+ *                  fk_manga:
+ *                      type: integer
+ *                  fk_user:
+ *                      type: integer
  */
 module.exports.getAllFollowedManga = async (req, res) => {
     const client = await pool.connect();

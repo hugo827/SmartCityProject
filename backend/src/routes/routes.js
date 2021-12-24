@@ -23,18 +23,17 @@ function Way(){
         return <Login  setToken={setToken} setAdmin={setAdmin}/>
     }
     else {
-
-            return(
-                <Router>
-                    <NavBar/>
-                    <Routes>
-                        <Route path={"/:name"} element={<Page />} />
-                        <Route path="/" element={<Home />} />
-                        <Route path={"/update/:name/:id"} element={<Update />} />
-                        <Route path={"/add/:name"} element={<Add />} />
-                    </Routes>
-                </Router>
-            );
+               return(
+                   <Router>
+                       <NavBar/>
+                       <Routes>
+                           <Route path={"/:name"} element={<Page />} />
+                           <Route path="/" element={<Home />} />
+                           <Route path={"/update/:name/:id"} element={<Update />} />
+                           <Route path={"/add/:name"} element={<Add />} />
+                       </Routes>
+                   </Router>
+               );
     }
 
 }

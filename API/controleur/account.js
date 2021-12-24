@@ -7,8 +7,9 @@ const {Buffer} = require("buffer");
 
 const account = require('../modele/login');
 const AccountMod = require('../modele/account');
-const readedTome = require('../modele/readedTome');
-const followedManga = require('../modele/followedManga');
+const FollowedManga = require('../modele/followedManga');
+const ReadedTome = require("../modele/readedTome");
+
 
 /**
  * @swagger
@@ -204,7 +205,7 @@ module.exports.getAllAccount = async (req, res) => {
  *  components:
  *      responses:
  *          Count:
- *              description: Le nombre de comptes utilisateur dans la table
+ *              description: Le nombre d'enregistrements dans la table
  *              content:
  *               application/json:
  *                   schema:
@@ -393,32 +394,37 @@ module.exports.deleteAccount = async (req, res) => {
         try{
 
             await client.query("BEGIN;");
-            const resDelReadTome = await readedTome.deleteUserReadedTome(id, client);
-            if(resDelReadTome.rowCount >= 1) {
-                const resDelFollowedManga = await followedManga.deleteUserFollowedManga(id, client);
-                if(resDelFollowedManga.rowCount >= 1) {
-                    const resDelAccount = await AccountMod.deleteAccount(id, client);
-                    if(resDelAccount.rowCount >= 1) {
-                        await client.query("COMMIT")
-                        res.sendStatus(204);
-                    } else {
-                        await client.query("ROLLBACK");
-                        res.status(404).json({error: "Un problème est survenue lors de la suppression du compte"});
-                    }
-                } else {
-                    await client.query("ROLLBACK");
-                    res.status(404).json({error: "Un problème est survenue lors de la suppression des mangas suivit !"});
-                }
-            } else {
-                const resDelAccount = await AccountMod.deleteAccount(id, client);
-                if(resDelAccount.rowCount >= 1) {
-                    await client.query("COMMIT")
-                    res.sendStatus(204);
-                } else {
-                    await client.query("ROLLBACK");
-                    res.status(404).json({error: "Un problème est survenue lors de la suppression des tomes lu !"});
-                }
+            let promises = [];
+            const {rows : readedTomes} =  await ReadedTome.getReadedTomeUser(id, client);
+
+            if(readedTomes !== undefined && readedTomes.length !== 0) {
+                promises.push(await ReadedTome.deleteUserReadedTome(id, client));
             }
+
+            const {rows: folMangas} =  await FollowedManga.getFollowedMangaByFKUSER(id, client);
+
+            if(folMangas !== undefined && folMangas.length !== 0) {
+                promises.push(await FollowedManga.deleteUserFollowedManga(id, client));
+            }
+            promises.push(await AccountMod.deleteAccount(id, client));
+
+            const response = await Promise.all(promises);
+            let i = 0;
+            let isDelete = true;
+
+            while(i < response.length && isDelete) {
+                if (response[i].rowCount === 0) isDelete = false;
+                i++;
+            }
+
+            if(isDelete) {
+                await client.query("COMMIT")
+                res.sendStatus(204);
+            } else {
+                await client.query("ROLLBACK");
+                res.status(404).json({error: "Un problème est survenue lors de la suppression d'un compte!"});
+            }
+
         } catch (error){
             await client.query("ROLLBACK");
             console.error(error);

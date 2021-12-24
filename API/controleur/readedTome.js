@@ -23,6 +23,16 @@ module.exports.getReadedTome = async (req, res) => {
             res.sendStatus(400);
         } else {
             const {rows: readedTomes} = await ReadedTome.getReadedTome(fk_manga, fk_user, client);
+
+            for(let i in readedTomes) {
+                if(readedTome[i].read_at !== null) {
+                    let year = readedTome[i].read_at.getFullYear();
+                    let month = readedTome[i].read_at.getMonth() +1;
+                    let day = readedTome[i].read_at.getDay();
+                    let dateString = `${year}/${month}/${day}`;
+                    readedTome.read_at = dateString;
+                }
+            }
             if(readedTomes !== undefined){
                 res.json(readedTomes);
             } else {
@@ -58,7 +68,18 @@ module.exports.getReadedTomeId = async (req, res) => {
         } else {
             const {rows: readedTomes} = await ReadedTome.getReadedTomeID(id, client);
             const readedTome = readedTomes[0];
-            if(readedTome !== undefined){
+
+            if(readedTome.read_at !== null) {
+                let year = readedTome.read_at.getFullYear();
+                let month = readedTome.read_at.getMonth() +1;
+                let day = readedTome.read_at.getDay();
+                month = month <= 9 ? `0${month}` : month;
+                day = day <= 9 ? `0${day}` : day;
+                let dateString = `${year}-${month}-${day}`;
+                readedTome.read_at = dateString;
+            }
+
+            if(readedTome){
                 res.json(readedTome);
             } else {
                 res.sendStatus(404);
@@ -188,9 +209,19 @@ module.exports.getAllReadedTome = async (req, res) => {
     const offsetText = req.params.offset;
     const offset = parseInt(offsetText);
     try{
-        const {rows: Mangas} = await ReadedTome.getAllReadedTome(client, offset);
-        if(Mangas !== undefined){
-            res.json(Mangas);
+        const {rows: readedTomes} = await ReadedTome.getAllReadedTome(client, offset);
+
+        for(let i in readedTomes) {
+            if(readedTomes[i].read_at !== undefined) {
+                let year = readedTomes[i].read_at.getFullYear();
+                let month = readedTomes[i].read_at.getMonth() +1;
+                let day = readedTomes[i].read_at.getDay();
+                readedTomes[i].read_at = `${day}/${month}/${year}`;
+            }
+        }
+
+        if(readedTomes !== undefined){
+            res.json(readedTomes);
         } else {
             res.sendStatus(404);
         }

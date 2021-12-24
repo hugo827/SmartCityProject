@@ -65,6 +65,21 @@ class AddFollowedManga extends React.Component {
         });
     }
 
+    async requiredVerif(event) {
+        let isValid = true;
+
+        const modified = {
+            state: this.state.stateManga,
+            fk_manga: this.state.fkManga,
+            fk_user: this.state.fkUser,
+        }
+
+        for(let elem in modified ) {
+            if(!isFinite(modified[elem]))
+                isValid = false;
+        }
+        isValid ? await this.sendForm(event) : alert('Tous les champs doivent être complétés correctement');
+    }
 
 
     render() {
@@ -77,7 +92,7 @@ class AddFollowedManga extends React.Component {
                     <label>fkManga (doit exister dans manga): </label> <input type={"number"} onChange={(e) => this.setState({fkManga: e.target.value})} required/>
                     <label>fkUser (doit exister dans user): </label> <input type={"number"} onChange={(e) => this.setState({fkUser: e.target.value})} required/>
 
-                    <button type="submit" onClick={(e) => this.sendForm(e)}>submit</button>
+                    <button type="submit" onClick={(e) => this.requiredVerif(e)}>submit</button>
                     <Link to={`/${this.props.name}`}><input  type="submit" value="Cancel" /></Link>
                 </form>
             </div>

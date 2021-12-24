@@ -63,8 +63,6 @@ router.get('/all/:offset', ReadedTomeControleur.getAllReadedTome);
  *      responses:
  *          200:
  *              $ref: '#/components/responses/ReadedTome'
- *          400:
- *              description: L'id passé n'est pas un nombre - Erreur imputable à l'utilisateur.
  *          404:
  *              description: Le tomes lu n'a pas été trouvée
  *          500:
@@ -105,7 +103,7 @@ router.get('/', ReadedTomeControleur.getReadedTome);
  *          - ReadedTome
  *      description: Permet la création d'un tome lu
  *      requestBody:
- *          description: Toutes les attribut de la table sont passé dans le body pour l'ajout d'un tome lu.
+ *          description: Tous les attributs de la table sont passé dans le body pour l'ajout d'un tome lu.
  *          content:
  *              application/json:
  *                  schema:
