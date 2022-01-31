@@ -15,11 +15,11 @@ import Login from "../pages/Login";
 
 function Way(){
 
-    const [token, setToken ] = useState(sessionStorage.getItem("token"));
+    const [token, setToken ] = useState(sessionStorage.getItem("token")); // hook -> si valeur existant alors on met le token dans la variable token
     const [admin, setAdmin ] = useState(sessionStorage.getItem("admin"));
 
     if((!token && !admin)) {
-        sessionStorage.clear();
+        sessionStorage.clear(); // pas nécessaire.
         return <Login  setToken={setToken} setAdmin={setAdmin}/>
     }
     else {

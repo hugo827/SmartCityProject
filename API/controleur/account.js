@@ -331,6 +331,7 @@ module.exports.patchAccount = async (req, res) => {
         const picture = req.files.picture[0];
         const pictureHex = picture.buffer.toString('hex');
         const pictureHexX = '\\x' + pictureHex;
+
         const client = await pool.connect();
         try{
             await AccountMod.patchAccount(id_user, login, pswd, email, birthdate, phone, pictureHexX, is_admin, client);

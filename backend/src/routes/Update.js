@@ -11,6 +11,9 @@ export default function Update() {
     let params = useParams();
     let name = params.name.toLowerCase();
 
+    // il y a surement moyen de faire une seul page pour update et add.
+    // et aussi de faire une appelle comme pour les affichage avec un seul composant.
+
     switch (name) {
         case 'manga' :
             return (
