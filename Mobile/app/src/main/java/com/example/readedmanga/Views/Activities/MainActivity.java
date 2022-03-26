@@ -1,9 +1,13 @@
-package com.example.readedmanga;
+package com.example.readedmanga.Views.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.widget.TextView;
+
+import com.example.readedmanga.R;
+import com.example.readedmanga.Repositories.DAO.IDaoManga;
+import com.example.readedmanga.Models.GetPost;
 
 import java.util.List;
 
@@ -30,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        JSonPlaceHolderApi jSonPlaceHolderApi = retrofit.create(JSonPlaceHolderApi.class);
+        IDaoManga jSonPlaceHolderApi = retrofit.create(IDaoManga.class);
 
         Call<List<GetPost>> call = jSonPlaceHolderApi.getPosts();
 

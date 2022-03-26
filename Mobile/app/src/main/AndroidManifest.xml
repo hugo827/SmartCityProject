@@ -14,7 +14,7 @@
         android:theme="@style/Theme.ReadedManga"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".Login.LoginActivity"
+            android:name=".Views.Activities.LoginActivity"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".Views.Activities.MainActivity"
             android:exported="true">
         </activity>
     </application>

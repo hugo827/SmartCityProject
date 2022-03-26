@@ -1,9 +1,7 @@
-package com.example.readedmanga.Login;
+package com.example.readedmanga.Views.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -12,9 +10,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.readedmanga.ApiClient;
-import com.example.readedmanga.MainActivity;
 import com.example.readedmanga.R;
+import com.example.readedmanga.Models.LoginRequest;
+import com.example.readedmanga.Repositories.ApiClient;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -51,15 +49,16 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
         public void login() {
-            LoginRequest  loginRequest = new LoginRequest();
+            LoginRequest loginRequest = new LoginRequest();
             loginRequest.setLogin(login.getText().toString());
             loginRequest.setPassword(pswd.getText().toString());
 
-            Call<LoginResponse> loginResponseCall = ApiClient.getJsonPlaceHolderApi().userLogin(loginRequest);
+            Call<String> loginResponseCall = ApiClient.getUserApi().userLogin(loginRequest);
 
-            loginResponseCall.enqueue(new Callback<LoginResponse>() {
+
+            loginResponseCall.enqueue(new Callback<String>() {
                 @Override
-                public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                public void onResponse(Call<String> call, Response<String> response) {
 
                     if(response.isSuccessful()) {
                         Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
@@ -69,7 +68,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onFailure(Call<LoginResponse> call, Throwable t) {
+                public void onFailure(Call<String> call, Throwable t) {
                     Toast.makeText(LoginActivity.this, t.getLocalizedMessage(), Toast.LENGTH_LONG).show();
                     res.setText(t.getLocalizedMessage());
                 }
