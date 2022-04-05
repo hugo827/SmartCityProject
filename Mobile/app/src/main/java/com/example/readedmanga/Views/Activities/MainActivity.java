@@ -5,17 +5,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.example.readedmanga.Models.Manga;
 import com.example.readedmanga.R;
-import com.example.readedmanga.Repositories.DAO.IDaoManga;
-import com.example.readedmanga.Models.GetPost;
+import com.example.readedmanga.Repositories.ApiClient;
+import com.example.readedmanga.Repositories.Services.IDaoManga;
 
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,25 +28,21 @@ public class MainActivity extends AppCompatActivity {
 
         textViewResult = findViewById(R.id.text_view_result);
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.0.18:3001/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
 
-        IDaoManga jSonPlaceHolderApi = retrofit.create(IDaoManga.class);
+        IDaoManga jSonPlaceHolderApi = ApiClient.getIDaoManga();
 
-        Call<List<GetPost>> call = jSonPlaceHolderApi.getPosts();
+        Call<List<Manga>> call = jSonPlaceHolderApi.getManga();
 
-        call.enqueue(new Callback<List<GetPost>>() {
+        call.enqueue(new Callback<List<Manga>>() {
             @Override
-            public void onResponse(Call<List<GetPost>> call, Response<List<GetPost>> response) {
+            public void onResponse(Call<List<Manga>> call, Response<List<Manga>> response) {
 
                 if(!response.isSuccessful()) {
                     textViewResult.setText("Code: " + response.code());
                     return;
                 }
-                    List<GetPost> posts = response.body();
-                    for (GetPost post : posts) {
+                    List<Manga> posts = response.body();
+                    for (Manga post : posts) {
                         String content = "";
                         content += "ID: " + post.getId() + "\n";
                         content += "Title: " + post.getTitle() + "\n\n";
@@ -57,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<List<GetPost>> call, Throwable t) {
+            public void onFailure(Call<List<Manga>> call, Throwable t) {
                 textViewResult.setText(t.getMessage());
             }
         });

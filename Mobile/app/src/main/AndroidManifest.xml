@@ -14,17 +14,26 @@
         android:theme="@style/Theme.ReadedManga"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".Views.Activities.UserActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Views.Activities.SignUpActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Views.Activities.MangaActivity"
+            android:exported="false" />
+        <activity
             android:name=".Views.Activities.LoginActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".Views.Activities.MainActivity"
-            android:exported="true">
-        </activity>
+            android:exported="true" />
     </application>
 
 </manifest>

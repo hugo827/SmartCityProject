@@ -252,4 +252,8 @@ router.patch('/', JWTMiddleWare.identification, AuthoMiddleware.mustBeOwner, upl
  */
 router.delete('/', JWTMiddleWare.identification, AuthoMiddleware.mustBeOwner, accountController.deleteAccount);
 
+
+
+router.get('/myaccount', JWTMiddleWare.identification, AuthoMiddleware.mustBeOwner, accountController.getMyAccount);
+
 module.exports =  router;

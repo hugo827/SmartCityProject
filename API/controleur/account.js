@@ -104,9 +104,13 @@ module.exports.login = async (req, res) => {
  */
 module.exports.inscription = async (req, res) => {
     const {login, pswd, email, birthdate, phone, is_admin} = req.body;
-    const picture = req.files.picture[0];
-    const pictureHex = picture.buffer.toString('hex');
-    const pictureHexX = '\\x' + pictureHex;
+
+    let pictureHexX = null;
+    if(req.files.picture !== undefined ) {
+        const picture = req.files.picture[0];
+        const pictureHex = picture.buffer.toString('hex');
+        pictureHexX = '\\x' + pictureHex;
+    }
 
     if(login === undefined || pswd === undefined || email === undefined) {
         res.sendStatus(400);
@@ -438,3 +442,43 @@ module.exports.deleteAccount = async (req, res) => {
     }
 
 };
+
+
+module.exports.getMyAccount = async (req, res) => {
+    const client = await pool.connect();
+    const idTexte = req.session[0];
+    const id = parseInt(idTexte);
+    try{
+        if(isNaN(id)){
+            res.sendStatus(400);
+        } else {
+            const {rows: Users} = await AccountMod.getAccountId(client, id);
+            const user = Users[0];
+
+            if(user.picture !== null) {
+                let base64 = Buffer.from(user.picture, 'hex').toString('base64');
+                user.picture = base64;
+            }
+            if(user.birthdate !== null) {
+                let year = user.birthdate.getFullYear();
+                let month = user.birthdate.getMonth() +1;
+                let day = user.birthdate.getDay();
+                month = month <= 9 ? `0${month}` : month;
+                day = day <= 9 ? `0${day}` : day;
+                let dateString = `${year}-${month}-${day}`;
+                user.birthdate = dateString;
+            }
+
+            if(user !== undefined){
+                res.json(user);
+            } else {
+                res.sendStatus(404);
+            }
+        }
+    } catch (error){
+        console.error(error);
+        res.sendStatus(500);
+    } finally {
+        client.release();
+    }
+}
