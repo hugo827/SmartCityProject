@@ -25,9 +25,13 @@ public class TokenRepository {
         return instance;
     }
 
-    public LiveData<String> getToken(LoginRequest loginRequest) {
+    public LiveData<String> setToken(LoginRequest loginRequest) {
         login(loginRequest);
         return tokenAuth;
+    }
+
+    public LiveData<String> getToken() {
+        return  tokenAuth;
     }
 
 

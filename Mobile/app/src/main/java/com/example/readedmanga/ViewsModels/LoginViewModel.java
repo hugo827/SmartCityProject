@@ -22,7 +22,7 @@ public class LoginViewModel extends ViewModel {
     }
 
     public void setToken(LoginRequest loginRequest) {
-        _token.setValue(tokenRepository.getToken(loginRequest).getValue());
+        _token.setValue(tokenRepository.setToken(loginRequest).getValue());
     }
 
 

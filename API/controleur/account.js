@@ -37,13 +37,12 @@ module.exports.login = async (req, res) => {
         const client = await pool.connect();
         try {
             const result = await account.checkConnection(client, login, password);
-
             const {userType, value} = result;
             if (userType === "inconnu") {
                 res.sendStatus(404);
             } else if (userType === "admin") {
-                const {id_account, login} = value;
-                const payload = {status: userType, value: {id_account, login}};
+                const {id_user, login} = value;
+                const payload = {status: userType, value: {id_user, login} };
                 const token = jwt.sign(
                     payload,
                     process.env.SECRET_TOKEN,
@@ -52,8 +51,8 @@ module.exports.login = async (req, res) => {
                 res.json(token);
 
             } else {
-                const {id_account, login} = value;
-                const payload = {status: userType, value: {id_account, login}};
+                const {id_user, login} = value;
+                const payload = {status: userType, value: {id_user, login}};
                 const token = jwt.sign(
                     payload,
                     process.env.SECRET_TOKEN,
@@ -446,8 +445,9 @@ module.exports.deleteAccount = async (req, res) => {
 
 module.exports.getMyAccount = async (req, res) => {
     const client = await pool.connect();
-    const idTexte = req.session[0];
-    const id = parseInt(idTexte);
+    const {id_user, login, authLevel } = req.session;
+    const id = parseInt(id_user);
+
     try{
         if(isNaN(id)){
             res.sendStatus(400);
@@ -467,10 +467,14 @@ module.exports.getMyAccount = async (req, res) => {
                 day = day <= 9 ? `0${day}` : day;
                 let dateString = `${year}-${month}-${day}`;
                 user.birthdate = dateString;
+            } else {
+                user.birthdate = "So bad no birthdate";
             }
 
-            if(user !== undefined){
-                res.json(user);
+            let userInformation = { login: user.login, phone: user.phone, email: user.email, birthdate: user.birthdate }
+
+            if(userInformation !== undefined){
+                res.json(userInformation);
             } else {
                 res.sendStatus(404);
             }

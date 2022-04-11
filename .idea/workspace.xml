@@ -2,21 +2,22 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9a924f7a-ec53-4841-832f-774a2b128889" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Views/Activities/MangaActivity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/ViewsModels/MangaViewModel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Mobile/app/src/main/res/layout/activity_manga.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/API/controleur/account.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/controleur/account.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/middleware/identification.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/middleware/identification.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/API/route/account.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/route/account.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/API/ubuntu-bionic-18.04-cloudimg-console.log" beforeDir="false" afterPath="$PROJECT_DIR$/API/ubuntu-bionic-18.04-cloudimg-console.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Mobile/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Mobile/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Mobile/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Mobile/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Models/Manga.java" beforeDir="false" afterPath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Models/Manga.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Models/Tome.java" beforeDir="false" afterPath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Models/Tome.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Models/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Models/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Repositories/ApiClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Repositories/ApiClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Repositories/Services/IDaoUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Repositories/Services/IDaoUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Repositories/TokenRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Repositories/TokenRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Repositories/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Repositories/UserRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Views/Activities/LoginActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Views/Activities/LoginActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Views/Activities/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Views/Activities/MainActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Mobile/app/src/main/res/layout/activity_login.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Mobile/app/src/main/res/layout/activity_login.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Mobile/app/src/main/res/values/themes.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Mobile/app/src/main/res/values/themes.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Views/Activities/UserActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Views/Activities/UserActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/ViewsModels/LoginViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/ViewsModels/LoginViewModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/ViewsModels/UserViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/ViewsModels/UserViewModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Mobile/app/src/main/res/layout/activity_user.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Mobile/app/src/main/res/layout/activity_user.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src.zip" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,6 +59,7 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="configurable.group.editor" />
+    <property name="ts.external.directory.path" value="D:\Pfiles\webstorm\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
@@ -175,6 +177,8 @@
       <workItem from="1648818407374" duration="1274000" />
       <workItem from="1648907160281" duration="1348000" />
       <workItem from="1648909906407" duration="663000" />
+      <workItem from="1649674227584" duration="5469000" />
+      <workItem from="1649680328204" duration="2283000" />
     </task>
     <servers />
   </component>

@@ -9,6 +9,9 @@ const AuthoMiddleware = require("../middleware/authorization");
 
 const uploadImage = require("../middleware/UploadsImage");
 
+
+
+
 /**
  * @swagger
  * /account/nb:
@@ -253,7 +256,7 @@ router.patch('/', JWTMiddleWare.identification, AuthoMiddleware.mustBeOwner, upl
 router.delete('/', JWTMiddleWare.identification, AuthoMiddleware.mustBeOwner, accountController.deleteAccount);
 
 
+router.get('/get/myaccount', JWTMiddleWare.identification, AuthoMiddleware.mustBeOwner, accountController.getMyAccount);
 
-router.get('/myaccount', JWTMiddleWare.identification, AuthoMiddleware.mustBeOwner, accountController.getMyAccount);
 
 module.exports =  router;
