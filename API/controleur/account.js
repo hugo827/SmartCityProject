@@ -102,7 +102,9 @@ module.exports.login = async (req, res) => {
  *              - picture
  */
 module.exports.inscription = async (req, res) => {
-    const {login, pswd, email, birthdate, phone, is_admin} = req.body;
+    let {login, pswd, email, birthdate, phone, is_admin} = req.body;
+    console.log("INFORMATION");
+    console.log(req.body);
 
     let pictureHexX = null;
     if(req.files.picture !== undefined ) {
@@ -110,6 +112,7 @@ module.exports.inscription = async (req, res) => {
         const pictureHex = picture.buffer.toString('hex');
         pictureHexX = '\\x' + pictureHex;
     }
+    if(is_admin === null || is_admin === undefined) is_admin = false;
 
     if(login === undefined || pswd === undefined || email === undefined) {
         res.sendStatus(400);

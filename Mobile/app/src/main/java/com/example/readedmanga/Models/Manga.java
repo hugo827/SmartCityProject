@@ -2,11 +2,12 @@ package com.example.readedmanga.Models;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class Manga {
 
     @SerializedName("id_manga")
     private int id;
-
     private String title;
     private String synopsis;
     private double new_price;
@@ -16,6 +17,8 @@ public class Manga {
     private String publisher;
     private String picture;
     private boolean is_finish;
+    private List<Tome> tomeList;
+    private Boolean isFollowed;
 
 
     public int getId() {
@@ -96,5 +99,21 @@ public class Manga {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public List<Tome> getTomeList() {
+        return tomeList;
+    }
+
+    public void setTomeList(List<Tome> tomeList) {
+        this.tomeList = tomeList;
+    }
+
+    public Boolean getFollowed() {
+        return isFollowed;
+    }
+
+    public void setFollowed(Boolean followed) {
+        isFollowed = followed;
     }
 }

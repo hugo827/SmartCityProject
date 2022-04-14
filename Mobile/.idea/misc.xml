@@ -11,6 +11,9 @@
         <entry key="..\:/github/SmartCityProject/Mobile/app/src/main/res/layout/activity_show_manga.xml" value="0.36666666666666664" />
         <entry key="..\:/github/SmartCityProject/Mobile/app/src/main/res/layout/activity_sign_up.xml" value="0.35260416666666666" />
         <entry key="..\:/github/SmartCityProject/Mobile/app/src/main/res/layout/activity_user.xml" value="0.36666666666666664" />
+        <entry key="..\:/github/SmartCityProject/Mobile/app/src/main/res/layout/fragment_list_manga.xml" value="0.36666666666666664" />
+        <entry key="..\:/github/SmartCityProject/Mobile/app/src/main/res/layout/list_mangas_fragment.xml" value="0.36666666666666664" />
+        <entry key="..\:/github/SmartCityProject/Mobile/app/src/main/res/layout/search_fragment.xml" value="0.35260416666666666" />
       </map>
     </option>
   </component>

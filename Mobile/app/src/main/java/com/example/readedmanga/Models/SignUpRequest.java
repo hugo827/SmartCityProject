@@ -15,10 +15,6 @@ public class SignUpRequest {
         this.picture = picture;
     }
 
-    public SignUpRequest(String login, String password, String email) {
-        this(login, password, email, null, null, null);
-    }
-
     public String getLogin() {
         return login;
     }
@@ -66,4 +62,6 @@ public class SignUpRequest {
     public void setPicture(String picture) {
         this.picture = picture;
     }
+
+    public Boolean getIsAdmin() { return is_admin;}
 }

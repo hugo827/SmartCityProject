@@ -30,7 +30,10 @@ public class SignUpRepository {
     }
 
     public LiveData<String> setSignUp(SignUpRequest signUpRequest) {
-        Call<String> response = ApiClient.getUserApi().signUp(signUpRequest);
+        Call<String> response = ApiClient.getUserApi().signUp(
+                signUpRequest.getLogin(), signUpRequest.getPassword(), signUpRequest.getEmail(), signUpRequest.getBirthdate(),
+                signUpRequest.getPhone(),signUpRequest.getIsAdmin(), signUpRequest.getPicture()
+        );
 
         response.enqueue(new Callback<String>() {
             @Override

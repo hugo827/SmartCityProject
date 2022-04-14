@@ -47,7 +47,7 @@ public class UserActivity extends AppCompatActivity {
         });
 
         btnBack.setOnClickListener( view -> {
-            Toast.makeText(UserActivity.this, "Comming soon", Toast.LENGTH_LONG).show();
+            this.finish();
         });
     }
 }

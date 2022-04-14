@@ -2,8 +2,6 @@ package com.example.readedmanga.Repositories;
 
 import com.example.readedmanga.Repositories.Services.IDaoManga;
 import com.example.readedmanga.Repositories.Services.IDaoReadedManga;
-import com.example.readedmanga.Repositories.Services.IDaoReadedTome;
-import com.example.readedmanga.Repositories.Services.IDaoTome;
 import com.example.readedmanga.Repositories.Services.IDaoUser;
 
 import retrofit2.Retrofit;
@@ -40,8 +38,5 @@ public class ApiClient {
 
     public static IDaoReadedManga getIDaoReadedManga() { return getRetrofit().create(IDaoReadedManga.class); }
 
-    public static IDaoReadedTome getIDaoReadedTome() { return getRetrofit().create(IDaoReadedTome.class); }
-
-    public static IDaoTome getIDaoTome() { return getRetrofit().create(IDaoTome.class); }
 
 }

@@ -2,22 +2,38 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9a924f7a-ec53-4841-832f-774a2b128889" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/API/controleur/userData.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/API/route/userData.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/API/controleur/account.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/controleur/account.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/middleware/identification.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/middleware/identification.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/route/account.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/route/account.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/modele/followedManga.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/modele/followedManga.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/route/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/route/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/API/ubuntu-bionic-18.04-cloudimg-console.log" beforeDir="false" afterPath="$PROJECT_DIR$/API/ubuntu-bionic-18.04-cloudimg-console.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Models/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Models/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Mobile/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Mobile/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Mobile/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/Mobile/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Models/Manga.java" beforeDir="false" afterPath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Models/Manga.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Models/ReadedManga.java" beforeDir="false" afterPath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Models/ReadedManga.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Models/ReadedTome.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Models/SignUpRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Models/SignUpRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Models/Tome.java" beforeDir="false" afterPath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Models/Tome.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Repositories/ApiClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Repositories/ApiClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Repositories/Services/IDaoManga.java" beforeDir="false" afterPath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Repositories/Services/IDaoManga.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Repositories/Services/IDaoReadedManga.java" beforeDir="false" afterPath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Repositories/Services/IDaoReadedManga.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Repositories/Services/IDaoReadedTome.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Repositories/Services/IDaoTome.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Repositories/Services/IDaoUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Repositories/Services/IDaoUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Repositories/SignUpRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Repositories/SignUpRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Repositories/TokenRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Repositories/TokenRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Repositories/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Repositories/UserRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Views/Activities/LoginActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Views/Activities/LoginActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Views/Activities/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Views/Activities/MainActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Views/Activities/SignUpActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Views/Activities/SignUpActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Views/Activities/UserActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Views/Activities/UserActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/ViewsModels/LoginViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/ViewsModels/LoginViewModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/ViewsModels/UserViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/ViewsModels/UserViewModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/ViewsModels/MangaViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/ViewsModels/MangaViewModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Mobile/app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Mobile/app/src/main/res/layout/activity_main.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Mobile/app/src/main/res/layout/activity_manga.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Mobile/app/src/main/res/layout/activity_manga.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Mobile/app/src/main/res/layout/activity_sign_up.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Mobile/app/src/main/res/layout/activity_sign_up.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Mobile/app/src/main/res/layout/activity_user.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Mobile/app/src/main/res/layout/activity_user.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Mobile/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Mobile/app/src/main/res/values/strings.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,18 +66,13 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="TODO_SCOPE" value="All Places" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="codeWithMe.voiceChat.enabledByDefault" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="configurable.group.editor" />
-    <property name="ts.external.directory.path" value="D:\Pfiles\webstorm\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
-    <property name="vue.rearranger.settings.migration" value="true" />
-  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\github\SmartCityProject\backend\src\temp" />
@@ -179,10 +190,24 @@
       <workItem from="1648909906407" duration="663000" />
       <workItem from="1649674227584" duration="5469000" />
       <workItem from="1649680328204" duration="2283000" />
+      <workItem from="1649757542686" duration="6116000" />
+      <workItem from="1649765866874" duration="3686000" />
+      <workItem from="1649933842322" duration="1242000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

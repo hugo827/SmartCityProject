@@ -1,14 +1,23 @@
 package com.example.readedmanga.Views.Activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
+import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.readedmanga.Models.Manga;
 import com.example.readedmanga.R;
 import com.example.readedmanga.Repositories.ApiClient;
 import com.example.readedmanga.Repositories.Services.IDaoManga;
+import com.example.readedmanga.Views.Fragments.ListMangasFragment;
+import com.example.readedmanga.Views.Fragments.SearchFragment;
+import com.google.android.material.navigation.NavigationView;
 
 import java.util.List;
 
@@ -18,43 +27,42 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TextView textViewResult;
-
+    private ImageButton btnSearch, btnListManga, btnProfile;
+    private Boolean noChange = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        textViewResult = findViewById(R.id.text_view_result);
+        btnSearch = findViewById(R.id.btnSearchNav);
+        btnListManga = findViewById(R.id.btnListMangaNav);
+        btnProfile = findViewById(R.id.btnProfile);
+
+        getSupportFragmentManager().beginTransaction().add(R.id.frameLayout, new SearchFragment()).commit();
 
 
-        IDaoManga jSonPlaceHolderApi = ApiClient.getIDaoManga();
-
-        Call<List<Manga>> call = jSonPlaceHolderApi.getManga();
-
-        call.enqueue(new Callback<List<Manga>>() {
-            @Override
-            public void onResponse(Call<List<Manga>> call, Response<List<Manga>> response) {
-
-                if(!response.isSuccessful()) {
-                    textViewResult.setText("Code: " + response.code());
-                    return;
+        btnSearch.setOnClickListener(view -> {
+                if(!noChange) {
+                    getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, new SearchFragment()).commit();
+                    noChange = true;
                 }
-                    List<Manga> posts = response.body();
-                    for (Manga post : posts) {
-                        String content = "";
-                        content += "ID: " + post.getId() + "\n";
-                        content += "Title: " + post.getTitle() + "\n\n";
-                        textViewResult.append(content);
-                    }
-
-            }
-
-            @Override
-            public void onFailure(Call<List<Manga>> call, Throwable t) {
-                textViewResult.setText(t.getMessage());
-            }
         });
+
+        btnListManga.setOnClickListener(view -> {
+                if(noChange) {
+                    getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, new ListMangasFragment()).commit();
+                    noChange = false;
+                }
+
+        });
+
+        btnProfile.setOnClickListener(view -> {
+            Intent intent = new Intent(this, UserActivity.class);
+            startActivity(intent);
+        });
+
     }
+
+
 }
