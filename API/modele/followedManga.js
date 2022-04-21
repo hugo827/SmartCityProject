@@ -3,7 +3,7 @@ module.exports.getFollowedManga = async (id, client) => {
 }
 
 module.exports.getListFollowedManga = async (id, client) => {
-    return await client.query("Select id_manga, id_followed_manga, title from manga inner join followed_manga fm on manga.id_manga = fm.fk_manga Where fm.fk_user = $1", [id]);
+    return await client.query("Select id_manga, id_followed_manga, title, state from manga inner join followed_manga fm on manga.id_manga = fm.fk_manga Where fm.fk_user = $1", [id]);
 }
 
 module.exports.getAllFollowedManga = async (client, nb) => {
@@ -46,4 +46,8 @@ module.exports.getFollowedMangaByUSER = async (id, client) =>  {
 
 module.exports.getFollowedMangaByFKUSER = async (id, client) =>  {
     return await client.query("SELECT * FROM followed_manga WHERE fk_user = $1", [id]);
+}
+
+module.exports.getFmByFkUserFkManga = async (id_user, id_manga, client) => {
+    return await client.query("SELECT state FROM followed_manga WHERE fk_user = $1 AND fk_manga = $2", [id_user, id_manga]);
 }

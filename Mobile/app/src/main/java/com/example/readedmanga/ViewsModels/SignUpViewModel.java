@@ -1,5 +1,7 @@
 package com.example.readedmanga.ViewsModels;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.ViewModel;
@@ -20,6 +22,7 @@ public class SignUpViewModel extends ViewModel {
     }
 
     public void setSignUp(SignUpRequest signUpRequest) {
+        Log.i("DEBUG", signUpRequest.getLogin() + " " + signUpRequest.getPhone());
         _SignUp.setValue(signUpRepository.setSignUp(signUpRequest).getValue());
     }
 }

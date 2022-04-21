@@ -36,6 +36,17 @@ public class LoginActivity extends AppCompatActivity {
 
         loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
 
+        loginViewModel.getToken().observe(this, strToken -> {
+                    if(strToken == null || strToken.equals("Failed")) {
+                        Toast.makeText(LoginActivity.this, "Login failed ", Toast.LENGTH_LONG).show();
+
+                    } else {
+                        Toast.makeText(LoginActivity.this, "Login success", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(this, MainActivity.class);
+                        startActivity(intent);
+                    }
+                }
+        );
 
         btnLogin.setOnClickListener(view ->  {
             if (TextUtils.isEmpty(login.getText().toString()) || TextUtils.isEmpty(pswd.getText().toString())) {
@@ -49,19 +60,6 @@ public class LoginActivity extends AppCompatActivity {
             Intent intent = new Intent(this, SignUpActivity.class);
             startActivity(intent);
         });
-
-
-        loginViewModel.getToken().observe(this, strToken -> {
-                if(strToken == null || strToken.equals("Failed")) {
-                    Toast.makeText(LoginActivity.this, "Login failed ", Toast.LENGTH_LONG).show();
-
-                } else {
-                    Toast.makeText(LoginActivity.this, "Login success", Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(this, MainActivity.class);
-                    startActivity(intent);
-                }
-            }
-        );
 
     }
 

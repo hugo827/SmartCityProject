@@ -87,8 +87,8 @@ public class SignUpActivity extends AppCompatActivity {
                             SignUpRequest signUpRequest = new SignUpRequest(
                                     login.getText().toString(), password.getText().toString(), email.getText().toString(),
                                     date, phone.getText().toString(), null
-
                             );
+
                             signUpViewModel.setSignUp(signUpRequest);
                         }
                     } else {

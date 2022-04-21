@@ -1,6 +1,8 @@
 module.exports.getManga = async (id, client) => {
     return await client.query("SELECT * FROM manga WHERE id_manga = $1", [id]);
 }
+
+
 module.exports.getAllManga = async (client, nb) => {
     return await client.query("SELECT * FROM manga LIMIT 2 OFFSET $1", [nb]);
 }

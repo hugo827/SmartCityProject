@@ -2,38 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9a924f7a-ec53-4841-832f-774a2b128889" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/API/controleur/userData.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/route/userData.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/controleur/account.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/controleur/account.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/controleur/userData.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/controleur/userData.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/API/modele/followedManga.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/modele/followedManga.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/route/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/route/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/modele/manga.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/modele/manga.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/route/userData.js" beforeDir="false" afterPath="$PROJECT_DIR$/API/route/userData.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/API/ubuntu-bionic-18.04-cloudimg-console.log" beforeDir="false" afterPath="$PROJECT_DIR$/API/ubuntu-bionic-18.04-cloudimg-console.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Mobile/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Mobile/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Mobile/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/Mobile/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Models/Manga.java" beforeDir="false" afterPath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Models/Manga.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Models/ReadedManga.java" beforeDir="false" afterPath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Models/ReadedManga.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Models/ReadedTome.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Models/SignUpRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Models/SignUpRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Models/Tome.java" beforeDir="false" afterPath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Models/Tome.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Repositories/ApiClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Repositories/ApiClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Repositories/Services/IDaoManga.java" beforeDir="false" afterPath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Repositories/Services/IDaoManga.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Repositories/Services/IDaoReadedManga.java" beforeDir="false" afterPath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Repositories/Services/IDaoReadedManga.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Repositories/Services/IDaoReadedTome.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Repositories/Services/IDaoTome.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Repositories/Services/IDaoUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Repositories/Services/IDaoUser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Repositories/SignUpRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Repositories/SignUpRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Repositories/TokenRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Repositories/TokenRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Views/Activities/LoginActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Views/Activities/LoginActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Views/Activities/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Views/Activities/MainActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Views/Activities/SignUpActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Views/Activities/SignUpActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Views/Activities/UserActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/Views/Activities/UserActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/ViewsModels/MangaViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/ViewsModels/MangaViewModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Mobile/app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Mobile/app/src/main/res/layout/activity_main.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/ViewsModels/SignUpViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/Mobile/app/src/main/java/com/example/readedmanga/ViewsModels/SignUpViewModel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Mobile/app/src/main/res/layout/activity_manga.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Mobile/app/src/main/res/layout/activity_manga.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Mobile/app/src/main/res/layout/activity_sign_up.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Mobile/app/src/main/res/layout/activity_sign_up.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Mobile/app/src/main/res/layout/activity_user.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Mobile/app/src/main/res/layout/activity_user.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Mobile/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Mobile/app/src/main/res/values/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Mobile/app/src/main/res/layout/list_mangas_fragment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Mobile/app/src/main/res/layout/list_mangas_fragment.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -193,6 +175,8 @@
       <workItem from="1649757542686" duration="6116000" />
       <workItem from="1649765866874" duration="3686000" />
       <workItem from="1649933842322" duration="1242000" />
+      <workItem from="1650377205620" duration="515000" />
+      <workItem from="1650479272150" duration="897000" />
     </task>
     <servers />
   </component>

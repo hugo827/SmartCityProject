@@ -18,7 +18,6 @@ public class UserActivity extends AppCompatActivity {
 
     private ImageView userPicture;
     private TextView login, phone, email, birthdate;
-    private ImageButton btnBack;
     private UserViewModel userViewModel;
 
     @Override
@@ -33,9 +32,7 @@ public class UserActivity extends AppCompatActivity {
         phone = findViewById(R.id.UserPhone);
         email = findViewById(R.id.UserEmail);
         birthdate = findViewById(R.id.UserBirthDate);
-        btnBack = findViewById(R.id.btnBack);
 
-        userViewModel.setUser();
 
         userViewModel.getUser().observe( this, user -> {
             if(user != null) {
@@ -43,11 +40,10 @@ public class UserActivity extends AppCompatActivity {
                 phone.setText(user.getPhone());
                 email.setText(user.getEmail());
                 birthdate.setText(user.getBirthdate());
+                userPicture.setImageResource(R.drawable.icon_user);
             }
         });
 
-        btnBack.setOnClickListener( view -> {
-            this.finish();
-        });
+        userViewModel.setUser();
     }
 }
