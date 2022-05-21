@@ -1,16 +1,14 @@
 # SmartCityProject
 
-Groupe : 
+Groupe :\
     Janssens Hugo
   
-Description projet : 
+Description projet :
       
  
- 
- 
-Code :
-    - API : NODEjs
-    - Mobile : Java
-    - Web : React
+Code :\
+	- API : NODEjs\
+    - Mobile : Java\
+    - Web : ReactJS
     
     
