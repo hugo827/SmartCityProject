@@ -8,6 +8,8 @@ import androidx.lifecycle.MediatorLiveData;
 
 import com.example.readedmanga.Models.SignUpRequest;
 
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -30,9 +32,23 @@ public class SignUpRepository {
     }
 
     public LiveData<String> setSignUp(SignUpRequest signUpRequest) {
+
+
+        Log.i("------------------------------------------------------INFORMATION", signUpRequest.getLogin() + " - " + signUpRequest.getPassword());
+
+        RequestBody loginBody = RequestBody.create(MediaType.parse("text/plain"),  signUpRequest.getLogin()) ;
+        RequestBody passwordBody = RequestBody.create(MediaType.parse("text/plain"),  signUpRequest.getPassword());
+        RequestBody emailBody = RequestBody.create(MediaType.parse("text/plain"),  signUpRequest.getEmail());
+        RequestBody phoneBody = RequestBody.create(MediaType.parse("text/plain"),  signUpRequest.getPhone());
+
+        RequestBody pictureBody = signUpRequest.getPicture() != null ? RequestBody.create(MediaType.parse("text/plain"), signUpRequest.getPicture()) : null;
+
+
+
+
         Call<String> response = ApiClient.getUserApi().signUp(
-                signUpRequest.getLogin(), signUpRequest.getPassword(), signUpRequest.getEmail(), signUpRequest.getBirthdate(),
-                signUpRequest.getPhone(),signUpRequest.getIsAdmin(), signUpRequest.getPicture()
+                loginBody,passwordBody, emailBody , signUpRequest.getBirthdate() ,phoneBody
+               ,signUpRequest.getIsAdmin(), null
         );
 
         response.enqueue(new Callback<String>() {
@@ -44,7 +60,7 @@ public class SignUpRepository {
             @Override
             public void onFailure(Call<String> call, Throwable t) {
                 _signUp.setValue("Failed");
-                Log.i("FAILURE", t.getLocalizedMessage());
+                Log.i("FAILURE", t.getLocalizedMessage() + "errrrrrrrrrrrrrror");
             }
         });
 

@@ -55,8 +55,9 @@ public class SignUpActivity extends AppCompatActivity {
             monthOfYear +=1;
             String monthOfYearString = monthOfYear <= 9 ? ("0" + "" +monthOfYear) : "" + monthOfYear + "";
             String dayOfMonthString = dayOfMonth <= 9 ? ("0"+ "" +dayOfMonth) : "" + dayOfMonth + "";
-            date = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
+            date = year  + "-" + monthOfYearString + "-" + dayOfMonthString ;
             btnDate.setText(dayOfMonthString + "-" + monthOfYearString + "-" + year);
+
         }
     };
 
@@ -65,12 +66,19 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
         setFindView();
-
+        signUpViewModel = new ViewModelProvider(this).get(SignUpViewModel.class);
 
         DatePickerDialog datePickerDialog = new DatePickerDialog(this, dateSetListener, selectedYear, selectedMonth, selectedDayOfMonth);
 
+        signUpViewModel.getSignUp().observe(this, msg -> {
+            if(msg == null || msg.equals("failed")) {
+                Toast.makeText(SignUpActivity.this, "Failed to sign up", Toast.LENGTH_LONG).show();
+            } else {
+                super.onDestroy();
+            }
+        });
 
-        signUpViewModel = new ViewModelProvider(this).get(SignUpViewModel.class);
+
 
         btnSignUp.setOnClickListener(view -> {
             if(TextUtils.isEmpty(login.getText().toString().trim()) ) {
@@ -101,22 +109,15 @@ public class SignUpActivity extends AppCompatActivity {
 
         btnDate.setOnClickListener(view ->  datePickerDialog.show());
 
-        signUpViewModel.getSignUp().observe(this, msg -> {
-            if(msg == null || msg.equals("failed")) {
-                Toast.makeText(SignUpActivity.this, "Failed to sign up", Toast.LENGTH_LONG).show();
-            } else {
-                onDestroy();
-            }
-        });
+
 
     }
 
-    @Override
-    public void onDestroy()
-    {
-        super.onDestroy();
-        finish();
-    }
+//    @Override
+//    public void onDestroy()
+//    {
+//        super.onDestroy();
+//    }
 
 
     private void setFindView() {

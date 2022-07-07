@@ -1,17 +1,14 @@
 package com.example.readedmanga.Repositories.Services;
 
 import com.example.readedmanga.Models.LoginRequest;
-import com.example.readedmanga.Models.SignUpRequest;
 import com.example.readedmanga.Models.User;
 
-import java.util.Date;
 
-import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
-import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
@@ -26,16 +23,16 @@ public interface IDaoUser {
     Call<User> userInformation(@Header("authorization") String token);
 
     @Multipart
-    @Headers("Accept:application/json")
+    //@Headers("Accept: Multipart/form-data")
     @POST("account/inscription")
     Call<String> signUp(
-                        @Part("login") String login,
-                        @Part("pswd") String pswd,
-                        @Part("email") String email,
+                        @Part("login") RequestBody login,
+                        @Part("pswd") RequestBody pswd,
+                        @Part("email") RequestBody email,
                         @Part("birthdate") String birthdate,
-                        @Part("phone") String phone,
+                        @Part("phone") RequestBody phone,
                         @Part("is_admin") Boolean is_admin,
-                        @Part("picture") String picture
+                        @Part("picture") RequestBody  picture
     );
 
 

@@ -1,5 +1,5 @@
 module.exports.getReadedTome = async (fk_manga, fk_user, client) => {
-    return await client.query("SELECT * FROM readed_tome WHERE fk_manga = $1 AND fk_user = $2", [fk_manga,fk_user]);
+    return await client.query("SELECT * FROM readed_tome WHERE fk_followed_manga = $1 AND fk_user = $2", [fk_manga,fk_user]);
 }
 module.exports.getAllReadedTome = async (client, nb) => {
     return await client.query("SELECT * FROM readed_tome LIMIT 2 OFFSET $1", [nb]);

@@ -1,11 +1,16 @@
 package com.example.readedmanga.Repositories;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 
+import com.example.readedmanga.Models.CallInfoManga;
 import com.example.readedmanga.Models.Manga;
 
 import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MangaRepository {
 
@@ -22,7 +27,22 @@ public class MangaRepository {
     }
 
     public LiveData<Manga> loadManga(String token, int id) {
-        Call<Manga> mangaResponseCall = ApiClient.getIDaoManga().getManga(token, id);
+
+        Call<Manga> mangaResponseCall = ApiClient.getIDaoManga().getManga("Bearer " + token, new CallInfoManga(id));
+        Log.i("-------------------------------------", " 3 :" + "Bearer " + token);
+
+        mangaResponseCall.enqueue(new Callback<Manga>() {
+            @Override
+            public void onResponse(Call<Manga> call, Response<Manga> response) {
+                Log.i("-----------------------------", " 4 :" + response.body());
+                _manga.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<Manga> call, Throwable t) {
+                Log.i("-------------------------------FAILURE", t.getLocalizedMessage());
+            }
+        });
         return manga;
     }
 

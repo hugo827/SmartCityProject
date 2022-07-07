@@ -24,15 +24,7 @@ public class UserActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
-
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
-
-        userPicture = findViewById(R.id.UserPicture);
-        login = findViewById(R.id.UserLogin);
-        phone = findViewById(R.id.UserPhone);
-        email = findViewById(R.id.UserEmail);
-        birthdate = findViewById(R.id.UserBirthDate);
-
 
         userViewModel.getUser().observe( this, user -> {
             if(user != null) {
@@ -43,6 +35,17 @@ public class UserActivity extends AppCompatActivity {
                 userPicture.setImageResource(R.drawable.icon_user);
             }
         });
+
+
+
+        userPicture = findViewById(R.id.UserPicture);
+        login = findViewById(R.id.UserLogin);
+        phone = findViewById(R.id.UserPhone);
+        email = findViewById(R.id.UserEmail);
+        birthdate = findViewById(R.id.UserBirthDate);
+
+
+
 
         userViewModel.setUser();
     }

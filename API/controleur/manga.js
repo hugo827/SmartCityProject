@@ -124,13 +124,17 @@ module.exports.getAllManga = async (req, res) => {
 module.exports.postManga = async (req, res) => {
     if(req.session) {
         const {title, synopsis, new_price, type, sub_genre, author, publisher, is_finish} = req.body;
-        const picture =  req.files.picture[0];
+
+        const picture =  req?.files?.picture !== undefined ? req?.files?.picture[0] : null ;
+        let pictureHexX = null;
 
         const client = await pool.connect();
         try{
+            if(picture !== null) {
+                const pictureHex = picture.buffer.toString('hex');
+                pictureHexX = '\\x' + pictureHex;
+             }
 
-            const pictureHex = picture.buffer.toString('hex');
-            const pictureHexX = '\\x' + pictureHex;
 
             await Manga.postManga(title, synopsis, new_price, type, sub_genre, author, publisher, pictureHexX, is_finish, client);
             res.sendStatus(201);
@@ -189,10 +193,12 @@ module.exports.postManga = async (req, res) => {
 module.exports.patchManga = async (req, res) => {
     if(req.session) {
         const {id_manga, title, synopsis, new_price, type, sub_genre, author, publisher, is_finish} = req.body;
-        const picture =  req.files.picture[0];
-        const pictureHex = picture.buffer.toString('hex');
-        const pictureHexX = '\\x' + pictureHex;
-
+        const picture =  req?.files?.picture !== undefined ? req.files.picture[0] : null;
+        let pictureHexX = null;
+        if(picture !== null) {
+            const pictureHex = picture.buffer.toString('hex');
+            pictureHexX = '\\x' + pictureHex;
+        }
         const client = await pool.connect();
         try{
             await Manga.patchManga(id_manga, title, synopsis, new_price, type, sub_genre, author, publisher, pictureHexX, is_finish, client);

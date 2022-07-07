@@ -18,6 +18,8 @@ const jwt = require('jsonwebtoken');
  *          description: le JWT n'est pas présent
  */
 module.exports.identification = async (req, res, next) => {
+
+
     const headerAuth = req.get('authorization');
 
     if(headerAuth !== undefined && headerAuth.includes("Bearer")){

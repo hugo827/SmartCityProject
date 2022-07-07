@@ -10,7 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ApiClient {
 
     private static Retrofit instance = null;
-    private final static String ip = "192.168.0.18";
+    private final static String ip = "192.168.0.30";
     private final static String port = "3001";
 
     private static Retrofit instance() {

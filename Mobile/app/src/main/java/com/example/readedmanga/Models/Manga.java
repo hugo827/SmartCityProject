@@ -17,9 +17,10 @@ public class Manga {
     private String publisher;
     private String picture;
     private boolean is_finish;
-    private List<Tome> tomeList;
-    private Boolean isFollowed;
-
+    private List<Tome> tomes;
+    private int state;
+    private int fk_user;
+    private int id_followed_manga;
 
     public int getId() {
         return id;
@@ -101,19 +102,36 @@ public class Manga {
         this.title = title;
     }
 
+
     public List<Tome> getTomeList() {
-        return tomeList;
+        return tomes;
     }
 
     public void setTomeList(List<Tome> tomeList) {
-        this.tomeList = tomeList;
+        this.tomes = tomeList;
     }
 
-    public Boolean getFollowed() {
-        return isFollowed;
+    public int getState() {
+        return state;
     }
 
-    public void setFollowed(Boolean followed) {
-        isFollowed = followed;
+    public void setState(int state) {
+        this.state = state;
+    }
+
+    public int getFk_user() {
+        return fk_user;
+    }
+
+    public void setFk_user(int fk_user) {
+        this.fk_user = fk_user;
+    }
+
+    public int getId_followed_manga() {
+        return id_followed_manga;
+    }
+
+    public void setId_followed_manga(int id_followed_manga) {
+        this.id_followed_manga = id_followed_manga;
     }
 }

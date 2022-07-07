@@ -7,6 +7,7 @@ const JWTMiddleWare = require("../middleware/identification");
 const AuthoMiddleware = require("../middleware/authorization");
 
 router.get('/listownmanga', JWTMiddleWare.identification, AuthoMiddleware.mustBeOwner, userDataControleur.getOwnListManga);
-router.get('/manga', JWTMiddleWare.identification, AuthoMiddleware.mustBeOwner, userDataControleur.getAllDataManga);
+router.post('/manga', JWTMiddleWare.identification, AuthoMiddleware.mustBeOwner, userDataControleur.getAllDataManga);
+router.post('/search', userDataControleur.getListMangaByInput);
 
 module.exports = router;

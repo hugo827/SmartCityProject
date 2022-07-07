@@ -1,5 +1,7 @@
 package com.example.readedmanga.Repositories;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 
@@ -26,7 +28,7 @@ public class ReadedMangaRepository {
     }
 
     public LiveData<List<ReadedManga>> loadReadedManga(String token) {
-        Call<List<ReadedManga>> responseCall = ApiClient.getIDaoReadedManga().loadReadedManga(token);
+        Call<List<ReadedManga>> responseCall = ApiClient.getIDaoReadedManga().loadReadedManga("Bearer " + token);
 
         responseCall.enqueue(new Callback<List<ReadedManga>>() {
             @Override

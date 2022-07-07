@@ -5,9 +5,14 @@ public class Tome {
     private int id_tome;
     private int number;
     private String title;
-    private Boolean notOut;
+    private String picture;
     private String release_date;
-    private Boolean isReaded;
+    private Boolean is_last_tome;
+    private int fk_manga;
+    private int id_readed_tome;
+    private String read_at;
+
+
 
     public int getId_tome() {
         return id_tome;
@@ -33,13 +38,6 @@ public class Tome {
         this.title = title;
     }
 
-    public Boolean getNotOut() {
-        return notOut;
-    }
-
-    public void setNotOut(Boolean notOut) {
-        this.notOut = notOut;
-    }
 
     public String getRelease_date() {
         return release_date;
@@ -49,11 +47,43 @@ public class Tome {
         this.release_date = release_date;
     }
 
-    public Boolean getReaded() {
-        return isReaded;
+    public String getPicture() {
+        return picture;
     }
 
-    public void setReaded(Boolean readed) {
-        isReaded = readed;
+    public void setPicture(String picture) {
+        this.picture = picture;
+    }
+
+    public Boolean getIs_last_tome() {
+        return is_last_tome;
+    }
+
+    public void setIs_last_tome(Boolean is_last_tome) {
+        this.is_last_tome = is_last_tome;
+    }
+
+    public int getFk_manga() {
+        return fk_manga;
+    }
+
+    public void setFk_manga(int fk_manga) {
+        this.fk_manga = fk_manga;
+    }
+
+    public int getId_readed_tome() {
+        return id_readed_tome;
+    }
+
+    public void setId_readed_tome(int id_readed_tome) {
+        this.id_readed_tome = id_readed_tome;
+    }
+
+    public String getRead_at() {
+        return read_at;
+    }
+
+    public void setRead_at(String read_at) {
+        this.read_at = read_at;
     }
 }

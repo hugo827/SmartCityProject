@@ -2,7 +2,6 @@ module.exports.getManga = async (id, client) => {
     return await client.query("SELECT * FROM manga WHERE id_manga = $1", [id]);
 }
 
-
 module.exports.getAllManga = async (client, nb) => {
     return await client.query("SELECT * FROM manga LIMIT 2 OFFSET $1", [nb]);
 }
@@ -22,4 +21,8 @@ module.exports.deleteManga = async (id, client) => {
 module.exports.getCountManga = async (client) => {
     const {rows} = await client.query("SELECT COUNT(*) FROM manga");
     return rows[0].count;
+}
+
+module.exports.getListMangaByInput = async (input, client) => {
+    return await client.query(`SELECT * FROM manga WHERE lower(title) LIKE lower('%${input}%')`);
 }

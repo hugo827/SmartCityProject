@@ -1,5 +1,7 @@
 package com.example.readedmanga.ViewsModels;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.ViewModel;
@@ -22,8 +24,10 @@ public class MangaViewModel extends ViewModel {
         return manga;
     }
 
-    public void loadMangaAndTome() {
-        _manga.setValue(mangaRepository.loadManga(tokenRepository.getToken().getValue(), 1).getValue());
+    public void loadMangaAndTome(int manga_id) {
+        Log.i("-------------------------------------", " 2 :" + tokenRepository.getToken().getValue() + "    id =" + manga_id);
+        _manga.setValue(mangaRepository.loadManga(tokenRepository.getToken().getValue(), manga_id).getValue());
+
     }
 
 }

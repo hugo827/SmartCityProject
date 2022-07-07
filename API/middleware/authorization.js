@@ -24,6 +24,7 @@ module.exports.mustBeOwner = (req, res, next) => {
     if(req.session !== undefined && (req.session.authLevel === "client" || req.session.authLevel === "admin") ){
         next();
     } else {
+        console.log("here 2");
         res.sendStatus(403);
     }
 }

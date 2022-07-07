@@ -3,6 +3,7 @@ package com.example.readedmanga.Views.Activities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -23,20 +24,19 @@ public class LoginActivity extends AppCompatActivity {
     private LoginViewModel loginViewModel;
     private Button btnInscription;
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
 
         login = findViewById(R.id.Login);
         pswd = findViewById(R.id.Password);
         btnLogin = findViewById(R.id.Connexion);
         btnInscription = findViewById(R.id.inscription);
 
-        loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
-
         loginViewModel.getToken().observe(this, strToken -> {
+
                     if(strToken == null || strToken.equals("Failed")) {
                         Toast.makeText(LoginActivity.this, "Login failed ", Toast.LENGTH_LONG).show();
 
@@ -47,6 +47,8 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 }
         );
+
+
 
         btnLogin.setOnClickListener(view ->  {
             if (TextUtils.isEmpty(login.getText().toString()) || TextUtils.isEmpty(pswd.getText().toString())) {

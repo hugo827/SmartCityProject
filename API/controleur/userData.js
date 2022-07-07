@@ -31,6 +31,7 @@ module.exports.getOwnListManga = async (req, res) => {
 
 
 module.exports.getAllDataManga = async (req, res) => {
+
     const client = await pool.connect();
     const {id_manga} = req.body;
     const {id_user} = req.session;
@@ -42,16 +43,25 @@ module.exports.getAllDataManga = async (req, res) => {
             res.sendStatus(400);
         } else {
             // TODO : code pour récuper les informations d'un manga pour le mobile et le renvoyer. (Manga, si followed par l'utilisateur, listTome, listTome followed)
-            const {rows: manga} = MangaMod.getManga(idManga, client);
-            const {rows: tomes} = TomeMod.getTomeManga(idManga, client);
-            const {rows: followedManga} = FollowedMangaMod.getFmByFkUserFkManga(id_user, idManga, client);
-            const {rows: readedTomes} = ReadedTomeMod.getReadedTome(idManga, idUser, client);
+            //Transaction ?
+            const {rows: manga} = await MangaMod.getManga(idManga, client);
+            const {rows: tomes} = await TomeMod.getTomeManga(idManga, client);
+            const {rows: followedManga} = await FollowedMangaMod.getFmByFkUserFkManga(idUser, idManga, client);
+            const {rows: readedTomes} = await ReadedTomeMod.getReadedTome(idManga, idUser, client);
 
-            console.log(manga);
-            console.log(tomes);
-            console.log(followedManga);
-            console.log(readedTomes);
+            let allDataManga = manga[0];
 
+            for(let i = 0; i < readedTomes.length; i++) {
+                tomes[i].id_readed_tome = readedTomes[i]["id_readed_tome"];
+                tomes[i].read_at = readedTomes[i]["read_at"];
+            }
+            allDataManga['tomes'] = tomes;
+            allDataManga.state = followedManga[0]['state'];
+            allDataManga.fk_user = followedManga[0]['fk_user'];
+            allDataManga.id_followed_manga = followedManga[0]['id_followed_manga'];
+
+
+            res.json(allDataManga);
         }
     } catch (e) {
         console.error(e);
@@ -60,4 +70,21 @@ module.exports.getAllDataManga = async (req, res) => {
         client.release();
     }
 
+}
+
+module.exports.getListMangaByInput = async (req, res) => {
+
+    const client = await pool.connect();
+    const {input} = req.body;
+
+    try {
+            const {rows: listManga} = await MangaMod.getListMangaByInput(input, client);
+            res.json(listManga);
+
+    } catch (e) {
+        console.error(e);
+        res.sendStatus(500);
+    } finally {
+        client.release();
+    }
 }

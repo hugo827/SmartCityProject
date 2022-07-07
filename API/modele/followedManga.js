@@ -49,5 +49,5 @@ module.exports.getFollowedMangaByFKUSER = async (id, client) =>  {
 }
 
 module.exports.getFmByFkUserFkManga = async (id_user, id_manga, client) => {
-    return await client.query("SELECT state FROM followed_manga WHERE fk_user = $1 AND fk_manga = $2", [id_user, id_manga]);
+    return await client.query("SELECT * FROM followed_manga WHERE fk_user = $1 AND fk_manga = $2", [id_user, id_manga]);
 }

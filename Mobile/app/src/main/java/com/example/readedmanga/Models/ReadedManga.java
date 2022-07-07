@@ -6,6 +6,12 @@ public class ReadedManga {
     private int id_followed_manga;
     private String title;
 
+    public ReadedManga(int id_manga, int id_followed_manga, String title) {
+        this.id_manga = id_manga;
+        this.id_followed_manga = id_followed_manga;
+        this.title = title;
+    }
+
     public int getId_manga() {
         return id_manga;
     }
