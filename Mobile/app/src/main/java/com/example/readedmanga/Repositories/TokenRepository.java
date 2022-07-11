@@ -16,7 +16,10 @@ public class TokenRepository {
     private MediatorLiveData<String> _tokenAuth = new MediatorLiveData<>();
     private LiveData<String> tokenAuth = _tokenAuth;
 
-    private TokenRepository() {}
+
+
+    private TokenRepository() {
+    }
 
     public static TokenRepository getInstance() {
         if(instance == null ) instance = new TokenRepository();

@@ -1,8 +1,5 @@
 package com.example.readedmanga.Repositories;
 
-
-import android.util.Log;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 
@@ -33,18 +30,11 @@ public class SignUpRepository {
 
     public LiveData<String> setSignUp(SignUpRequest signUpRequest) {
 
-
-        Log.i("------------------------------------------------------INFORMATION", signUpRequest.getLogin() + " - " + signUpRequest.getPassword());
-
         RequestBody loginBody = RequestBody.create(MediaType.parse("text/plain"),  signUpRequest.getLogin()) ;
         RequestBody passwordBody = RequestBody.create(MediaType.parse("text/plain"),  signUpRequest.getPassword());
         RequestBody emailBody = RequestBody.create(MediaType.parse("text/plain"),  signUpRequest.getEmail());
         RequestBody phoneBody = RequestBody.create(MediaType.parse("text/plain"),  signUpRequest.getPhone());
-
         RequestBody pictureBody = signUpRequest.getPicture() != null ? RequestBody.create(MediaType.parse("text/plain"), signUpRequest.getPicture()) : null;
-
-
-
 
         Call<String> response = ApiClient.getUserApi().signUp(
                 loginBody,passwordBody, emailBody , signUpRequest.getBirthdate() ,phoneBody
@@ -60,7 +50,6 @@ public class SignUpRepository {
             @Override
             public void onFailure(Call<String> call, Throwable t) {
                 _signUp.setValue("Failed");
-                Log.i("FAILURE", t.getLocalizedMessage() + "errrrrrrrrrrrrrror");
             }
         });
 

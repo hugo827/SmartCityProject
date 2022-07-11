@@ -1,5 +1,6 @@
 package com.example.readedmanga.ViewsModels;
 
+
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -12,13 +13,17 @@ import com.example.readedmanga.Repositories.SignUpRepository;
 
 public class SignUpViewModel extends ViewModel {
 
-    private SignUpRepository signUpRepository = SignUpRepository.getInstance();
+    private SignUpRepository signUpRepository;
 
     private MediatorLiveData<String> _SignUp = new MediatorLiveData<>();
     private LiveData<String> signUp = _SignUp;
 
     public LiveData<String> getSignUp() {
         return signUp;
+    }
+
+    public SignUpViewModel() {
+        signUpRepository = SignUpRepository.getInstance();
     }
 
     public void setSignUp(SignUpRequest signUpRequest) {

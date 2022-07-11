@@ -1,10 +1,11 @@
 package com.example.readedmanga.Repositories;
 
-import android.util.Log;
+
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 
+import com.example.readedmanga.Models.InputSearch;
 import com.example.readedmanga.Models.ReadedManga;
 
 import java.util.List;
@@ -20,7 +21,9 @@ public class ReadedMangaRepository {
     private MediatorLiveData<List<ReadedManga>> _readedManga = new MediatorLiveData<>();
     private LiveData<List<ReadedManga>> readedManga = _readedManga;
 
-    private ReadedMangaRepository() {}
+
+    private ReadedMangaRepository() {
+    }
 
     public static ReadedMangaRepository getInstance() {
         if(instance == null) instance = new ReadedMangaRepository();
@@ -29,6 +32,24 @@ public class ReadedMangaRepository {
 
     public LiveData<List<ReadedManga>> loadReadedManga(String token) {
         Call<List<ReadedManga>> responseCall = ApiClient.getIDaoReadedManga().loadReadedManga("Bearer " + token);
+
+        responseCall.enqueue(new Callback<List<ReadedManga>>() {
+            @Override
+            public void onResponse(Call<List<ReadedManga>> call, Response<List<ReadedManga>> response) {
+                _readedManga.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<List<ReadedManga>> call, Throwable t) {
+
+            }
+        });
+
+        return readedManga;
+    }
+
+    public LiveData<List<ReadedManga>> loadSearchManga(String input) {
+        Call<List<ReadedManga>> responseCall = ApiClient.getIDaoManga().getSearchManga(new InputSearch(input));
 
         responseCall.enqueue(new Callback<List<ReadedManga>>() {
             @Override

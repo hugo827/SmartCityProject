@@ -1,5 +1,7 @@
 package com.example.readedmanga.Repositories;
 
+
+
 import com.example.readedmanga.Repositories.Services.IDaoManga;
 import com.example.readedmanga.Repositories.Services.IDaoReadedManga;
 import com.example.readedmanga.Repositories.Services.IDaoUser;
@@ -15,10 +17,17 @@ public class ApiClient {
 
     private static Retrofit instance() {
         String url = "http://" + ip + ":" + port + "/";
+
+//        OkHttpClient client = new OkHttpClient.Builder()
+//                .addInterceptor(new ConnectivityCheckInterceptor(context))
+//                .build();
+
         Retrofit retrofit = new Retrofit.Builder()
+//                .client(client)
                 .addConverterFactory(GsonConverterFactory.create())
                 .baseUrl(url)
                 .build();
+
         return retrofit;
     }
 

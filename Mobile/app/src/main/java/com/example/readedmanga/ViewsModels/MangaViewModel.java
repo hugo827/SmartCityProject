@@ -1,7 +1,10 @@
 package com.example.readedmanga.ViewsModels;
 
+import android.app.Application;
+import android.content.Context;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.ViewModel;
@@ -13,12 +16,17 @@ import com.example.readedmanga.Repositories.TokenRepository;
 
 public class MangaViewModel extends ViewModel {
 
-    private TokenRepository tokenRepository = TokenRepository.getInstance();
-    private MangaRepository mangaRepository = MangaRepository.getInstance();
+    private TokenRepository tokenRepository;
+    private MangaRepository mangaRepository;
 
     private MediatorLiveData<Manga> _manga = new MediatorLiveData<Manga>();
-
     private LiveData<Manga> manga = _manga;
+
+
+    public MangaViewModel() {
+        tokenRepository = TokenRepository.getInstance();
+        mangaRepository = MangaRepository.getInstance();
+    }
 
     public LiveData<Manga> getManga() {
         return manga;

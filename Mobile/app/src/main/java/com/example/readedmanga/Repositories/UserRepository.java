@@ -19,11 +19,11 @@ public class UserRepository {
 
     private static UserRepository instance = null;
 
-    private MediatorLiveData<User> _user = new MediatorLiveData<>();
+    private MediatorLiveData<User> _user;
     private LiveData<User> user = _user;
 
-    private UserRepository() {
-
+    private UserRepository(){
+        _user = new MediatorLiveData<>();
     }
 
     public static UserRepository getInstance() {

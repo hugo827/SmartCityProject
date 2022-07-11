@@ -1,5 +1,6 @@
 package com.example.readedmanga.ViewsModels;
 
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.ViewModel;
@@ -10,11 +11,16 @@ import com.example.readedmanga.Repositories.UserRepository;
 
 public class UserViewModel extends ViewModel {
 
-    private UserRepository userRepository = UserRepository.getInstance();
-    private TokenRepository tokenRepository = TokenRepository.getInstance();
+    private UserRepository userRepository;
+    private TokenRepository tokenRepository;
 
     private MediatorLiveData<User> _user = new MediatorLiveData<>();
     private LiveData<User> user = _user;
+
+    public  UserViewModel() {
+        userRepository = UserRepository.getInstance();
+        tokenRepository = TokenRepository.getInstance();
+    }
 
     public LiveData<User> getUser() {
         return user;
